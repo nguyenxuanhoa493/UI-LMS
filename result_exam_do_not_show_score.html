@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kết quả bài thi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50">
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <!-- Header kết quả -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-blue-500 p-6 text-white">
+                    <h1 class="text-2xl font-bold mb-2">Kết quả bài thi</h1>
+                    <p class="text-lg">Bài kiểm tra tiếng Anh - Trung cấp B2</p>
+                </div>
+
+                <!-- Thông tin chính -->
+                <div class="p-6">
+                    <!-- Thông báo kết quả sẽ được công bố -->
+                    <div
+                        class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6"
+                    >
+                        <div class="flex items-center justify-center mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-12 w-12 text-yellow-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-center text-xl font-bold text-gray-800 mb-2"
+                        >
+                            Kết quả sẽ được công bố sau
+                        </h2>
+                        <p class="text-center text-gray-600">
+                            Vui lòng chờ thông báo từ ban tổ chức
+                        </p>
+                    </div>
+
+                    <!-- Thông tin chi tiết -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Cột thông tin thí sinh -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Họ và tên:</span>
+                                <span class="font-medium">Nguyễn Văn A</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Mã thí sinh:</span>
+                                <span class="font-medium">SV2024001</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Lần thi:</span>
+                                <span class="font-medium">Lần 1</span>
+                            </div>
+                        </div>
+
+                        <!-- Cột thông tin bài thi -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Ngày thi</span>
+                                <span class="font-medium">15/03/2024</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600"
+                                    >Thời gian làm bài:</span
+                                >
+                                <span class="font-medium">13:30 ➜ 14:30</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600"
+                                    >Số lần vi phạm quy chế:</span
+                                >
+                                <span class="font-medium">3 lần</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thống kê chi tiết -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4">Thống kê bài làm</h2>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-medium mb-2">Thống kê câu trả lời</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">
+                                20
+                            </div>
+                            <div class="text-gray-600">Đã làm</div>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                            <div class="text-2xl font-bold text-gray-600">
+                                2
+                            </div>
+                            <div class="text-gray-600">Chưa làm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút tác vụ -->
+            <div class="flex justify-end gap-4 mt-6">
+                <button
+                    class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                >
+                    Thi lại
+                </button>
+                <button
+                    class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    Xem chi tiết bài làm
+                </button>
+            </div>
+        </div>
+    </body>
+</html>

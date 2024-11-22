@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kết quả bài thi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50">
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <!-- Header kết quả -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-blue-500 p-6 text-white">
+                    <h1 class="text-2xl font-bold mb-2">Kết quả bài thi</h1>
+                    <p class="text-lg">Bài kiểm tra tiếng Anh - Trung cấp B2</p>
+                </div>
+
+                <!-- Thông tin chính -->
+                <div class="p-6">
+                    <!-- Điểm và trạng thái -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Điểm số -->
+                        <div class="bg-blue-50 p-4 rounded-lg text-center">
+                            <div class="text-4xl font-bold text-blue-600 mb-2">
+                                85/100
+                            </div>
+                            <div class="text-gray-600">Điểm số</div>
+                        </div>
+                        <!-- Trạng thái đạt -->
+                        <div class="bg-green-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-green-600 mb-2">
+                                ĐẠT
+                            </div>
+                            <div class="text-gray-600">Trạng thái</div>
+                        </div>
+                        <!-- Xếp loại -->
+                        <div class="bg-purple-50 p-4 rounded-lg text-center">
+                            <div
+                                class="text-2xl font-bold text-purple-600 mb-2"
+                            >
+                                GIỎI
+                            </div>
+                            <div class="text-gray-600">Xếp loại</div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin chi tiết -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Cột thông tin thí sinh -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Họ và tên:</span>
+                                <span class="font-medium">Nguyễn Văn A</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Mã thí sinh:</span>
+                                <span class="font-medium">SV2024001</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Lần thi:</span>
+                                <span class="font-medium">Lần 1</span>
+                            </div>
+                        </div>
+
+                        <!-- Cột thông tin bài thi -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Ngày thi</span>
+                                <span class="font-medium">15/03/2024</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600"
+                                    >Thời gian làm bai:</span
+                                >
+                                <span class="font-medium">13:30 ➜ 14:30</span>
+                            </div>
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600"
+                                    >Số lần vi phạm quy chế:</span
+                                >
+                                <span class="font-medium">3 lần</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thống kê chi tiết -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-4">Thống kê chi tiết</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Biểu đồ phân bố điểm -->
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium mb-2">Phân bố điểm theo phần</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Ngữ pháp</span>
+                                    <span>90%</span>
+                                </div>
+                                <div
+                                    class="w-full bg-gray-200 rounded-full h-2"
+                                >
+                                    <div
+                                        class="bg-blue-500 h-2 rounded-full"
+                                        style="width: 90%"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Từ vựng</span>
+                                    <span>85%</span>
+                                </div>
+                                <div
+                                    class="w-full bg-gray-200 rounded-full h-2"
+                                >
+                                    <div
+                                        class="bg-blue-500 h-2 rounded-full"
+                                        style="width: 85%"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Đọc hiểu</span>
+                                    <span>80%</span>
+                                </div>
+                                <div
+                                    class="w-full bg-gray-200 rounded-full h-2"
+                                >
+                                    <div
+                                        class="bg-blue-500 h-2 rounded-full"
+                                        style="width: 80%"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thống kê câu trả lời -->
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium mb-2">Thống kê câu trả lời</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center p-3 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">
+                                    17
+                                </div>
+                                <div class="text-gray-600">Đúng</div>
+                            </div>
+                            <div class="text-center p-3 bg-red-50 rounded-lg">
+                                <div class="text-2xl font-bold text-red-600">
+                                    3
+                                </div>
+                                <div class="text-gray-600">Sai</div>
+                            </div>
+                            <div class="text-center p-3 bg-gray-50 rounded-lg">
+                                <div class="text-2xl font-bold text-gray-600">
+                                    2
+                                </div>
+                                <div class="text-gray-600">Chưa làm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút tác vụ -->
+            <div class="flex justify-end gap-4 mt-6">
+                <button
+                    class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                >
+                    Thi lại
+                </button>
+                <button
+                    class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    Xem chi tiết bài làm
+                </button>
+            </div>
+        </div>
+    </body>
+</html>
