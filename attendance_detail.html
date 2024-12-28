@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chi tiết điểm danh</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/html5-qrcode"></script>
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen p-4">
+            <!-- Header -->
+            <div class="max-w-2xl mx-auto mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">
+                            Điểm danh lần 2
+                        </h1>
+                        <p class="text-gray-600">15:30 - 20/03/2024</p>
+                    </div>
+                    <a
+                        href="attendance.html"
+                        class="text-blue-500 hover:text-blue-600"
+                    >
+                        ← Quay lại
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                    <!-- Nhiệm vụ 1: Quét mã QR -->
+                    <div id="task-1" class="group cursor-pointer h-full">
+                        <div
+                            class="bg-white rounded-xl shadow-lg p-4 md:p-6 flex flex-col space-y-4 hover:bg-blue-50 transition-colors h-full"
+                        >
+                            <div
+                                class="flex items-center space-x-4 md:flex-col md:space-x-0 md:space-y-4 flex-1"
+                            >
+                                <div
+                                    class="w-16 h-16 md:w-20 md:h-20 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-8 w-8 md:h-10 md:w-10 text-blue-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 md:text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Quét mã QR
+                                    </h3>
+                                    <span
+                                        id="qr-status"
+                                        class="inline-block px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
+                                    >
+                                        Chưa thực hiện
+                                    </span>
+                                    <p
+                                        id="qr-time"
+                                        class="mt-2 text-sm text-gray-600 hidden"
+                                    >
+                                        --:--
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nhiệm vụ 2: Xác thực vị trí -->
+                    <div id="task-2" class="group cursor-pointer h-full">
+                        <div
+                            class="bg-white rounded-xl shadow-lg p-4 md:p-6 flex flex-col space-y-4 hover:bg-blue-50 transition-colors h-full"
+                        >
+                            <div
+                                class="flex items-center space-x-4 md:flex-col md:space-x-0 md:space-y-4 flex-1"
+                            >
+                                <div
+                                    id="location-icon"
+                                    class="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-blue-100"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-8 w-8 md:h-10 md:w-10 text-blue-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                        />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 md:text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Xác thực vị trí
+                                    </h3>
+                                    <span
+                                        id="location-status"
+                                        class="inline-block px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
+                                    >
+                                        Chưa thực hiện
+                                    </span>
+                                    <p
+                                        id="location-address"
+                                        class="mt-2 text-sm text-gray-600 hidden"
+                                    >
+                                        --
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nhiệm vụ 3: Xác thực khuôn mặt -->
+                    <div id="task-3" class="group cursor-pointer h-full">
+                        <div
+                            class="bg-white rounded-xl shadow-lg p-4 md:p-6 flex flex-col space-y-4 hover:bg-blue-50 transition-colors h-full"
+                        >
+                            <div
+                                class="flex items-center space-x-4 md:flex-col md:space-x-0 md:space-y-4 flex-1"
+                            >
+                                <div
+                                    id="face-icon"
+                                    class="w-16 h-16 md:w-20 md:h-20 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-8 w-8 md:h-10 md:w-10 text-blue-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 md:text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Xác thực khuôn mặt
+                                    </h3>
+                                    <span
+                                        id="face-status"
+                                        class="inline-block px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
+                                    >
+                                        Chưa thực hiện
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="fixed bottom-4 right-4 flex flex-col space-y-2">
+            <div
+                id="success-toast"
+                class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden"
+            >
+                Hoàn thành nhiệm vụ!
+            </div>
+        </div>
+
+        <script>
+            let currentTask = 1;
+
+            function showToast(message) {
+                const toast = document.getElementById("success-toast");
+                toast.textContent = message;
+                toast.classList.remove("hidden");
+                setTimeout(() => toast.classList.add("hidden"), 3000);
+            }
+
+            function completeTask(taskId, status, results) {
+                const statusEl = document.getElementById(`${status}-status`);
+                const isValid = Math.random() >= 0.5; // Random kết quả hợp lệ/không hợp lệ
+
+                // Cập nhật trạng thái
+                statusEl.textContent = isValid ? "Hợp lệ" : "Không hợp lệ";
+                statusEl.className = `inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                    isValid
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                }`;
+
+                // Hiển thị kết quả theo từng loại
+                switch (status) {
+                    case "qr":
+                        const qrTime = document.getElementById("qr-time");
+                        qrTime.textContent = results.time;
+                        qrTime.classList.remove("hidden");
+                        break;
+
+                    case "location":
+                        // Lưu icon vị trí
+                        const locationIconSVG =
+                            document.getElementById("location-icon").innerHTML;
+
+                        // Cập nhật icon với khoảng cách
+                        const locationIcon =
+                            document.getElementById("location-icon");
+                        locationIcon.className = `w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center flex-shrink-0 ${
+                            isValid ? "bg-green-100" : "bg-red-100"
+                        }`;
+                        locationIcon.innerHTML = `
+                            <div class="text-center">
+                                <span class="text-xl md:text-2xl font-bold ${
+                                    isValid ? "text-green-600" : "text-red-600"
+                                }">${results.distance}m</span>
+                            </div>
+                        `;
+
+                        // Hiển thị địa chỉ
+                        const locationAddress =
+                            document.getElementById("location-address");
+                        locationAddress.textContent = results.address;
+                        locationAddress.classList.remove("hidden");
+
+                        // Thêm sự kiện để quay lại icon khi hover ra
+                        const task2 = document.getElementById("task-2");
+                        task2.addEventListener("mouseleave", () => {
+                            if (!statusEl.textContent.includes("hợp lệ")) {
+                                locationIcon.className =
+                                    "w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-blue-100";
+                                locationIcon.innerHTML = locationIconSVG;
+                            }
+                        });
+                        break;
+
+                    case "face":
+                        const faceIcon = document.getElementById("face-icon");
+                        faceIcon.innerHTML = `<img src="${results.image}" alt="Ảnh xác thực" class="w-full h-full object-cover">`;
+                        break;
+                }
+
+                // Hiển thị thông báo
+                showToast(
+                    isValid ? "Xác thực hợp lệ!" : "Xác thực không hợp lệ!"
+                );
+
+                // Kiểm tra nếu tất cả nhiệm vụ đã hoàn thành và hợp lệ
+                const allTasks = [
+                    "qr-status",
+                    "location-status",
+                    "face-status",
+                ];
+                const allCompleted = allTasks.every(
+                    (taskStatus) =>
+                        document.getElementById(taskStatus).textContent ===
+                        "Hợp lệ"
+                );
+
+                if (allCompleted) {
+                    setTimeout(() => {
+                        window.location.href = "attendance.html";
+                    }, 2000);
+                }
+            }
+
+            // Cập nhật các event listener để bỏ điều kiện currentTask
+            document.getElementById("task-1").addEventListener("click", () => {
+                completeTask(1, "qr", {
+                    time: "15:30 - 20/03/2024",
+                });
+            });
+
+            document.getElementById("task-2").addEventListener("click", () => {
+                completeTask(2, "location", {
+                    address: "235 Hoàng Quốc Việt",
+                    distance: "5",
+                });
+            });
+
+            document.getElementById("task-3").addEventListener("click", () => {
+                completeTask(3, "face", {
+                    image: "https://static-cloud.lotuslms.com/static/testtlx/2024/10/07/ef/668d609eeb6302548d0e15ef/6703afe9ba2b94ff4e0076e4.png",
+                });
+            });
+        </script>
+    </body>
+</html>

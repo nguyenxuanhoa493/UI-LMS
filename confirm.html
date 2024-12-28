@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Xác nhận thông tin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100">
+        <!-- Overlay nền mờ -->
+        <div
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+            <!-- Modal -->
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-xl mx-4">
+                <!-- Header -->
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        Xác nhận thông tin người dùng
+                    </h2>
+                </div>
+
+                <!-- Nội dung -->
+                <div class="p-6 md:flex md:space-x-8">
+                    <!-- Avatar -->
+                    <div class="flex justify-center mb-8 md:mb-0 md:w-2/5">
+                        <div class="relative">
+                            <img
+                                src="https://static-cloud.lotuslms.com/static/testtlx/2024/10/07/ef/668d609eeb6302548d0e15ef/6703afe9ba2b94ff4e0076e4.png"
+                                alt="Avatar"
+                                class="w-48 h-48 md:w-60 md:h-56 rounded-full border-4 border-gray-200 object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Thông tin cá nhân -->
+                    <div class="space-y-6 md:w-3/5">
+                        <div>
+                            <div class="flex items-baseline space-x-2">
+                                <label
+                                    class="text-sm font-medium text-gray-500 min-w-[65px]"
+                                    >Họ và tên:</label
+                                >
+                                <p
+                                    class="font-semibold text-xl text-gray-800"
+                                >
+                                    Nguyễn Văn A
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline space-x-2">
+                                <label
+                                    class="text-sm font-medium text-gray-500 min-w-[65px]"
+                                    >CCCD:</label
+                                >
+                                <p
+                                    class="font-semibold text-lg md:text-xl text-gray-700"
+                                >
+                                    001202034567
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline space-x-2">
+                                <label
+                                    class="text-sm font-medium text-gray-500 min-w-[65px]"
+                                    >Ngày sinh:</label
+                                >
+                                <p
+                                    class="font-semibold text-lg md:text-xl text-gray-700"
+                                >
+                                    01/01/1990
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer với các nút thao tác -->
+                <div class="p-6 border-t flex justify-end space-x-3">
+                    <button
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                        onclick="reportWrongInfo()"
+                    >
+                        Báo sai thông tin
+                    </button>
+                    <button
+                        class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                        onclick="confirmInfo()"
+                    >
+                        Xác nhận đúng
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function confirmInfo() {
+                alert("Đã xác nhận thông tin chính xác");
+                // Thêm xử lý khi xác nhận đúng
+            }
+
+            function reportWrongInfo() {
+                alert("Đã báo cáo thông tin sai");
+                // Thêm xử lý khi báo sai
+            }
+        </script>
+    </body>
+</html>
