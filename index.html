@@ -1,32 +1,110 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách các UI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 class="text-3xl font-bold mb-8 text-gray-800">Danh sách các UI</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Danh sách các UI</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50">
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">
+                Danh sách các UI
+            </h1>
 
-        
+            <div class="space-y-8">
+                <!-- Nhóm điểm danh -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-700">
+                        Điểm danh
+                    </h2>
+                    <div class="space-y-3">
+                        <a
+                            href="attendance.html"
+                            class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span class="font-medium text-blue-600"
+                                    >Trang chủ điểm danh</span
+                                >
+                                <span class="text-sm text-gray-600"
+                                    >Xem thông tin và trạng thái điểm danh</span
+                                >
+                            </div>
+                        </a>
+                        <a
+                            href="attendance_detail.html"
+                            class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span class="font-medium text-blue-600"
+                                    >Chi tiết điểm danh</span
+                                >
+                                <span class="text-sm text-gray-600"
+                                    >Thực hiện các bước điểm danh</span
+                                >
+                            </div>
+                        </a>
+                    </div>
+                </div>
 
-            <!-- Nhóm kết quả -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4 text-gray-700">Kết quả bài thi</h2>
-                <div class="space-y-3">
-                    <a href="result_exam.html" 
-                       class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors">
-                        <span class="font-medium text-blue-600">Kết quả bài thi có show điểm</span>
-                    </a>
-                    <a href="result_exam_do_not_show_score.html" 
-                       class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors">
-                        <span class="font-medium text-blue-600">Kết quả bài thi không show điểm</span>
-                    </a>
+                <!-- Nhóm kết quả -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-700">
+                        Kết quả bài thi
+                    </h2>
+                    <div class="space-y-3">
+                        <a
+                            href="result_exam.html"
+                            class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span class="font-medium text-blue-600"
+                                    >Kết quả bài thi có show điểm</span
+                                >
+                                <span class="text-sm text-gray-600"
+                                    >Hiển thị điểm số và đáp án chi tiết</span
+                                >
+                            </div>
+                        </a>
+                        <a
+                            href="result_exam_do_not_show_score.html"
+                            class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span class="font-medium text-blue-600"
+                                    >Kết quả bài thi không show điểm</span
+                                >
+                                <span class="text-sm text-gray-600"
+                                    >Chỉ hiển thị trạng thái đạt/không đạt</span
+                                >
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Nhóm xác nhận -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-700">
+                        Xác nhận
+                    </h2>
+                    <div class="space-y-3">
+                        <a
+                            href="confirm.html"
+                            class="block p-4 border rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                            <div class="flex flex-col gap-1">
+                                <span class="font-medium text-blue-600"
+                                    >Trang xác nhận</span
+                                >
+                                <span class="text-sm text-gray-600"
+                                    >Xác nhận các hành động quan trọng</span
+                                >
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
