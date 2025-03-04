@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng quan cấu hình theo ngày</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1890ff;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --error-color: #f5222d;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        .ant-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+                        0 3px 6px 0 rgba(0, 0, 0, 0.12),
+                        0 5px 12px 4px rgba(0, 0, 0, 0.09);
+            margin-bottom: 24px;
+            padding: 24px;
+        }
+
+        .day-card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-tag.configured {
+            background: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+
+        .status-tag.default {
+            background: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+        .stats-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-stacked {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-segment {
+            height: 100%;
+            float: left;
+            transition: width 0.3s ease;
+        }
+
+        .progress-chip { background-color: var(--primary-color); }
+        .progress-supplementary { background-color: var(--success-color); }
+        .progress-unavailable { background-color: var(--error-color); }
+        .progress-available { background-color: #d9d9d9; }
+
+        .stats-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #f5f5f5;
+            color: rgba(0, 0, 0, 0.65);
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Add Statistics Cards -->
+        <style>
+            :root {
+                --primary-color: #1890ff;
+                --success-color: #52c41a;
+                --warning-color: #faad14;
+                --error-color: #f5222d;
+            }
+        
+            body {
+                background-color: #f0f2f5;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            }
+        
+            .ant-card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+                            0 3px 6px 0 rgba(0, 0, 0, 0.12),
+                            0 5px 12px 4px rgba(0, 0, 0, 0.09);
+                margin-bottom: 24px;
+                padding: 24px;
+            }
+        
+            .day-card {
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+        
+            .day-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+        
+            .status-tag {
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+        
+            .status-tag.configured {
+                background: #f6ffed;
+                color: #52c41a;
+                border: 1px solid #b7eb8f;
+            }
+        
+            .status-tag.default {
+                background: #e6f7ff;
+                color: #1890ff;
+                border: 1px solid #91d5ff;
+            }
+            .stats-card {
+                background: #fff;
+                border-radius: 8px;
+                padding: 20px;
+                margin-bottom: 24px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+        
+            .progress-stacked {
+                height: 8px;
+                border-radius: 4px;
+                overflow: hidden;
+            }
+        
+            .progress-segment {
+                height: 100%;
+                float: left;
+                transition: width 0.3s ease;
+            }
+        
+            .progress-chip { background-color: var(--primary-color); }
+            .progress-supplementary { background-color: var(--success-color); }
+            .progress-unavailable { background-color: var(--error-color); }
+            .progress-available { background-color: #d9d9d9; }
+        
+            .stats-badge {
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                background: #f5f5f5;
+                color: rgba(0, 0, 0, 0.65);
+                margin-right: 8px;
+            }
+            .day-card.modified {
+                border: 2px solid var(--warning-color);
+            }
+        
+            .stats-card.chip {
+                border-left: 4px solid var(--primary-color);
+            }
+            .stats-card.supplementary {
+                border-left: 4px solid var(--success-color);
+            }
+            .stats-card.unavailable {
+                border-left: 4px solid var(--error-color);
+            }
+            .stats-card.available {
+                border-left: 4px solid #d9d9d9;
+            }
+        
+            .progress-legend {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 20px;
+            }
+        
+            .legend-item {
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+            }
+        
+            .legend-color {
+                width: 16px;
+                height: 16px;
+                border-radius: 4px;
+                margin-right: 8px;
+            }
+        
+            .ant-card .progress-stacked {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                border-radius: 0 0 8px 8px;
+            }
+        
+            .ant-card {
+                position: relative;
+                padding-bottom: 32px;
+            }
+        </style>
+        <!-- Add this after the statistics cards and before the month picker -->
+        <div class="progress-legend">
+            <div class="legend-item">
+                <div class="legend-color progress-chip"></div>
+                <span>Vé xe chip</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color progress-supplementary"></div>
+                <span>Vé xe bổ túc</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color progress-unavailable"></div>
+                <span>Vé không khả dụng</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color progress-available"></div>
+                <span>Vé trống</span>
+            </div>
+        </div>
+        
+        <!-- Update the stats cards section -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stats-card chip">
+                    <div class="icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="mb-1">45</h3>
+                    <div class="text-muted">Tổng số vé xe chip</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card supplementary">
+                    <div class="icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="mb-1">27</h3>
+                    <div class="text-muted">Tổng số vé xe bổ túc</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card unavailable">
+                    <div class="icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3 class="mb-1">15</h3>
+                    <div class="text-muted">Vé không khả dụng</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card available">
+                    <div class="icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="mb-1">57</h3>
+                    <div class="text-muted">Vé trống</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Cấu hình theo ngày</h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary" id="prevMonth">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <input type="month" class="form-control" id="monthPicker">
+                <button class="btn btn-outline-primary" id="nextMonth">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" id="daysGrid">
+            <!-- Days will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        let monthData = null;
+
+        async function loadMonthData(yearMonth) {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                monthData = data[yearMonth] || null;
+                return monthData;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                return null;
+            }
+        }
+
+        function updateStatsCards(stats) {
+            if (!stats) return;
+            
+            const statsElements = {
+                totalChipTickets: document.querySelector('.stats-card.chip h3'),
+                totalSupplementaryTickets: document.querySelector('.stats-card.supplementary h3'),
+                unavailableTickets: document.querySelector('.stats-card.unavailable h3'),
+                availableTickets: document.querySelector('.stats-card.available h3')
+            };
+
+            for (const [key, element] of Object.entries(statsElements)) {
+                if (element) {
+                    element.textContent = stats[key].toLocaleString();
+                }
+            }
+        }
+
+        async function renderDays(month) {
+            const container = document.getElementById('daysGrid');
+            container.innerHTML = '';
+
+            const monthData = await loadMonthData(month);
+            updateStatsCards(monthData?.monthStats);
+
+            const date = new Date(month);
+            const year = date.getFullYear();
+            const monthIndex = date.getMonth();
+            const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayConfig = monthData?.days[currentDate];
+
+                const element = document.createElement('div');
+                element.className = 'col-md-3 mb-4';
+
+                let dayContent;
+                if (dayConfig) {
+                    const totalSlots = dayConfig.chipCars.total * 9 + dayConfig.supplementaryCars.total * 9;
+                    const chipPercent = (dayConfig.chipCars.booked / totalSlots) * 100;
+                    const suppPercent = (dayConfig.supplementaryCars.booked / totalSlots) * 100;
+                    const unavailablePercent = (dayConfig.unavailable / totalSlots) * 100;
+                    const availablePercent = 100 - chipPercent - suppPercent - unavailablePercent;
+
+                    dayContent = `
+                        <div class="ant-card day-card ${dayConfig.modified ? 'modified' : ''}" 
+                             onclick="window.location.href='daily-config.html?date=${currentDate}'"
+                             data-bs-toggle="tooltip" 
+                             data-bs-html="true"
+                             title="Vé xe chip đã đặt: ${dayConfig.chipCars.booked}/${dayConfig.chipCars.total * 9}<br>
+                                    Vé xe bổ túc đã đặt: ${dayConfig.supplementaryCars.booked}/${dayConfig.supplementaryCars.total * 9}<br>
+                                    Vé không khả dụng: ${dayConfig.unavailable}<br>
+                                    Vé trống: ${dayConfig.available}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h4 class="mb-2">${day}</h4>
+                                    <div class="text-muted">${new Date(currentDate).toLocaleDateString('vi-VN', { weekday: 'long' })}</div>
+                                </div>
+                                <div>
+                                    <span class="stats-badge chip">
+                                        <i class="fas fa-car me-1"></i>${dayConfig.chipCars.total}
+                                    </span>
+                                    <span class="stats-badge supplementary">
+                                        <i class="fas fa-truck me-1"></i>${dayConfig.supplementaryCars.total}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress-stacked">
+                                <div class="progress-segment progress-chip" style="width: ${chipPercent}%"></div>
+                                <div class="progress-segment progress-supplementary" style="width: ${suppPercent}%"></div>
+                                <div class="progress-segment progress-unavailable" style="width: ${unavailablePercent}%"></div>
+                                <div class="progress-segment progress-available" style="width: ${availablePercent}%"></div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    dayContent = `
+                        <div class="ant-card day-card" onclick="window.location.href='daily-config.html?date=${currentDate}'">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h4 class="mb-2">${day}</h4>
+                                    <div class="text-muted">${new Date(currentDate).toLocaleDateString('vi-VN', { weekday: 'long' })}</div>
+                                </div>
+                                <div>
+                                    <span class="stats-badge chip">
+                                        <i class="fas fa-car me-1"></i>5
+                                    </span>
+                                    <span class="stats-badge supplementary">
+                                        <i class="fas fa-truck me-1"></i>3
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                element.innerHTML = dayContent;
+                container.appendChild(element);
+            }
+
+            // Initialize tooltips
+            const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const monthPicker = document.getElementById('monthPicker');
+            monthPicker.value = '2025-03'; // Set initial month to March 2025
+            
+            renderDays(monthPicker.value);
+
+            monthPicker.addEventListener('change', (e) => renderDays(e.target.value));
+            
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                const date = new Date(monthPicker.value);
+                date.setMonth(date.getMonth() - 1);
+                monthPicker.value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                renderDays(monthPicker.value);
+            });
+
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                const date = new Date(monthPicker.value);
+                date.setMonth(date.getMonth() + 1);
+                monthPicker.value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                renderDays(monthPicker.value);
+            });
+        });
+    </script>
+</body>
+</html>

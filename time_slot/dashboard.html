@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard Quản lý</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
+        <style>
+            :root {
+                --primary-color: #1890ff;
+                --success-color: #52c41a;
+                --warning-color: #faad14;
+                --error-color: #f5222d;
+            }
+
+            body {
+                background-color: #f0f2f5;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial;
+            }
+
+            .ant-card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+                    0 3px 6px 0 rgba(0, 0, 0, 0.12),
+                    0 5px 12px 4px rgba(0, 0, 0, 0.09);
+                margin-bottom: 24px;
+            }
+
+            .stat-card {
+                padding: 20px;
+                border-radius: 8px;
+                color: white;
+                transition: transform 0.3s;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-card.primary {
+                background-color: var(--primary-color);
+            }
+            .stat-card.success {
+                background-color: var(--success-color);
+            }
+            .stat-card.warning {
+                background-color: var(--warning-color);
+            }
+            .stat-card.error {
+                background-color: var(--error-color);
+            }
+
+            .timeline {
+                position: relative;
+                padding: 20px 0;
+            }
+
+            .timeline-item {
+                padding: 15px;
+                border-left: 2px solid var(--primary-color);
+                margin-left: 25px;
+                position: relative;
+                background: white;
+                margin-bottom: 15px;
+                border-radius: 4px;
+            }
+
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -8px;
+                top: 20px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: var(--primary-color);
+            }
+
+            .schedule-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1rem;
+            }
+
+            .schedule-card {
+                background: white;
+                border-radius: 8px;
+                padding: 1rem;
+                border: 1px solid #e8e8e8;
+                transition: all 0.3s;
+            }
+
+            .schedule-card:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .schedule-card .time {
+                color: var(--primary-color);
+                font-weight: 500;
+            }
+
+            .schedule-card .status {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .schedule-card.upcoming {
+                border-left: 4px solid var(--primary-color);
+            }
+
+            .schedule-card.ongoing {
+                border-left: 4px solid var(--success-color);
+            }
+
+            .schedule-card.completed {
+                border-left: 4px solid var(--warning-color);
+                opacity: 0.8;
+            }
+
+            .progress {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .progress-bar {
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+
+            .schedule-table-wrapper {
+                overflow-x: auto;
+            }
+
+            .schedule-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0.5rem;
+            }
+
+            .schedule-table th {
+                text-align: center;
+                padding: 0.5rem;
+                background: #f5f5f5;
+                border-radius: 6px;
+                font-weight: 500;
+                color: #595959;
+            }
+
+            .schedule-table td {
+                vertical-align: top;
+                padding: 0.5rem;
+                min-width: 250px;
+                background: #fafafa;
+                border-radius: 6px;
+            }
+
+            .ticket-card {
+                background: white;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+                border: 1px solid #f0f0f0;
+                transition: all 0.3s;
+            }
+
+            .ticket-card:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .ticket-card:last-child {
+                margin-bottom: 0;
+            }
+
+            .avatar-group {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background-size: cover;
+                background-position: center;
+                margin-right: 0.5rem;
+                position: relative;
+            }
+
+            .avatar.teacher {
+                border: 2px solid var(--success-color);
+            }
+
+            .avatar.pending {
+                background: #fff1f0;
+                color: var(--error-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .avatar-initials {
+                position: absolute;
+                bottom: -4px;
+                right: -4px;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                font-size: 8px;
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+
+            .ticket-type {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+                margin-right: 0.5rem;
+            }
+
+            .ticket-type.chip {
+                background: #e6f7ff;
+                color: var(--primary-color);
+            }
+
+            .ticket-type.supplement {
+                background: #f6ffed;
+                color: var(--success-color);
+            }
+
+            .ticket-status {
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-2">Dashboard</h2>
+                    <p class="text-muted" id="currentDate">
+                        Ngày 20 tháng 01, 2024
+                    </p>
+                </div>
+                <div class="btn-group">
+                    <button
+                        class="btn btn-outline-primary"
+                        onclick="changeDate('prev')"
+                    >
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button
+                        class="btn btn-outline-primary"
+                        onclick="changeDate('today')"
+                    >
+                        Hôm nay
+                    </button>
+                    <button
+                        class="btn btn-outline-primary"
+                        onclick="changeDate('next')"
+                    >
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="stat-card primary">
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <div>
+                                <h3>8/10</h3>
+                                <p class="mb-0">Xe Chip Đã Đặt</p>
+                            </div>
+                            <i class="fas fa-car fa-2x opacity-50"></i>
+                        </div>
+                        <div class="progress mt-2" style="height: 4px">
+                            <div
+                                class="progress-bar bg-white"
+                                role="progressbar"
+                                style="width: 80%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="stat-card success">
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <div>
+                                <h3>5/6</h3>
+                                <p class="mb-0">Xe Bổ Túc Đã Đặt</p>
+                            </div>
+                            <i class="fas fa-truck fa-2x opacity-50"></i>
+                        </div>
+                        <div class="progress mt-2" style="height: 4px">
+                            <div
+                                class="progress-bar bg-white"
+                                role="progressbar"
+                                style="width: 83%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="stat-card warning">
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <div>
+                                <h3>6/13</h3>
+                                <p class="mb-0">Vé Đã Xếp Giáo Viên</p>
+                            </div>
+                            <i
+                                class="fas fa-chalkboard-teacher fa-2x opacity-50"
+                            ></i>
+                        </div>
+                        <div class="progress mt-2" style="height: 4px">
+                            <div
+                                class="progress-bar bg-white"
+                                role="progressbar"
+                                style="width: 46%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="stat-card primary">
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <div>
+                                <h3>10/16</h3>
+                                <p class="mb-0">Vé Đã Xác Nhận</p>
+                            </div>
+                            <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                        </div>
+                        <div class="progress mt-2" style="height: 4px">
+                            <div
+                                class="progress-bar bg-white"
+                                role="progressbar"
+                                style="width: 62.5%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="stat-card error">
+                        <div
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <div>
+                                <h3>5</h3>
+                                <p class="mb-0">Slot Không Khả Dụng</p>
+                            </div>
+                            <i class="fas fa-ban fa-2x opacity-50"></i>
+                        </div>
+                        <div class="progress mt-2" style="height: 4px">
+                            <div
+                                class="progress-bar bg-white"
+                                role="progressbar"
+                                style="width: 100%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Schedule -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="ant-card">
+                        <div class="card-body">
+                            <div
+                                class="d-flex justify-content-between align-items-center mb-4"
+                            >
+                                <div>
+                                    <h5 class="mb-0">Lịch Học Hôm Nay</h5>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div class="btn-group">
+                                        <button
+                                            class="btn btn-outline-primary btn-sm active"
+                                            onclick="filterTickets('all')"
+                                        >
+                                            Tất cả
+                                        </button>
+                                        <button
+                                            class="btn btn-outline-primary btn-sm"
+                                            onclick="filterTickets('chip')"
+                                        >
+                                            Xe Chip
+                                        </button>
+                                        <button
+                                            class="btn btn-outline-primary btn-sm"
+                                            onclick="filterTickets('supplement')"
+                                        >
+                                            Xe Bổ Túc
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-table-wrapper">
+                                <table class="schedule-table">
+                                    <thead>
+                                        <tr>
+                                            <th>08:00 - 09:00</th>
+                                            <th>09:00 - 10:00</th>
+                                            <th>10:00 - 11:00</th>
+                                            <th>13:00 - 14:00</th>
+                                            <th>14:00 - 15:00</th>
+                                            <th>15:00 - 16:00</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="slot-1"></td>
+                                            <td id="slot-2"></td>
+                                            <td id="slot-3"></td>
+                                            <td id="slot-4"></td>
+                                            <td id="slot-5"></td>
+                                            <td id="slot-6"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const mockSchedule = [
+                {
+                    id: 1,
+                    slot: 1,
+                    student: "Nguyễn Văn A",
+                    studentInitials: "NVA",
+                    teacher: "Trần Văn B",
+                    teacherInitials: "TVB",
+                    type: "chip",
+                    status: "confirmed",
+                },
+                {
+                    id: 2,
+                    slot: 1,
+                    student: "Lê Thị C",
+                    studentInitials: "LTC",
+                    teacher: null,
+                    type: "supplement",
+                    status: "pending",
+                },
+                {
+                    id: 3,
+                    slot: 2,
+                    student: "Phạm Văn D",
+                    studentInitials: "PVD",
+                    teacher: "Nguyễn Thị E",
+                    teacherInitials: "NTE",
+                    type: "chip",
+                    status: "confirmed",
+                },
+                {
+                    id: 4,
+                    slot: 2,
+                    student: "Trần Thị F",
+                    studentInitials: "TTF",
+                    teacher: "Lê Văn G",
+                    teacherInitials: "LVG",
+                    type: "supplement",
+                    status: "confirmed",
+                },
+                {
+                    id: 5,
+                    slot: 3,
+                    student: "Hoàng Văn H",
+                    studentInitials: "HVH",
+                    teacher: null,
+                    type: "chip",
+                    status: "pending",
+                },
+                {
+                    id: 6,
+                    slot: 4,
+                    student: "Mai Thị I",
+                    studentInitials: "MTI",
+                    teacher: "Phan Văn K",
+                    teacherInitials: "PVK",
+                    type: "chip",
+                    status: "confirmed",
+                },
+                {
+                    id: 7,
+                    slot: 4,
+                    student: "Đỗ Văn L",
+                    studentInitials: "DVL",
+                    teacher: null,
+                    type: "supplement",
+                    status: "pending",
+                },
+                {
+                    id: 8,
+                    slot: 5,
+                    student: "Vũ Thị M",
+                    studentInitials: "VTM",
+                    teacher: "Ngô Văn N",
+                    teacherInitials: "NVN",
+                    type: "chip",
+                    status: "confirmed",
+                },
+                {
+                    id: 9,
+                    slot: 6,
+                    student: "Bùi Văn O",
+                    studentInitials: "BVO",
+                    teacher: "Đặng Thị P",
+                    teacherInitials: "DTP",
+                    type: "supplement",
+                    status: "confirmed",
+                },
+                {
+                    id: 10,
+                    slot: 6,
+                    student: "Lý Thị Q",
+                    studentInitials: "LTQ",
+                    teacher: null,
+                    type: "chip",
+                    status: "pending",
+                },
+            ];
+
+            let currentFilter = "all";
+
+            function filterTickets(type) {
+                currentFilter = type;
+                renderSchedule();
+
+                // Update active button
+                document.querySelectorAll(".btn-group .btn").forEach((btn) => {
+                    btn.classList.remove("active");
+                    if (
+                        btn.textContent.trim().toLowerCase().includes(type) ||
+                        (type === "all" && btn.textContent.trim() === "Tất cả")
+                    ) {
+                        btn.classList.add("active");
+                    }
+                });
+            }
+
+            function updateTeacherStats() {
+                const totalTickets = mockSchedule.length;
+                const ticketsWithTeacher = mockSchedule.filter(
+                    (ticket) => ticket.teacher
+                ).length;
+                document.getElementById(
+                    "teacherStats"
+                ).textContent = `${ticketsWithTeacher}/${totalTickets}`;
+
+                // Cập nhật card thống kê
+                const progressBar = document.querySelector(
+                    ".stat-card.warning .progress-bar"
+                );
+                const percentage = (ticketsWithTeacher / totalTickets) * 100;
+                progressBar.style.width = `${percentage}%`;
+                document.querySelector(
+                    ".stat-card.warning h3"
+                ).textContent = `${ticketsWithTeacher}/${totalTickets}`;
+            }
+
+            function formatDate(date) {
+                const options = {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    weekday: "long",
+                };
+                return date.toLocaleDateString("vi-VN", options);
+            }
+
+            function changeDate(action) {
+                const currentDate = new Date();
+                switch (action) {
+                    case "prev":
+                        currentDate.setDate(currentDate.getDate() - 1);
+                        break;
+                    case "next":
+                        currentDate.setDate(currentDate.getDate() + 1);
+                        break;
+                }
+                document.getElementById("currentDate").textContent =
+                    formatDate(currentDate);
+                renderSchedule();
+            }
+
+            function getTicketTypeLabel(type) {
+                return type === "chip" ? "Xe Chip" : "Xe Bổ Túc";
+            }
+
+            function getTicketStatusLabel(status) {
+                return status === "confirmed"
+                    ? '<span class="text-success"><i class="fas fa-check-circle me-1"></i>Đã xác nhận</span>'
+                    : '<span class="text-warning"><i class="fas fa-clock me-1"></i>Chờ xác nhận</span>';
+            }
+
+            function renderTicket(ticket) {
+                return `
+                    <div class="ticket-card">
+                        <div class="avatar-group">
+                            <div class="avatar" 
+                                style="background-image: url('${
+                                    ticket.studentAvatar
+                                }')" 
+                                title="Học viên: ${ticket.student}">
+                                <span class="avatar-initials">${
+                                    ticket.studentInitials
+                                }</span>
+                            </div>
+                            ${
+                                ticket.teacher
+                                    ? `<div class="avatar teacher" 
+                                    style="background-image: url('${ticket.teacherAvatar}')" 
+                                    title="Giáo viên: ${ticket.teacher}">
+                                    <span class="avatar-initials">${ticket.teacherInitials}</span>
+                                </div>`
+                                    : `<div class="avatar pending" title="Chưa có giáo viên">
+                                    <i class="fas fa-user-clock"></i>
+                                </div>`
+                            }
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="ticket-type ${ticket.type}">
+                                ${getTicketTypeLabel(ticket.type)}
+                            </span>
+                            <span class="ticket-status">
+                                ${getTicketStatusLabel(ticket.status)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderSchedule() {
+                // Reset all slots
+                for (let i = 1; i <= 6; i++) {
+                    document.getElementById(`slot-${i}`).innerHTML = "";
+                }
+
+                // Filter tickets based on current filter
+                const filteredTickets =
+                    currentFilter === "all"
+                        ? mockSchedule
+                        : mockSchedule.filter(
+                              (ticket) => ticket.type === currentFilter
+                          );
+
+                // Render tickets in their respective slots
+                filteredTickets.forEach((ticket) => {
+                    const slotElement = document.getElementById(
+                        `slot-${ticket.slot}`
+                    );
+                    if (slotElement) {
+                        slotElement.innerHTML += renderTicket(ticket);
+                    }
+                });
+
+                updateTeacherStats();
+            }
+
+            // Thêm mảng avatar mẫu
+            const avatarUrls = [
+                "https://i.pravatar.cc/150?img=1",
+                "https://i.pravatar.cc/150?img=2",
+                "https://i.pravatar.cc/150?img=3",
+                "https://i.pravatar.cc/150?img=4",
+                "https://i.pravatar.cc/150?img=5",
+                "https://i.pravatar.cc/150?img=6",
+                "https://i.pravatar.cc/150?img=7",
+                "https://i.pravatar.cc/150?img=8",
+                "https://i.pravatar.cc/150?img=9",
+                "https://i.pravatar.cc/150?img=10",
+            ];
+
+            // Thêm avatar ngẫu nhiên cho mỗi học viên và giáo viên
+            mockSchedule.forEach((ticket) => {
+                ticket.studentAvatar =
+                    avatarUrls[Math.floor(Math.random() * avatarUrls.length)];
+                if (ticket.teacher) {
+                    ticket.teacherAvatar =
+                        avatarUrls[
+                            Math.floor(Math.random() * avatarUrls.length)
+                        ];
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById("currentDate").textContent = formatDate(
+                    new Date()
+                );
+                renderSchedule();
+            });
+        </script>
+    </body>
+</html>

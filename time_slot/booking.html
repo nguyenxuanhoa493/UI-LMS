@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Đăng ký Slot Time</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
+        <style>
+            /* ... existing root and body styles ... */
+
+            .car-type-card {
+                border: 1px solid #d9d9d9;
+                border-radius: 8px;
+                padding: 20px;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-bottom: 16px;
+            }
+
+            .car-type-card:hover {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            }
+
+            .car-type-card.selected {
+                background-color: #e6f7ff;
+                border-color: var(--primary-color);
+            }
+
+            .date-card {
+                border: 1px solid #d9d9d9;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .date-card .date-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+            }
+
+            .slot-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+
+            .slot-card {
+                border: 1px solid #d9d9d9;
+                border-radius: 8px;
+                padding: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                background: white;
+            }
+
+            .slot-card:not(.disabled):hover {
+                border-color: #40a9ff;
+                box-shadow: 0 0 8px rgba(24, 144, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .slot-card.selected {
+                background-color: #e6f7ff;
+                border-color: #1890ff;
+            }
+
+            .slot-card .time-info {
+                font-size: 0.9em;
+                color: #595959;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .slot-card .time-info i {
+                color: #8c8c8c;
+                font-size: 0.85em;
+            }
+
+            .slot-card .time-info strong {
+                font-weight: 500;
+            }
+
+            .slot-card .ticket-info {
+                background: #f5f5f5;
+                border-radius: 4px;
+                padding: 4px 8px;
+                font-weight: 500;
+                color: #595959;
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+                font-size: 0.85em;
+            }
+
+            .slot-card.disabled {
+                background-color: #f5f5f5;
+                cursor: not-allowed;
+            }
+
+            .slot-card.disabled .ticket-info {
+                background: #e8e8e8;
+                color: #999;
+            }
+
+            .booking-summary {
+                position: sticky;
+                top: 20px;
+                background: white;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container py-4">
+            <!-- Car Type Selection -->
+            <div class="ant-card mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4">Chọn loại xe</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div
+                                class="car-type-card"
+                                data-type="chip"
+                                onclick="selectCarType(this)"
+                            >
+                                <h5><i class="fas fa-car me-2"></i>Xe chip</h5>
+                                <p class="text-muted mb-0">
+                                    Dành cho học viên đăng ký học bằng B2
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div
+                                class="car-type-card"
+                                data-type="supplementary"
+                                onclick="selectCarType(this)"
+                            >
+                                <h5>
+                                    <i class="fas fa-truck me-2"></i>Xe bổ túc
+                                </h5>
+                                <p class="text-muted mb-0">
+                                    Dành cho học viên cần thêm giờ thực hành
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Selection -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="ant-card mb-4">
+                        <div class="card-body">
+                            <div
+                                class="d-flex justify-content-between align-items-center mb-4"
+                            >
+                                <h4 class="mb-0">Chọn ngày và giờ học</h4>
+                            </div>
+                            <div class="mb-4">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="dateSelector"
+                                    style="max-width: 200px"
+                                />
+                            </div>
+                            <div id="dateContainer">
+                                <!-- Date cards will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="col-md-4">
+                    <div class="booking-summary">
+                        <h5 class="mb-3">Tổng quan đăng ký</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Loại xe:</span>
+                                <strong id="summaryCarType">Chưa chọn</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Số ngày học:</span>
+                                <strong id="summaryDays">0</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Tổng số slot:</span>
+                                <strong id="summarySlots">0</strong>
+                            </div>
+                        </div>
+                        <button
+                            class="btn btn-primary w-100"
+                            id="btnBook"
+                            disabled
+                        >
+                            Đăng ký học
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const defaultSlots = [
+                { id: 1, start: "08:00", end: "09:00" },
+                { id: 2, start: "09:00", end: "10:00" },
+                { id: 3, start: "10:00", end: "11:00" },
+                { id: 4, start: "11:00", end: "12:00" },
+                { id: 5, start: "13:00", end: "14:00" },
+                { id: 6, start: "14:00", end: "15:00" },
+                { id: 7, start: "15:00", end: "16:00" },
+                { id: 8, start: "16:00", end: "17:00" },
+                { id: 9, start: "17:00", end: "18:00" },
+                { id: 10, start: "18:00", end: "19:00" },
+            ];
+
+            let selectedCarType = null;
+            let selectedDates = new Map(); // Map to store date -> selected slots
+
+            function selectCarType(element) {
+                document
+                    .querySelectorAll(".car-type-card")
+                    .forEach((card) => card.classList.remove("selected"));
+                element.classList.add("selected");
+                selectedCarType = element.dataset.type;
+                updateSummary();
+                document.getElementById("btnBook").disabled = !isBookingValid();
+            }
+
+            async function getAvailableTickets(date) {
+                // Random số vé từ 0-10 cho mỗi slot
+                return defaultSlots.map(() => Math.floor(Math.random() * 11));
+            }
+
+            async function createDateCard(date) {
+                const dateObj = new Date(date);
+                const ticketsPerSlot = await getAvailableTickets(date);
+
+                const card = document.createElement("div");
+                card.className = "date-card";
+                card.innerHTML = `
+                <div class="date-header">
+                    <div>
+                        <h5 class="mb-1">${dateObj.toLocaleDateString("vi-VN", {
+                            weekday: "long",
+                        })}</h5>
+                        <div class="text-muted">${dateObj.toLocaleDateString(
+                            "vi-VN"
+                        )}</div>
+                    </div>
+                    <button class="btn btn-outline-danger btn-sm" onclick="removeDate('${date}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="slot-grid">
+                    ${defaultSlots
+                        .map(
+                            (slot, index) => `
+                        <div class="slot-card ${
+                            ticketsPerSlot[index] <= 0 ? "disabled" : ""
+                        }" 
+                             data-date="${date}" 
+                             data-slot-id="${slot.id}" 
+                             data-tickets="${ticketsPerSlot[index]}"
+                             onclick="${
+                                 ticketsPerSlot[index] > 0
+                                     ? "toggleSlot(this)"
+                                     : ""
+                             }">
+                            <div class="time-info">
+                                <i class="far fa-clock me-1"></i>
+                                <strong>${slot.start} - ${slot.end}</strong>
+                            </div>
+                            <div class="ticket-info">
+                                <i class="fas fa-ticket-alt me-1"></i>
+                                ${ticketsPerSlot[index]} vé trống
+                            </div>
+                        </div>
+                    `
+                        )
+                        .join("")}
+                </div>
+            `;
+                return card;
+            }
+
+            function initializeDatePicker() {
+                const dateSelector = document.getElementById("dateSelector");
+                const today = new Date();
+                dateSelector.min = today.toISOString().split("T")[0];
+
+                const maxDate = new Date();
+                maxDate.setMonth(maxDate.getMonth() + 3);
+                dateSelector.max = maxDate.toISOString().split("T")[0];
+
+                dateSelector.addEventListener("change", async (e) => {
+                    const selectedDate = e.target.value;
+
+                    // Check if date is already selected
+                    if (selectedDates.has(selectedDate)) {
+                        alert("Ngày này đã được chọn!");
+                        return;
+                    }
+
+                    // Check if it's not a past date
+                    const selected = new Date(selectedDate);
+                    if (selected < today) {
+                        alert("Không thể chọn ngày trong quá khứ!");
+                        return;
+                    }
+
+                    // Check if maximum number of dates (5) is reached
+                    if (selectedDates.size >= 5) {
+                        alert("Bạn chỉ có thể chọn tối đa 5 ngày!");
+                        return;
+                    }
+
+                    try {
+                        // Add the date if all checks pass
+                        selectedDates.set(selectedDate, new Set());
+                        const container =
+                            document.getElementById("dateContainer");
+
+                        // Insert new date card in chronological order
+                        const newCard = await createDateCard(selectedDate);
+                        const existingCards =
+                            container.querySelectorAll(".date-card");
+                        let inserted = false;
+
+                        for (let card of existingCards) {
+                            const cardDate =
+                                card.querySelector("[data-date]").dataset.date;
+                            if (selectedDate < cardDate) {
+                                card.parentNode.insertBefore(newCard, card);
+                                inserted = true;
+                                break;
+                            }
+                        }
+
+                        if (!inserted) {
+                            container.appendChild(newCard);
+                        }
+                        updateSummary();
+                    } catch (error) {
+                        console.error("Lỗi khi tạo thẻ ngày:", error);
+                        alert(
+                            "Có lỗi xảy ra khi tạo thẻ ngày. Vui lòng thử lại."
+                        );
+                        selectedDates.delete(selectedDate);
+                    }
+                });
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                initializeDatePicker();
+            });
+
+            function removeDate(date) {
+                selectedDates.delete(date);
+                document
+                    .querySelector(`.date-card [data-date="${date}"]`)
+                    .closest(".date-card")
+                    .remove();
+                updateSummary();
+            }
+
+            function toggleSlot(element) {
+                if (element.classList.contains("disabled")) {
+                    return;
+                }
+
+                const date = element.dataset.date;
+                const slotId = element.dataset.slotId;
+                const availableTickets = parseInt(element.dataset.tickets);
+
+                if (availableTickets <= 0) {
+                    alert("Slot này đã hết vé!");
+                    return;
+                }
+
+                if (!selectedDates.has(date)) {
+                    selectedDates.set(date, new Set());
+                }
+
+                const dateSlots = selectedDates.get(date);
+
+                element.classList.toggle("selected");
+                if (element.classList.contains("selected")) {
+                    dateSlots.add(slotId);
+                } else {
+                    dateSlots.delete(slotId);
+                }
+
+                updateSummary();
+                document.getElementById("btnBook").disabled = !isBookingValid();
+            }
+
+            function updateSummary() {
+                const summaryCarType =
+                    document.getElementById("summaryCarType");
+                const summaryDays = document.getElementById("summaryDays");
+                const summarySlots = document.getElementById("summarySlots");
+
+                summaryCarType.textContent =
+                    selectedCarType === "chip"
+                        ? "Xe chip"
+                        : selectedCarType === "supplementary"
+                        ? "Xe bổ túc"
+                        : "Chưa chọn";
+
+                let totalSlots = 0;
+                let daysWithSlots = 0;
+
+                selectedDates.forEach((slots) => {
+                    if (slots.size > 0) {
+                        daysWithSlots++;
+                        totalSlots += slots.size;
+                    }
+                });
+
+                summaryDays.textContent = daysWithSlots;
+                summarySlots.textContent = totalSlots;
+            }
+
+            function isBookingValid() {
+                let hasSelectedSlots = false;
+                selectedDates.forEach((slots) => {
+                    if (slots.size > 0) {
+                        hasSelectedSlots = true;
+                    }
+                });
+                return selectedCarType && hasSelectedSlots;
+            }
+
+            document.getElementById("btnBook").addEventListener("click", () => {
+                const bookingData = {
+                    carType: selectedCarType,
+                    dates: Array.from(selectedDates.entries()).map(
+                        ([date, slots]) => ({
+                            date,
+                            slots: Array.from(slots),
+                        })
+                    ),
+                };
+                console.log("Booking:", bookingData);
+                // Here you would typically send the booking to the backend
+            });
+        </script>
+    </body>
+</html>

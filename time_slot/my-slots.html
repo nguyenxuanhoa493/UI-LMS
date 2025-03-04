@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lịch học của tôi</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
+        <style>
+            :root {
+                --primary-color: #1890ff;
+                --success-color: #52c41a;
+                --warning-color: #faad14;
+                --error-color: #f5222d;
+            }
+
+            body {
+                background-color: #f0f2f5;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial;
+            }
+
+            .slot-block {
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+            }
+
+            .slot-block:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .status-tag {
+                padding: 4px 12px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .status-tag.pending {
+                background: #fff7e6;
+                color: #fa8c16;
+                border: 1px solid #ffd591;
+            }
+
+            .status-tag.confirmed {
+                background: #f6ffed;
+                color: #52c41a;
+                border: 1px solid #b7eb8f;
+            }
+
+            .status-tag.changed {
+                background: #e6f7ff;
+                color: #1890ff;
+                border: 1px solid #91d5ff;
+            }
+
+            .action-btn {
+                padding: 4px 12px;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Lịch học của tôi</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary">
+                        <i class="fas fa-calendar-alt me-2"></i>Tuần này
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="fas fa-calendar-alt me-2"></i>Tuần sau
+                    </button>
+                </div>
+            </div>
+
+            <!-- Thêm phần thống kê -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i
+                                    class="fas fa-ticket-alt text-primary me-2"
+                                    style="font-size: 1.5rem"
+                                ></i>
+                                <h6 class="card-subtitle text-muted mb-0">
+                                    Tổng số vé đã mua
+                                </h6>
+                            </div>
+                            <h3
+                                class="card-title mb-0 text-primary"
+                                id="totalTickets"
+                            >
+                                0
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i
+                                    class="fas fa-calendar-check text-success me-2"
+                                    style="font-size: 1.5rem"
+                                ></i>
+                                <h6 class="card-subtitle text-muted mb-0">
+                                    Số ngày học
+                                </h6>
+                            </div>
+                            <h3
+                                class="card-title mb-0 text-success"
+                                id="totalDays"
+                            >
+                                0
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i
+                                    class="fas fa-clock text-warning me-2"
+                                    style="font-size: 1.5rem"
+                                ></i>
+                                <h6 class="card-subtitle text-muted mb-0">
+                                    Chờ xác nhận
+                                </h6>
+                            </div>
+                            <h3
+                                class="card-title mb-0 text-warning"
+                                id="pendingConfirm"
+                            >
+                                0
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <i
+                                    class="fas fa-check-circle text-info me-2"
+                                    style="font-size: 1.5rem"
+                                ></i>
+                                <h6 class="card-subtitle text-muted mb-0">
+                                    Đã xác nhận
+                                </h6>
+                            </div>
+                            <h3
+                                class="card-title mb-0 text-info"
+                                id="confirmed"
+                            >
+                                0
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chuyển sang dạng bảng -->
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái thời gian</th>
+                                <th>Loại xe</th>
+                                <th>Giáo viên</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="slotsTableBody">
+                            <!-- Slots will be generated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xác nhận tham gia</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn xác nhận sẽ tham gia buổi học này?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Hủy
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="confirmAttendance"
+                        >
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const mockSlots = [
+                {
+                    id: 1,
+                    date: "2024-01-20",
+                    time: "08:00 - 09:00",
+                    type: "Xe Chip",
+                    teacher: "Nguyễn Văn A",
+                    status: "pending",
+                    timeStatus: "completed", // sắp diễn ra
+                    changed: false,
+                },
+                {
+                    id: 2,
+                    date: "2024-01-21",
+                    time: "10:00 - 11:00",
+                    type: "Xe Bổ Túc",
+                    teacher: "Trần Thị B",
+                    status: "confirmed",
+                    timeStatus: "upcoming", // đang diễn ra
+                    changed: true,
+                    oldTime: "09:00 - 10:00",
+                },
+                {
+                    id: 3,
+                    date: "2024-01-22",
+                    time: "13:00 - 14:00",
+                    type: "Xe Chip",
+                    teacher: "Đang xếp",
+                    status: "waiting_teacher",
+                    timeStatus: "upcoming",
+                    changed: false,
+                },
+                {
+                    id: 4,
+                    date: "2024-01-19",
+                    time: "15:00 - 16:00",
+                    type: "Xe Chip",
+                    teacher: "Lê Thị D",
+                    status: "confirmed",
+                    timeStatus: "completed", // đã kết thúc
+                    changed: false,
+                },
+                {
+                    id: 5,
+                    date: "2024-01-21",
+                    time: "10:00 - 11:00",
+                    type: "Xe Bổ Túc",
+                    teacher: "Trần Thị B",
+                    status: "pending",
+                    timeStatus: "ongoing", // đang diễn ra
+                    changed: false,
+                    oldTime: "09:00 - 10:00",
+                },
+            ];
+
+            function getStatusBadge(status, changed) {
+                if (changed) {
+                    return '<span class="badge bg-info">Lịch đã thay đổi</span>';
+                }
+                switch (status) {
+                    case "pending":
+                        return '<span class="badge bg-warning">Chờ xác nhận</span>';
+                    case "confirmed":
+                        return '<span class="badge bg-success">Đã xác nhận</span>';
+                    case "waiting_teacher":
+                        return '<span class="badge bg-secondary">Đợi xếp giáo viên</span>';
+                    default:
+                        return "";
+                }
+            }
+
+            function getTimeStatusBadge(timeStatus) {
+                switch (timeStatus) {
+                    case "upcoming":
+                        return '<span class="badge bg-primary">Sắp diễn ra</span>';
+                    case "ongoing":
+                        return '<span class="badge bg-success">Đang diễn ra</span>';
+                    case "completed":
+                        return '<span class="badge bg-secondary">Đã kết thúc</span>';
+                    default:
+                        return "";
+                }
+            }
+
+            function getActionButtons(slot) {
+                if (slot.changed) {
+                    return `
+                    <button class="btn btn-primary btn-sm me-2">Chấp nhận</button>
+                    <button class="btn btn-outline-danger btn-sm">Từ chối</button>
+                `;
+                }
+                if (slot.status === "pending") {
+                    return `
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                        Xác nhận tham gia
+                    </button>
+                `;
+                }
+                if (slot.status === "waiting_teacher") {
+                    return `
+                    <button class="btn btn-secondary btn-sm" disabled>
+                        Đang xếp giáo viên
+                    </button>
+                `;
+                }
+                return "";
+            }
+
+            function updateStatistics() {
+                document.getElementById("totalTickets").textContent =
+                    mockSlots.length;
+                document.getElementById("totalDays").textContent = new Set(
+                    mockSlots.map((slot) => slot.date)
+                ).size;
+                document.getElementById("pendingConfirm").textContent =
+                    mockSlots.filter(
+                        (slot) => slot.status === "pending"
+                    ).length;
+                document.getElementById("confirmed").textContent =
+                    mockSlots.filter(
+                        (slot) => slot.status === "confirmed"
+                    ).length;
+            }
+
+            function renderSlots() {
+                const tableBody = document.getElementById("slotsTableBody");
+                tableBody.innerHTML = "";
+
+                mockSlots.forEach((slot) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                    <td>${slot.date}</td>
+                    <td>
+                        ${slot.time}
+                        ${
+                            slot.changed
+                                ? `<div class="text-muted small">Lịch cũ: ${slot.oldTime}</div>`
+                                : ""
+                        }
+                    </td>
+                    <td>${getTimeStatusBadge(slot.timeStatus)}</td>
+                    <td>${slot.type}</td>
+                    <td>${slot.teacher}</td>
+                    <td>${getStatusBadge(slot.status, slot.changed)}</td>
+                    <td>${getActionButtons(slot)}</td>
+                `;
+                    tableBody.appendChild(row);
+                });
+
+                updateStatistics();
+            }
+
+            document.addEventListener("DOMContentLoaded", renderSlots);
+        </script>
+    </body>
+</html>

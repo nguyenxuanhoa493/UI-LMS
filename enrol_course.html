@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký khóa học</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .ant-card {
+            box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 
+                        0 3px 6px 0 rgba(0, 0, 0, 0.12), 
+                        0 5px 12px 4px rgba(0, 0, 0, 0.09);
+            border-radius: 8px;
+            border: none;
+        }
+        .ant-btn {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .ant-btn:hover {
+            transform: translateY(-1px);
+        }
+        .instructor-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        .course-stats {
+            color: #595959;
+            font-size: 14px;
+        }
+        .modal-content {
+            border-radius: 8px;
+        }
+        .form-control {
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            border-color: #40a9ff;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="card ant-card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" 
+                         class="img-fluid rounded-start" 
+                         alt="Thumbnail khóa học"
+                         style="height: 100%; object-fit: cover;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body p-4">
+                        <h2 class="card-title mb-3">Đào tạo hội nhập</h2>
+                        
+                        <div class="course-description mb-4">
+                            <p class="text-muted">
+                                Khóa học Đào tạo hội nhập giúp học viên mới làm quen với môi trường làm việc, 
+                                văn hóa công ty và các quy trình cơ bản. Chương trình bao gồm các nội dung về 
+                                nội quy, chính sách, quy định an toàn và các kỹ năng cần thiết để thích nghi 
+                                nhanh chóng với công việc mới.
+                            </p>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="https://i.pravatar.cc/150?img=12" 
+                                 class="instructor-avatar" 
+                                 alt="Giảng viên">
+                            <div>
+                                <div class="fw-bold">Nguyễn Văn A</div>
+                                <div class="text-muted">Giảng viên</div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats d-flex gap-4 mb-4">
+                            <div>
+                                <i class="fas fa-users text-primary me-2"></i>
+                                <span>120 học viên</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                <span>20 giờ học</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary ant-btn px-4 py-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#enrollModal">
+                            Đăng ký khóa học
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal đăng ký cho người chưa có tài khoản -->
+    <div class="modal fade" id="enrollModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đăng ký khóa học</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <p>Bạn đã có tài khoản chưa?</p>
+                        <button class="btn btn-outline-primary me-2" id="btnLogin">Đăng nhập</button>
+                        <button class="btn btn-outline-success" id="btnRegister">Đăng ký mới</button>
+                    </div>
+                    
+                    <!-- Form đăng ký mới -->
+                    <form id="registerForm" class="d-none">
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+                    </form>
+
+                    <!-- Form đăng nhập -->
+                    <form id="loginForm" class="d-none">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('btnLogin').addEventListener('click', function() {
+            document.getElementById('loginForm').classList.remove('d-none');
+            document.getElementById('registerForm').classList.add('d-none');
+        });
+
+        document.getElementById('btnRegister').addEventListener('click', function() {
+            document.getElementById('registerForm').classList.remove('d-none');
+            document.getElementById('loginForm').classList.add('d-none');
+        });
+    </script>
+</body>
+</html>
