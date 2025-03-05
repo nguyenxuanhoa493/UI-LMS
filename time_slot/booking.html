@@ -119,8 +119,50 @@
                 top: 20px;
                 background: white;
                 border-radius: 8px;
-                padding: 16px;
+                padding: 20px;
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+
+            .summary-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .summary-item:last-child {
+                border-bottom: none;
+            }
+
+            .summary-item .label {
+                color: #8c8c8c;
+            }
+
+            .summary-item .value {
+                font-size: 1.1em;
+                color: #262626;
+            }
+
+            .summary-item.total {
+                margin-top: 12px;
+                padding-top: 16px;
+                border-top: 2px solid #f0f0f0;
+            }
+
+            .summary-item.total .value {
+                font-size: 1.3em;
+                color: var(--primary-color);
+            }
+
+            .car-type-card .price-tag {
+                margin-top: 10px;
+                padding: 4px 8px;
+                background: #f6ffed;
+                color: var(--success-color);
+                border-radius: 4px;
+                display: inline-block;
+                font-weight: 500;
             }
         </style>
     </head>
@@ -141,6 +183,7 @@
                                 <p class="text-muted mb-0">
                                     Dành cho học viên đăng ký học bằng B2
                                 </p>
+                                <div class="price-tag">300,000 VND / slot</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -155,6 +198,7 @@
                                 <p class="text-muted mb-0">
                                     Dành cho học viên cần thêm giờ thực hành
                                 </p>
+                                <div class="price-tag">200,000 VND / slot</div>
                             </div>
                         </div>
                     </div>
@@ -189,23 +233,31 @@
                 <!-- Booking Summary -->
                 <div class="col-md-4">
                     <div class="booking-summary">
-                        <h5 class="mb-3">Tổng quan đăng ký</h5>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Loại xe:</span>
-                                <strong id="summaryCarType">Chưa chọn</strong>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Số ngày học:</span>
-                                <strong id="summaryDays">0</strong>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Tổng số slot:</span>
-                                <strong id="summarySlots">0</strong>
-                            </div>
+                        <h5 class="mb-4">Tổng quan đăng ký</h5>
+                        <div class="summary-item">
+                            <span class="label">Loại xe:</span>
+                            <strong class="value" id="summaryCarType"
+                                >Chưa chọn</strong
+                            >
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Ngày đăng ký:</span>
+                            <strong class="value" id="summaryDate"
+                                >Chưa chọn</strong
+                            >
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Số slot:</span>
+                            <strong class="value" id="summarySlots">0</strong>
+                        </div>
+                        <div class="summary-item total">
+                            <span class="label">Thành tiền:</span>
+                            <strong class="value price" id="summaryTotal"
+                                >0 VND</strong
+                            >
                         </div>
                         <button
-                            class="btn btn-primary w-100"
+                            class="btn btn-primary w-100 mt-4"
                             id="btnBook"
                             disabled
                         >
@@ -232,6 +284,11 @@
 
             let selectedCarType = null;
             let selectedDates = new Map(); // Map to store date -> selected slots
+
+            const PRICES = {
+                chip: 300000,
+                supplementary: 200000,
+            };
 
             function selectCarType(element) {
                 document
@@ -311,51 +368,16 @@
 
                 dateSelector.addEventListener("change", async (e) => {
                     const selectedDate = e.target.value;
+                    const container = document.getElementById("dateContainer");
 
-                    // Check if date is already selected
-                    if (selectedDates.has(selectedDate)) {
-                        alert("Ngày này đã được chọn!");
-                        return;
-                    }
-
-                    // Check if it's not a past date
-                    const selected = new Date(selectedDate);
-                    if (selected < today) {
-                        alert("Không thể chọn ngày trong quá khứ!");
-                        return;
-                    }
-
-                    // Check if maximum number of dates (5) is reached
-                    if (selectedDates.size >= 5) {
-                        alert("Bạn chỉ có thể chọn tối đa 5 ngày!");
-                        return;
-                    }
+                    // Xóa tất cả các ngày đã chọn trước đó
+                    selectedDates.clear();
+                    container.innerHTML = "";
 
                     try {
-                        // Add the date if all checks pass
                         selectedDates.set(selectedDate, new Set());
-                        const container =
-                            document.getElementById("dateContainer");
-
-                        // Insert new date card in chronological order
                         const newCard = await createDateCard(selectedDate);
-                        const existingCards =
-                            container.querySelectorAll(".date-card");
-                        let inserted = false;
-
-                        for (let card of existingCards) {
-                            const cardDate =
-                                card.querySelector("[data-date]").dataset.date;
-                            if (selectedDate < cardDate) {
-                                card.parentNode.insertBefore(newCard, card);
-                                inserted = true;
-                                break;
-                            }
-                        }
-
-                        if (!inserted) {
-                            container.appendChild(newCard);
-                        }
+                        container.appendChild(newCard);
                         updateSummary();
                     } catch (error) {
                         console.error("Lỗi khi tạo thẻ ngày:", error);
@@ -414,9 +436,11 @@
             function updateSummary() {
                 const summaryCarType =
                     document.getElementById("summaryCarType");
-                const summaryDays = document.getElementById("summaryDays");
+                const summaryDate = document.getElementById("summaryDate");
                 const summarySlots = document.getElementById("summarySlots");
+                const summaryTotal = document.getElementById("summaryTotal");
 
+                // Cập nhật loại xe
                 summaryCarType.textContent =
                     selectedCarType === "chip"
                         ? "Xe chip"
@@ -424,18 +448,30 @@
                         ? "Xe bổ túc"
                         : "Chưa chọn";
 
+                // Cập nhật ngày
+                const selectedDate =
+                    document.getElementById("dateSelector").value;
+                summaryDate.textContent = selectedDate
+                    ? new Date(selectedDate).toLocaleDateString("vi-VN", {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                      })
+                    : "Chưa chọn";
+
+                // Cập nhật số slot và tổng tiền
                 let totalSlots = 0;
-                let daysWithSlots = 0;
-
                 selectedDates.forEach((slots) => {
-                    if (slots.size > 0) {
-                        daysWithSlots++;
-                        totalSlots += slots.size;
-                    }
+                    totalSlots += slots.size;
                 });
-
-                summaryDays.textContent = daysWithSlots;
                 summarySlots.textContent = totalSlots;
+
+                // Tính và hiển thị tổng tiền
+                const price = selectedCarType ? PRICES[selectedCarType] : 0;
+                const total = totalSlots * price;
+                summaryTotal.textContent =
+                    total.toLocaleString("vi-VN") + " VND";
             }
 
             function isBookingValid() {
