@@ -8,218 +8,404 @@
         },
         "days": {
             "2025-03-01": {
-                "chipCars": { "total": 50, "booked": 50 },
-                "supplementaryCars": { "total": 30, "booked": 30 },
+                "chipCars": {
+                    "total": 50,
+                    "booked": 50
+                },
+                "supplementaryCars": {
+                    "total": 30,
+                    "booked": 30
+                },
                 "unavailable": 70,
                 "available": 140,
                 "modified": true
             },
             "2025-03-02": {
-                "chipCars": { "total": 50, "booked": 50 },
-                "supplementaryCars": { "total": 30, "booked": 30 },
+                "chipCars": {
+                    "total": 50,
+                    "booked": 50
+                },
+                "supplementaryCars": {
+                    "total": 30,
+                    "booked": 30
+                },
                 "unavailable": 50,
                 "available": 190,
                 "modified": false
             },
             "2025-03-03": {
-                "chipCars": { "total": 5, "booked": 5 },
-                "supplementaryCars": { "total": 3, "booked": 3 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 5
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 3
+                },
                 "unavailable": 10,
                 "available": 11,
                 "modified": false
             },
             "2025-03-04": {
-                "chipCars": { "total": 5, "booked": 5 },
-                "supplementaryCars": { "total": 3, "booked": 3 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 5
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 3
+                },
                 "unavailable": 8,
                 "available": 12,
                 "modified": true
             },
             "2025-03-05": {
-                "chipCars": { "total": 4, "booked": 4 },
-                "supplementaryCars": { "total": 2, "booked": 2 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 4
+                },
+                "supplementaryCars": {
+                    "total": 2,
+                    "booked": 2
+                },
                 "unavailable": 12,
                 "available": 6,
                 "modified": true
             },
             "2025-03-06": {
-                "chipCars": { "total": 5, "booked": 5 },
-                "supplementaryCars": { "total": 3, "booked": 3 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 5
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 3
+                },
                 "unavailable": 6,
                 "available": 17,
                 "modified": false
             },
             "2025-03-07": {
-                "chipCars": { "total": 5, "booked": 5 },
-                "supplementaryCars": { "total": 3, "booked": 3 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 5
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 3
+                },
                 "unavailable": 9,
                 "available": 12,
                 "modified": false
             },
             "2025-03-08": {
-                "chipCars": { "total": 4, "booked": 4 },
-                "supplementaryCars": { "total": 2, "booked": 2 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 4
+                },
+                "supplementaryCars": {
+                    "total": 2,
+                    "booked": 2
+                },
                 "unavailable": 7,
                 "available": 14,
                 "modified": true
             },
             "2025-03-09": {
-                "chipCars": { "total": 5, "booked": 4 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 4
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 4,
                 "available": 21,
                 "modified": false
             },
             "2025-03-10": {
-                "chipCars": { "total": 5, "booked": 4 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 4
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 8,
                 "available": 25,
                 "modified": false
             },
             "2025-03-11": {
-                "chipCars": { "total": 5, "booked": 4 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 4
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 7,
                 "available": 14,
                 "modified": true
             },
             "2025-03-12": {
-                "chipCars": { "total": 4, "booked": 3 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 3
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 9,
                 "available": 13,
                 "modified": false
             },
             "2025-03-13": {
-                "chipCars": { "total": 5, "booked": 3 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 3
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 6,
                 "available": 13,
                 "modified": true
             },
             "2025-03-14": {
-                "chipCars": { "total": 5, "booked": 3 },
-                "supplementaryCars": { "total": 3, "booked": 2 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 3
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 2
+                },
                 "unavailable": 8,
                 "available": 13,
                 "modified": false
             },
             "2025-03-15": {
-                "chipCars": { "total": 3, "booked": 2 },
-                "supplementaryCars": { "total": 4, "booked": 2 },
+                "chipCars": {
+                    "total": 3,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 4,
+                    "booked": 2
+                },
                 "unavailable": 15,
                 "available": 9,
                 "modified": true
             },
             "2025-03-16": {
-                "chipCars": { "total": 5, "booked": 2 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 5,
                 "available": 19,
                 "modified": false
             },
             "2025-03-17": {
-                "chipCars": { "total": 5, "booked": 2 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 7,
                 "available": 15,
                 "modified": true
             },
             "2025-03-18": {
-                "chipCars": { "total": 4, "booked": 2 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 10,
                 "available": 11,
                 "modified": false
             },
             "2025-03-19": {
-                "chipCars": { "total": 5, "booked": 2 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 8,
                 "available": 14,
                 "modified": false
             },
             "2025-03-20": {
-                "chipCars": { "total": 5, "booked": 2 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 2
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 6,
                 "available": 14,
                 "modified": false
             },
             "2025-03-21": {
-                "chipCars": { "total": 5, "booked": 1 },
-                "supplementaryCars": { "total": 3, "booked": 1 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 1
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 1
+                },
                 "unavailable": 9,
                 "available": 11,
                 "modified": true
             },
             "2025-03-22": {
-                "chipCars": { "total": 4, "booked": 1 },
-                "supplementaryCars": { "total": 2, "booked": 0 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 1
+                },
+                "supplementaryCars": {
+                    "total": 2,
+                    "booked": 0
+                },
                 "unavailable": 7,
                 "available": 13,
                 "modified": false
             },
             "2025-03-23": {
-                "chipCars": { "total": 5, "booked": 1 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 1
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 5,
                 "available": 19,
                 "modified": false
             },
             "2025-03-24": {
-                "chipCars": { "total": 5, "booked": 1 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 1
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 8,
                 "available": 14,
                 "modified": true
             },
             "2025-03-25": {
-                "chipCars": { "total": 4, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 9,
                 "available": 24,
                 "modified": true
             },
             "2025-03-26": {
-                "chipCars": { "total": 5, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 7,
                 "available": 14,
                 "modified": false
             },
             "2025-03-27": {
-                "chipCars": { "total": 5, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 8,
                 "available": 14,
                 "modified": false
             },
             "2025-03-28": {
-                "chipCars": { "total": 5, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 11,
                 "available": 9,
                 "modified": false
             },
             "2025-03-29": {
-                "chipCars": { "total": 4, "booked": 0 },
-                "supplementaryCars": { "total": 2, "booked": 0 },
+                "chipCars": {
+                    "total": 4,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 2,
+                    "booked": 0
+                },
                 "unavailable": 6,
                 "available": 14,
                 "modified": true
             },
             "2025-03-30": {
-                "chipCars": { "total": 5, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 5,
                 "available": 19,
                 "modified": false
             },
             "2025-03-31": {
-                "chipCars": { "total": 5, "booked": 0 },
-                "supplementaryCars": { "total": 3, "booked": 0 },
+                "chipCars": {
+                    "total": 5,
+                    "booked": 0
+                },
+                "supplementaryCars": {
+                    "total": 3,
+                    "booked": 0
+                },
                 "unavailable": 80,
                 "available": 190,
                 "modified": true

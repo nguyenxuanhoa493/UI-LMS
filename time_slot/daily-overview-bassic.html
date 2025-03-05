@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tổng quan theo ngày</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        />
+        <style>
+            :root {
+                --primary-color: #1890ff;
+                --success-color: #52c41a;
+                --warning-color: #faad14;
+                --error-color: #f5222d;
+            }
+
+            body {
+                background-color: #f0f2f5;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial;
+            }
+
+            .calendar-container {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .calendar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .calendar-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 10px;
+            }
+
+            .calendar-day-header {
+                text-align: center;
+                font-weight: 500;
+                padding: 10px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .calendar-day {
+                min-height: 100px;
+                border: 1px solid #f0f0f0;
+                border-radius: 4px;
+                padding: 8px;
+                position: relative;
+                transition: all 0.3s;
+            }
+
+            .calendar-day:hover {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .calendar-day.today {
+                background-color: #e6f7ff;
+                border-color: #91d5ff;
+            }
+
+            .calendar-day.has-events {
+                cursor: pointer;
+            }
+
+            .calendar-day.modified {
+                border: 2px solid var(--warning-color);
+            }
+
+            .calendar-day-number {
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            .calendar-day.other-month {
+                opacity: 0.5;
+            }
+
+            .event-summary {
+                font-size: 12px;
+                margin-top: 5px;
+                color: #666;
+            }
+
+            .event-icon {
+                display: inline-flex;
+                align-items: center;
+                margin-right: 8px;
+                font-size: 14px;
+            }
+
+            .event-icon.chip {
+                color: var(--primary-color);
+            }
+
+            .event-icon.supplementary {
+                color: var(--success-color);
+            }
+
+            .event-icon.unavailable {
+                color: var(--error-color);
+            }
+
+            .event-count {
+                font-weight: 500;
+                margin-left: 4px;
+            }
+
+            .month-selector {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .btn-icon {
+                width: 36px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 4px;
+            }
+
+            .modified-indicator {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                color: var(--warning-color);
+                font-size: 12px;
+            }
+
+            .loading-spinner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container py-4">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h2>Lịch tổng quan</h2>
+                    <div class="month-selector">
+                        <button
+                            class="btn btn-outline-primary btn-icon"
+                            id="prevMonth"
+                        >
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <input
+                            type="month"
+                            class="form-control"
+                            id="monthPicker"
+                        />
+                        <button
+                            class="btn btn-outline-primary btn-icon"
+                            id="nextMonth"
+                        >
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="calendar-grid" id="calendarDayHeaders">
+                    <div class="calendar-day-header">CN</div>
+                    <div class="calendar-day-header">T2</div>
+                    <div class="calendar-day-header">T3</div>
+                    <div class="calendar-day-header">T4</div>
+                    <div class="calendar-day-header">T5</div>
+                    <div class="calendar-day-header">T6</div>
+                    <div class="calendar-day-header">T7</div>
+                </div>
+                <div class="calendar-grid" id="calendarDays">
+                    <div class="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Đang tải...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for day details -->
+        <div class="modal fade" id="dayDetailsModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="dayDetailsTitle">
+                            Chi tiết ngày
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                        ></button>
+                    </div>
+                    <div class="modal-body" id="dayDetailsBody">
+                        <!-- Day details will be shown here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Đóng
+                        </button>
+                        <a href="#" class="btn btn-primary" id="configDayBtn"
+                            >Cấu hình</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+            let calendarData = null;
+
+            // Hàm tải dữ liệu từ data.json
+            async function loadData() {
+                try {
+                    const response = await fetch("data.json");
+                    if (!response.ok) {
+                        throw new Error("Không thể tải dữ liệu");
+                    }
+                    const data = await response.json();
+                    calendarData = data;
+                    return data;
+                } catch (error) {
+                    console.error("Lỗi khi tải dữ liệu:", error);
+                    // Sử dụng dữ liệu mẫu nếu không tải được từ file
+                    return useMockData();
+                }
+            }
+
+            // Dữ liệu mẫu để sử dụng khi không tải được từ file
+            function useMockData() {
+                return {
+                    "2025-03": {
+                        monthStats: {
+                            totalChipTickets: 45,
+                            totalSupplementaryTickets: 27,
+                            unavailableTickets: 15,
+                            availableTickets: 57,
+                        },
+                        days: {
+                            "2025-03-01": {
+                                chipCars: { total: 3, booked: 12 },
+                                supplementaryCars: { total: 2, booked: 8 },
+                                unavailable: 5,
+                                available: 22,
+                                modified: true,
+                            },
+                            "2025-03-05": {
+                                chipCars: { total: 5, booked: 20 },
+                                supplementaryCars: { total: 3, booked: 12 },
+                                unavailable: 3,
+                                available: 37,
+                                modified: false,
+                            },
+                            "2025-03-10": {
+                                chipCars: { total: 4, booked: 16 },
+                                supplementaryCars: { total: 2, booked: 8 },
+                                unavailable: 2,
+                                available: 30,
+                                modified: true,
+                            },
+                            "2025-03-15": {
+                                chipCars: { total: 5, booked: 25 },
+                                supplementaryCars: { total: 3, booked: 15 },
+                                unavailable: 5,
+                                available: 27,
+                                modified: false,
+                            },
+                        },
+                    },
+                    "2025-04": {
+                        monthStats: {
+                            totalChipTickets: 50,
+                            totalSupplementaryTickets: 30,
+                            unavailableTickets: 10,
+                            availableTickets: 62,
+                        },
+                        days: {
+                            "2025-04-02": {
+                                chipCars: { total: 4, booked: 16 },
+                                supplementaryCars: { total: 2, booked: 8 },
+                                unavailable: 2,
+                                available: 30,
+                                modified: true,
+                            },
+                            "2025-04-07": {
+                                chipCars: { total: 5, booked: 20 },
+                                supplementaryCars: { total: 3, booked: 12 },
+                                unavailable: 3,
+                                available: 37,
+                                modified: false,
+                            },
+                        },
+                    },
+                };
+            }
+
+            async function renderCalendar(year, month) {
+                // Đảm bảo dữ liệu đã được tải
+                if (!calendarData) {
+                    await loadData();
+                }
+
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday, 1 = Monday, etc.
+
+                const calendarDays = document.getElementById("calendarDays");
+                calendarDays.innerHTML = "";
+
+                // Lấy ngày hiện tại để đánh dấu
+                const today = new Date();
+                const isCurrentMonth =
+                    today.getMonth() === month && today.getFullYear() === year;
+
+                // Lấy dữ liệu tháng hiện tại
+                const yearMonthKey = `${year}-${String(month + 1).padStart(
+                    2,
+                    "0"
+                )}`;
+                const monthData = calendarData[yearMonthKey] || { days: {} };
+
+                // Thêm ngày từ tháng trước để lấp đầy tuần đầu tiên
+                const prevMonthLastDay = new Date(year, month, 0).getDate();
+                for (let i = 0; i < startingDayOfWeek; i++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.className = "calendar-day other-month";
+                    const dayNumber =
+                        prevMonthLastDay - startingDayOfWeek + i + 1;
+                    dayElement.innerHTML = `<div class="calendar-day-number">${dayNumber}</div>`;
+                    calendarDays.appendChild(dayElement);
+                }
+
+                // Thêm ngày trong tháng hiện tại
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.className = "calendar-day";
+
+                    // Kiểm tra xem có phải là ngày hôm nay không
+                    if (isCurrentMonth && day === today.getDate()) {
+                        dayElement.classList.add("today");
+                    }
+
+                    // Định dạng ngày để tìm trong dữ liệu
+                    const dateKey = `${yearMonthKey}-${String(day).padStart(
+                        2,
+                        "0"
+                    )}`;
+                    const dayData = monthData.days[dateKey];
+
+                    let dayContent = `<div class="calendar-day-number">${day}</div>`;
+
+                    if (dayData) {
+                        dayElement.classList.add("has-events");
+
+                        // Thêm thông tin tóm tắt với biểu tượng
+                        dayContent += `
+                        <div class="event-summary">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="event-icon chip"><i class="fas fa-car"></i> <span class="event-count">${
+                                        dayData.chipCars.total
+                                    }</span></span>
+                                    <span class="event-icon supplementary"><i class="fas fa-truck"></i> <span class="event-count">${
+                                        dayData.supplementaryCars.total
+                                    }</span></span>
+                                </div>
+                                ${
+                                    dayData.modified
+                                        ? '<span class="text-warning"><i class="fas fa-exclamation-circle"></i></span>'
+                                        : ""
+                                }
+                            </div>
+                        </div>
+                    `;
+
+                        // Thêm sự kiện click để hiển thị chi tiết
+                        dayElement.setAttribute("data-date", dateKey);
+                        dayElement.addEventListener("click", () =>
+                            showDayDetails(dateKey, dayData)
+                        );
+                    }
+
+                    dayElement.innerHTML = dayContent;
+                    calendarDays.appendChild(dayElement);
+                }
+
+                // Thêm ngày từ tháng sau để lấp đầy tuần cuối cùng
+                const totalCells = 42; // 6 hàng x 7 cột
+                const cellsToAdd =
+                    totalCells - (startingDayOfWeek + daysInMonth);
+
+                for (let i = 1; i <= cellsToAdd; i++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.className = "calendar-day other-month";
+                    dayElement.innerHTML = `<div class="calendar-day-number">${i}</div>`;
+                    calendarDays.appendChild(dayElement);
+                }
+
+                // Cập nhật tiêu đề tháng
+                document.getElementById(
+                    "monthPicker"
+                ).value = `${year}-${String(month + 1).padStart(2, "0")}`;
+            }
+
+            function showDayDetails(dateKey, dayData) {
+                const modal = new bootstrap.Modal(
+                    document.getElementById("dayDetailsModal")
+                );
+                const title = document.getElementById("dayDetailsTitle");
+                const body = document.getElementById("dayDetailsBody");
+                const configBtn = document.getElementById("configDayBtn");
+
+                // Định dạng ngày hiển thị
+                const dateParts = dateKey.split("-");
+                const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+
+                title.textContent = `Chi tiết ngày ${formattedDate}`;
+
+                // Tạo nội dung chi tiết
+                let content = `
+                <div class="mb-3">
+                    <h6>Thông tin xe</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div><i class="fas fa-car text-primary me-2"></i>Xe chip:</div>
+                        <div><strong>${dayData.chipCars.total} xe</strong> (Đã đặt: ${dayData.chipCars.booked})</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div><i class="fas fa-truck text-success me-2"></i>Xe bổ túc:</div>
+                        <div><strong>${dayData.supplementaryCars.total} xe</strong> (Đã đặt: ${dayData.supplementaryCars.booked})</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h6>Trạng thái vé</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div><i class="fas fa-ban text-danger me-2"></i>Vé không khả dụng:</div>
+                        <div><strong>${dayData.unavailable}</strong></div>
+                    </div>
+                </div>
+            `;
+
+                // Thêm thông báo nếu ngày đã được chỉnh sửa
+                if (dayData.modified) {
+                    content =
+                        `
+                    <div class="alert alert-warning mb-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Ngày này đã được chỉnh sửa cấu hình.
+                    </div>
+                ` + content;
+                }
+
+                body.innerHTML = content;
+
+                // Cập nhật link cấu hình
+                configBtn.href = `daily-config.html?date=${dateKey}`;
+
+                modal.show();
+            }
+
+            document.addEventListener("DOMContentLoaded", async () => {
+                // Tải dữ liệu và khởi tạo lịch với tháng hiện tại
+                await loadData();
+                renderCalendar(currentYear, currentMonth);
+
+                // Xử lý sự kiện thay đổi tháng
+                document
+                    .getElementById("monthPicker")
+                    .addEventListener("change", (e) => {
+                        const [year, month] = e.target.value
+                            .split("-")
+                            .map(Number);
+                        currentYear = year;
+                        currentMonth = month - 1;
+                        renderCalendar(currentYear, currentMonth);
+                    });
+
+                // Xử lý nút tháng trước
+                document
+                    .getElementById("prevMonth")
+                    .addEventListener("click", () => {
+                        currentMonth--;
+                        if (currentMonth < 0) {
+                            currentMonth = 11;
+                            currentYear--;
+                        }
+                        renderCalendar(currentYear, currentMonth);
+                    });
+
+                // Xử lý nút tháng sau
+                document
+                    .getElementById("nextMonth")
+                    .addEventListener("click", () => {
+                        currentMonth++;
+                        if (currentMonth > 11) {
+                            currentMonth = 0;
+                            currentYear++;
+                        }
+                        renderCalendar(currentYear, currentMonth);
+                    });
+            });
+        </script>
+    </body>
+</html>

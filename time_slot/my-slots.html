@@ -71,33 +71,163 @@
                 cursor: pointer;
                 transition: all 0.3s;
             }
+
+            /* Responsive table styles */
+            @media (max-width: 767.98px) {
+                .table-responsive-card {
+                    border: 0;
+                }
+
+                .table-responsive-card thead {
+                    display: none;
+                }
+
+                .table-responsive-card tr {
+                    display: block;
+                    margin-bottom: 1rem;
+                    border: 1px solid #dee2e6;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    background-color: #fff;
+                    padding: 1rem;
+                }
+
+                .table-responsive-card td {
+                    display: block;
+                    text-align: right;
+                    padding: 0.5rem 0;
+                    border-bottom: 1px solid #f0f0f0;
+                }
+
+                .table-responsive-card td:last-child {
+                    border-bottom: 0;
+                }
+
+                .table-responsive-card td::before {
+                    content: attr(data-label);
+                    float: left;
+                    font-weight: bold;
+                    color: #6c757d;
+                }
+
+                .card-stats {
+                    margin-bottom: 0.5rem;
+                }
+
+                .btn-group {
+                    display: flex;
+                    width: 100%;
+                    margin-top: 1rem;
+                }
+
+                .btn-group .btn {
+                    flex: 1;
+                }
+            }
+
+            /* Clickable rows */
+            .table-responsive-card tbody tr {
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            .table-responsive-card tbody tr:hover {
+                background-color: rgba(24, 144, 255, 0.05);
+            }
+
+            /* Detail modal styles */
+            .ticket-detail-header {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .ticket-detail-section {
+                margin-bottom: 1.5rem;
+            }
+
+            .ticket-detail-section h6 {
+                color: #6c757d;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
+
+            .ticket-detail-item {
+                display: flex;
+                margin-bottom: 0.5rem;
+            }
+
+            .ticket-detail-label {
+                width: 120px;
+                color: #6c757d;
+                font-weight: 500;
+            }
+
+            .ticket-detail-value {
+                flex: 1;
+            }
+
+            .ticket-status-badge {
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                border-radius: 50px;
+                font-weight: 500;
+                margin-bottom: 1rem;
+            }
+
+            .ticket-status-badge.pending {
+                background-color: #fff7e6;
+                color: #fa8c16;
+            }
+
+            .ticket-status-badge.confirmed {
+                background-color: #f6ffed;
+                color: #52c41a;
+            }
+
+            .ticket-status-badge.waiting {
+                background-color: #f5f5f5;
+                color: #8c8c8c;
+            }
+
+            .ticket-status-badge.changed {
+                background-color: #e6f7ff;
+                color: #1890ff;
+            }
         </style>
     </head>
     <body>
         <div class="container py-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Lịch học của tôi</h2>
-                <div class="btn-group">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4"
+            >
+                <h2 class="mb-3 mb-md-0">Lịch học của tôi</h2>
+                <div class="btn-group w-100 w-md-auto">
                     <button class="btn btn-outline-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Tuần này
+                        <i class="fas fa-calendar-alt me-2"></i
+                        ><span class="d-none d-md-inline">Tuần này</span
+                        ><span class="d-inline d-md-none">Tuần này</span>
                     </button>
                     <button class="btn btn-outline-primary">
-                        <i class="fas fa-calendar-alt me-2"></i>Tuần sau
+                        <i class="fas fa-calendar-alt me-2"></i
+                        ><span class="d-none d-md-inline">Tuần sau</span
+                        ><span class="d-inline d-md-none">Tuần sau</span>
                     </button>
                 </div>
             </div>
 
             <!-- Thêm phần thống kê -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card border-primary">
+            <div class="row row-cols-2 row-cols-md-4 mb-4">
+                <div class="col mb-3 mb-md-0">
+                    <div class="card border-primary card-stats h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 <i
                                     class="fas fa-ticket-alt text-primary me-2"
                                     style="font-size: 1.5rem"
                                 ></i>
-                                <h6 class="card-subtitle text-muted mb-0">
+                                <h6 class="card-subtitle text-muted mb-0 small">
                                     Tổng số vé đã mua
                                 </h6>
                             </div>
@@ -110,15 +240,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card border-success">
+                <div class="col mb-3 mb-md-0">
+                    <div class="card border-success card-stats h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 <i
                                     class="fas fa-calendar-check text-success me-2"
                                     style="font-size: 1.5rem"
                                 ></i>
-                                <h6 class="card-subtitle text-muted mb-0">
+                                <h6 class="card-subtitle text-muted mb-0 small">
                                     Số ngày học
                                 </h6>
                             </div>
@@ -131,15 +261,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card border-warning">
+                <div class="col mb-3 mb-md-0">
+                    <div class="card border-warning card-stats h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 <i
                                     class="fas fa-clock text-warning me-2"
                                     style="font-size: 1.5rem"
                                 ></i>
-                                <h6 class="card-subtitle text-muted mb-0">
+                                <h6 class="card-subtitle text-muted mb-0 small">
                                     Chờ xác nhận
                                 </h6>
                             </div>
@@ -152,15 +282,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card border-info">
+                <div class="col mb-3 mb-md-0">
+                    <div class="card border-info card-stats h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 <i
                                     class="fas fa-check-circle text-info me-2"
                                     style="font-size: 1.5rem"
                                 ></i>
-                                <h6 class="card-subtitle text-muted mb-0">
+                                <h6 class="card-subtitle text-muted mb-0 small">
                                     Đã xác nhận
                                 </h6>
                             </div>
@@ -177,23 +307,25 @@
 
             <!-- Chuyển sang dạng bảng -->
             <div class="card">
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Ngày</th>
-                                <th>Thời gian</th>
-                                <th>Trạng thái thời gian</th>
-                                <th>Loại xe</th>
-                                <th>Giáo viên</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody id="slotsTableBody">
-                            <!-- Slots will be generated here -->
-                        </tbody>
-                    </table>
+                <div class="card-body p-0 p-md-3">
+                    <div class="table-responsive">
+                        <table class="table table-responsive-card">
+                            <thead>
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Thời gian</th>
+                                    <th>Trạng thái thời gian</th>
+                                    <th>Loại xe</th>
+                                    <th>Giáo viên</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="slotsTableBody">
+                                <!-- Slots will be generated here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -233,6 +365,166 @@
             </div>
         </div>
 
+        <!-- Ticket Detail Modal -->
+        <div class="modal fade" id="ticketDetailModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết vé học</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ticket-detail-header">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h4 id="detailTicketId">Vé #1</h4>
+                                    <div
+                                        id="detailTicketStatus"
+                                        class="ticket-status-badge pending"
+                                    >
+                                        Chờ xác nhận
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-md-end">
+                                    <div
+                                        class="text-muted"
+                                        id="detailTicketDate"
+                                    >
+                                        20/01/2024
+                                    </div>
+                                    <div
+                                        class="text-primary fw-bold"
+                                        id="detailTicketTime"
+                                    >
+                                        08:00 - 09:00
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ticket-detail-section">
+                            <h6>Thông tin chung</h6>
+                            <div class="ticket-detail-item">
+                                <div class="ticket-detail-label">Loại xe:</div>
+                                <div
+                                    class="ticket-detail-value"
+                                    id="detailTicketType"
+                                >
+                                    Xe Chip
+                                </div>
+                            </div>
+                            <div class="ticket-detail-item">
+                                <div class="ticket-detail-label">
+                                    Trạng thái:
+                                </div>
+                                <div
+                                    class="ticket-detail-value"
+                                    id="detailTicketStatusText"
+                                >
+                                    Chờ xác nhận
+                                </div>
+                            </div>
+                            <div class="ticket-detail-item">
+                                <div class="ticket-detail-label">
+                                    Trạng thái thời gian:
+                                </div>
+                                <div
+                                    class="ticket-detail-value"
+                                    id="detailTicketTimeStatus"
+                                >
+                                    Sắp diễn ra
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="ticket-detail-section"
+                            id="detailTicketChangedSection"
+                        >
+                            <h6>Thông tin thay đổi</h6>
+                            <div class="ticket-detail-item">
+                                <div class="ticket-detail-label">Ngày cũ:</div>
+                                <div
+                                    class="ticket-detail-value"
+                                    id="detailTicketOldDate"
+                                >
+                                    19/01/2024
+                                </div>
+                            </div>
+                            <div class="ticket-detail-item">
+                                <div class="ticket-detail-label">
+                                    Thời gian cũ:
+                                </div>
+                                <div
+                                    class="ticket-detail-value"
+                                    id="detailTicketOldTime"
+                                >
+                                    09:00 - 10:00
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ticket-detail-section">
+                            <h6>Thông tin giáo viên</h6>
+                            <div id="detailTicketTeacherInfo">
+                                <div class="ticket-detail-item">
+                                    <div class="ticket-detail-label">
+                                        Tên giáo viên:
+                                    </div>
+                                    <div
+                                        class="ticket-detail-value"
+                                        id="detailTicketTeacher"
+                                    >
+                                        Nguyễn Văn A
+                                    </div>
+                                </div>
+                                <div class="ticket-detail-item">
+                                    <div class="ticket-detail-label">
+                                        Số điện thoại:
+                                    </div>
+                                    <div
+                                        class="ticket-detail-value"
+                                        id="detailTicketTeacherPhone"
+                                    >
+                                        0912345678
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="detailTicketNoTeacher" class="d-none">
+                                <div class="alert alert-warning">
+                                    <i
+                                        class="fas fa-exclamation-triangle me-2"
+                                    ></i>
+                                    Chưa có giáo viên được phân công cho buổi
+                                    học này
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ticket-detail-section">
+                            <h6>Hành động</h6>
+                            <div id="detailTicketActions">
+                                <!-- Actions will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             const mockSlots = [
@@ -242,6 +534,7 @@
                     time: "08:00 - 09:00",
                     type: "Xe Chip",
                     teacher: "Nguyễn Văn A",
+                    teacherPhone: "0912345678",
                     status: "pending",
                     timeStatus: "completed", // sắp diễn ra
                     changed: false,
@@ -252,10 +545,12 @@
                     time: "10:00 - 11:00",
                     type: "Xe Bổ Túc",
                     teacher: "Trần Thị B",
+                    teacherPhone: "0923456789",
                     status: "confirmed",
                     timeStatus: "upcoming", // đang diễn ra
                     changed: true,
                     oldTime: "09:00 - 10:00",
+                    oldDate: "2024-01-20",
                 },
                 {
                     id: 3,
@@ -263,6 +558,7 @@
                     time: "13:00 - 14:00",
                     type: "Xe Chip",
                     teacher: "Đang xếp",
+                    teacherPhone: "",
                     status: "waiting_teacher",
                     timeStatus: "upcoming",
                     changed: false,
@@ -273,6 +569,7 @@
                     time: "15:00 - 16:00",
                     type: "Xe Chip",
                     teacher: "Lê Thị D",
+                    teacherPhone: "0934567890",
                     status: "confirmed",
                     timeStatus: "completed", // đã kết thúc
                     changed: false,
@@ -283,10 +580,12 @@
                     time: "10:00 - 11:00",
                     type: "Xe Bổ Túc",
                     teacher: "Trần Thị B",
+                    teacherPhone: "0923456789",
                     status: "pending",
                     timeStatus: "ongoing", // đang diễn ra
                     changed: false,
                     oldTime: "09:00 - 10:00",
+                    oldDate: "2024-01-19",
                 },
             ];
 
@@ -322,16 +621,15 @@
             function getActionButtons(slot) {
                 if (slot.changed) {
                     return `
-                    <button class="btn btn-primary btn-sm me-2">Chấp nhận</button>
-                    <button class="btn btn-outline-danger btn-sm">Từ chối</button>
+                    <button class="btn btn-primary btn-sm">Chấp nhận</button>
                 `;
                 }
                 if (slot.status === "pending") {
                     return `
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                        Xác nhận tham gia
-                    </button>
-                `;
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                            Xác nhận tham gia
+                        </button>
+                    `;
                 }
                 if (slot.status === "waiting_teacher") {
                     return `
@@ -365,26 +663,204 @@
 
                 mockSlots.forEach((slot) => {
                     const row = document.createElement("tr");
+                    row.dataset.slotId = slot.id;
+                    row.classList.add("slot-row");
                     row.innerHTML = `
-                    <td>${slot.date}</td>
-                    <td>
+                    <td data-label="Ngày">${slot.date}</td>
+                    <td data-label="Thời gian">
                         ${slot.time}
                         ${
                             slot.changed
-                                ? `<div class="text-muted small">Lịch cũ: ${slot.oldTime}</div>`
+                                ? `<div class="text-muted small">Lịch cũ: ${slot.oldTime} (${slot.oldDate})</div>`
                                 : ""
                         }
                     </td>
-                    <td>${getTimeStatusBadge(slot.timeStatus)}</td>
-                    <td>${slot.type}</td>
-                    <td>${slot.teacher}</td>
-                    <td>${getStatusBadge(slot.status, slot.changed)}</td>
-                    <td>${getActionButtons(slot)}</td>
+                    <td data-label="Trạng thái thời gian">${getTimeStatusBadge(
+                        slot.timeStatus
+                    )}</td>
+                    <td data-label="Loại xe">${slot.type}</td>
+                    <td data-label="Giáo viên">
+                        ${slot.teacher}
+                        ${
+                            slot.teacherPhone
+                                ? `<div class="text-muted small">${slot.teacherPhone}</div>`
+                                : ""
+                        }
+                    </td>
+                    <td data-label="Trạng thái">${getStatusBadge(
+                        slot.status,
+                        slot.changed
+                    )}</td>
+                    <td data-label="Hành động">${getActionButtons(slot)}</td>
                 `;
                     tableBody.appendChild(row);
                 });
 
+                // Thêm sự kiện click cho mỗi hàng
+                document.querySelectorAll(".slot-row").forEach((row) => {
+                    row.addEventListener("click", function (e) {
+                        // Nếu click vào nút, không mở modal chi tiết
+                        if (
+                            e.target.tagName === "BUTTON" ||
+                            e.target.closest("button")
+                        ) {
+                            return;
+                        }
+
+                        const slotId = parseInt(this.dataset.slotId);
+                        showTicketDetail(slotId);
+                    });
+                });
+
                 updateStatistics();
+            }
+
+            function showTicketDetail(slotId) {
+                const slot = mockSlots.find((s) => s.id === slotId);
+                if (!slot) return;
+
+                // Cập nhật thông tin cơ bản
+                document.getElementById(
+                    "detailTicketId"
+                ).textContent = `Vé #${slot.id}`;
+                document.getElementById("detailTicketDate").textContent =
+                    formatDate(slot.date);
+                document.getElementById("detailTicketTime").textContent =
+                    slot.time;
+                document.getElementById("detailTicketType").textContent =
+                    slot.type;
+
+                // Cập nhật trạng thái
+                const statusBadge =
+                    document.getElementById("detailTicketStatus");
+                statusBadge.className = "ticket-status-badge";
+                let statusText = "";
+
+                if (slot.changed) {
+                    statusBadge.classList.add("changed");
+                    statusText = "Lịch đã thay đổi";
+                } else {
+                    switch (slot.status) {
+                        case "pending":
+                            statusBadge.classList.add("pending");
+                            statusText = "Chờ xác nhận";
+                            break;
+                        case "confirmed":
+                            statusBadge.classList.add("confirmed");
+                            statusText = "Đã xác nhận";
+                            break;
+                        case "waiting_teacher":
+                            statusBadge.classList.add("waiting");
+                            statusText = "Đợi xếp giáo viên";
+                            break;
+                    }
+                }
+
+                statusBadge.textContent = statusText;
+                document.getElementById("detailTicketStatusText").textContent =
+                    statusText;
+
+                // Cập nhật trạng thái thời gian
+                let timeStatusText = "";
+                switch (slot.timeStatus) {
+                    case "upcoming":
+                        timeStatusText = "Sắp diễn ra";
+                        break;
+                    case "ongoing":
+                        timeStatusText = "Đang diễn ra";
+                        break;
+                    case "completed":
+                        timeStatusText = "Đã kết thúc";
+                        break;
+                }
+                document.getElementById("detailTicketTimeStatus").textContent =
+                    timeStatusText;
+
+                // Hiển thị/ẩn phần thông tin thay đổi
+                const changedSection = document.getElementById(
+                    "detailTicketChangedSection"
+                );
+                if (slot.changed) {
+                    changedSection.classList.remove("d-none");
+                    document.getElementById("detailTicketOldDate").textContent =
+                        formatDate(slot.oldDate);
+                    document.getElementById("detailTicketOldTime").textContent =
+                        slot.oldTime;
+                } else {
+                    changedSection.classList.add("d-none");
+                }
+
+                // Cập nhật thông tin giáo viên
+                const teacherInfo = document.getElementById(
+                    "detailTicketTeacherInfo"
+                );
+                const noTeacher = document.getElementById(
+                    "detailTicketNoTeacher"
+                );
+
+                if (slot.teacher && slot.teacher !== "Đang xếp") {
+                    teacherInfo.classList.remove("d-none");
+                    noTeacher.classList.add("d-none");
+                    document.getElementById("detailTicketTeacher").textContent =
+                        slot.teacher;
+                    document.getElementById(
+                        "detailTicketTeacherPhone"
+                    ).textContent = slot.teacherPhone || "Không có";
+                } else {
+                    teacherInfo.classList.add("d-none");
+                    noTeacher.classList.remove("d-none");
+                }
+
+                // Cập nhật các hành động
+                const actionsContainer = document.getElementById(
+                    "detailTicketActions"
+                );
+                actionsContainer.innerHTML = getDetailActionButtons(slot);
+
+                // Hiển thị modal
+                const ticketDetailModal = new bootstrap.Modal(
+                    document.getElementById("ticketDetailModal")
+                );
+                ticketDetailModal.show();
+            }
+
+            function getDetailActionButtons(slot) {
+                if (slot.changed) {
+                    return `
+                    <button class="btn btn-primary">
+                        <i class="fas fa-check me-2"></i>Chấp nhận thay đổi
+                    </button>
+                    `;
+                }
+                if (slot.status === "pending") {
+                    return `
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-dismiss="modal">
+                        <i class="fas fa-check-circle me-2"></i>Xác nhận tham gia
+                    </button>
+                    `;
+                }
+                if (slot.status === "waiting_teacher") {
+                    return `
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vé của bạn đang trong quá trình xếp giáo viên. Bạn sẽ nhận được thông báo khi có giáo viên được phân công.
+                    </div>
+                    `;
+                }
+                if (slot.status === "confirmed") {
+                    return `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Vé đã được xác nhận. Vui lòng đến đúng giờ để tham gia buổi học.
+                    </div>
+                `;
+                }
+                return "";
+            }
+
+            function formatDate(dateString) {
+                const parts = dateString.split("-");
+                return `${parts[2]}/${parts[1]}/${parts[0]}`;
             }
 
             document.addEventListener("DOMContentLoaded", renderSlots);
