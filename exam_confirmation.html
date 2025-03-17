@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Xác nhận kết thúc bài thi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100">
+        <!-- Overlay -->
+        <div
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+        >
+            <!-- Dialog Box -->
+            <div
+                class="bg-white rounded-lg shadow-xl max-w-md w-full mx-auto overflow-hidden"
+            >
+                <!-- Header -->
+                <div class="bg-red-50 p-4 border-b border-red-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-red-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                />
+                            </svg>
+                        </div>
+                        <h2 class="text-lg font-semibold text-red-700">
+                            Xác nhận kết thúc bài thi
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6 space-y-4">
+                    <p class="text-gray-700">
+                        Bạn chưa hoàn thành tất cả các câu hỏi! Bạn có chắc chắn
+                        muốn kết thúc bài thi?
+                    </p>
+
+                    <!-- Statistics -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600 font-medium"
+                                >Tiến độ làm bài:</span
+                            >
+                            <span class="text-blue-600 font-medium"
+                                >18/25 câu</span
+                            >
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div
+                                class="bg-blue-600 h-2.5 rounded-full"
+                                style="width: 72%"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3 w-3 text-green-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <span class="text-sm text-gray-600"
+                                    >Đã trả lời</span
+                                >
+                                <span class="text-sm font-medium">18 câu</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3 w-3 text-red-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <span class="text-sm text-gray-600"
+                                    >Chưa trả lời</span
+                                >
+                                <span class="text-sm font-medium text-red-600"
+                                    >7 câu</span
+                                >
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3 w-3 text-yellow-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="flex justify-between w-full">
+                                <span class="text-sm text-gray-600"
+                                    >Đã đánh dấu</span
+                                >
+                                <span class="text-sm font-medium">3 câu</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warning -->
+                    <div class="text-sm text-red-600 italic">
+                        Lưu ý: Sau khi kết thúc bài thi, bạn sẽ không thể quay
+                        lại để tiếp tục làm bài.
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div
+                    class="p-4 bg-gray-50 border-t flex flex-col sm:flex-row gap-3 sm:justify-end"
+                >
+                    <button
+                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors sm:order-1 order-2"
+                    >
+                        Quay lại làm bài
+                    </button>
+                    <button
+                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors sm:order-2 order-1"
+                    >
+                        Kết thúc bài thi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

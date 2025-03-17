@@ -69,110 +69,188 @@
                 color: #8c8c8c;
                 margin: 0;
             }
+
+            .header-section {
+                background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+                color: white;
+                padding: 2rem 0;
+                border-radius: 0 0 20px 20px;
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+                font-weight: 500;
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .card-section {
+                margin-bottom: 2rem;
+            }
+
+            .badge-new {
+                background-color: var(--success-color);
+                color: white;
+                font-size: 10px;
+                padding: 2px 6px;
+                border-radius: 10px;
+                margin-left: 8px;
+                vertical-align: middle;
+            }
+
+            .footer {
+                text-align: center;
+                padding: 1rem 0;
+                margin-top: 2rem;
+                color: #8c8c8c;
+                font-size: 14px;
+            }
         </style>
     </head>
     <body>
-        <div class="container py-4">
-            <div class="text-center mb-5">
-                <h1 class="mb-3">Hệ thống Quản lý Đặt Lịch Học Lái Xe</h1>
-                <p class="text-muted">
-                    Chọn một trong các trang dưới đây để truy cập
-                </p>
+        <div class="header-section">
+            <div class="container">
+                <div class="text-center">
+                    <h1 class="mb-3">Hệ thống Quản lý Đặt Lịch Học Lái Xe</h1>
+                    <p class="lead">
+                        Giải pháp quản lý lịch học và đặt lịch hiệu quả
+                    </p>
+                </div>
             </div>
+        </div>
 
+        <div class="container py-4">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="ant-card">
-                        <div class="card-body">
-                            <a href="dashboard.html" class="page-link">
-                                <i class="fas fa-chart-line"></i>
-                                <div>
-                                    <div class="title">Dashboard</div>
-                                    <p class="description">
-                                        Tổng quan về tình hình đặt lịch và hoạt
-                                        động
-                                    </p>
-                                </div>
-                            </a>
-
-                            <a href="booking.html" class="page-link">
-                                <i class="fas fa-calendar-plus"></i>
-                                <div>
-                                    <div class="title">Đặt Lịch</div>
-                                    <p class="description">
-                                        Đặt lịch học và chọn slot thời gian
-                                    </p>
-                                </div>
-                            </a>
-
-                            <a href="my-slots.html" class="page-link">
-                                <i class="fas fa-list-alt"></i>
-                                <div>
-                                    <div class="title">Lịch Của Tôi</div>
-                                    <p class="description">
-                                        Xem và quản lý các slot đã đặt
-                                    </p>
-                                </div>
-                            </a>
-
-                            <a href="conf_admin.html" class="page-link">
-                                <i class="fas fa-cog"></i>
-                                <div>
-                                    <div class="title">Cấu Hình Slot</div>
-                                    <p class="description">
-                                        Quản lý và cấu hình các slot thời gian
-                                    </p>
-                                </div>
-                            </a>
-
-                            <a href="daily-overview.html" class="page-link">
-                                <i class="fas fa-calendar-day"></i>
-                                <div>
-                                    <div class="title">Tổng Quan Theo Ngày</div>
-                                    <p class="description">
-                                        Xem lịch học theo từng ngày
-                                    </p>
-                                </div>
-                            </a>
-
-                            <a
-                                href="daily-overview-bassic.html"
-                                class="page-link"
-                            >
-                                <i class="fas fa-calendar-alt"></i>
-                                <div>
-                                    <div class="title">
-                                        Tổng Quan Theo Ngày (Đơn giản)
+                    <div class="card-section">
+                        <div class="section-title">Trang chính</div>
+                        <div class="ant-card">
+                            <div class="card-body">
+                                <a href="dashboard.html" class="page-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div>
+                                        <div class="title">Dashboard</div>
+                                        <p class="description">
+                                            Tổng quan về tình hình đặt lịch và
+                                            hoạt động
+                                        </p>
                                     </div>
-                                    <p class="description">
-                                        Xem lịch học theo từng ngày với giao
-                                        diện đơn giản
-                                    </p>
-                                </div>
-                            </a>
+                                </a>
 
-                            <a href="daily-config.html" class="page-link">
-                                <i class="fas fa-sliders-h"></i>
-                                <div>
-                                    <div class="title">Cấu Hình Theo Ngày</div>
-                                    <p class="description">
-                                        Thiết lập cấu hình cho từng ngày
-                                    </p>
-                                </div>
-                            </a>
+                                <a href="booking.html" class="page-link">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <div>
+                                        <div class="title">Đặt Lịch</div>
+                                        <p class="description">
+                                            Đặt lịch học và chọn slot thời gian
+                                            cho xe chip (300.000đ) và xe bổ túc
+                                            (200.000đ)
+                                        </p>
+                                    </div>
+                                </a>
 
-                            <a href="tickets.html" class="page-link">
-                                <i class="fas fa-ticket-alt"></i>
-                                <div>
-                                    <div class="title">Quản Lý Vé</div>
-                                    <p class="description">
-                                        Xem và quản lý các vé đã đặt
-                                    </p>
-                                </div>
-                            </a>
+                                <a href="my-slots.html" class="page-link">
+                                    <i class="fas fa-list-alt"></i>
+                                    <div>
+                                        <div class="title">Lịch Của Tôi</div>
+                                        <p class="description">
+                                            Xem và quản lý các slot đã đặt
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-section">
+                        <div class="section-title">Quản lý và cấu hình</div>
+                        <div class="ant-card">
+                            <div class="card-body">
+                                <a href="conf_admin.html" class="page-link">
+                                    <i class="fas fa-cog"></i>
+                                    <div>
+                                        <div class="title">Cấu Hình Slot</div>
+                                        <p class="description">
+                                            Quản lý và cấu hình các slot thời
+                                            gian
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <a href="daily-config.html" class="page-link">
+                                    <i class="fas fa-sliders-h"></i>
+                                    <div>
+                                        <div class="title">
+                                            Cấu Hình Theo Ngày
+                                        </div>
+                                        <p class="description">
+                                            Thiết lập cấu hình cho từng ngày
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <a href="tickets.html" class="page-link">
+                                    <i class="fas fa-ticket-alt"></i>
+                                    <div>
+                                        <div class="title">Quản Lý Vé</div>
+                                        <p class="description">
+                                            Xem và quản lý các vé đã đặt
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-section">
+                        <div class="section-title">Tổng quan lịch</div>
+                        <div class="ant-card">
+                            <div class="card-body">
+                                <a href="daily-overview.html" class="page-link">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <div>
+                                        <div class="title">
+                                            Tổng Quan Theo Ngày
+                                        </div>
+                                        <p class="description">
+                                            Xem lịch học theo từng ngày với đầy
+                                            đủ thống kê và biểu đồ
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <a
+                                    href="daily-overview-bassic.html"
+                                    class="page-link"
+                                >
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <div>
+                                        <div class="title">
+                                            Tổng Quan Theo Ngày (Đơn giản)
+                                            <span class="badge-new">Mới</span>
+                                        </div>
+                                        <p class="description">
+                                            Xem lịch học theo từng ngày với giao
+                                            diện đơn giản, chỉ hiển thị số lượng
+                                            xe
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <p>
+                    © 2024 Hệ thống Quản lý Đặt Lịch Học Lái Xe. Phát triển bởi
+                    Trung tâm đào tạo lái xe.
+                </p>
             </div>
         </div>
     </body>
