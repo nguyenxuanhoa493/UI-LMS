@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Buổi học đang diễn ra</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Roboto", sans-serif;
+            }
+
+            body {
+                background-color: #ffffff;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                padding: 2rem 1rem;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 425px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                color: #333;
+                margin-bottom: 2rem;
+            }
+
+            .session-item {
+                border-bottom: 1px solid #eee;
+                padding: 1.5rem;
+                display: flex;
+                align-items: flex-start;
+                transition: all 0.3s ease;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+
+            .session-item.active {
+                background-color: #f8f9fa;
+                border: 2px solid #48bb78;
+                box-shadow: 0 4px 6px rgba(72, 187, 120, 0.1);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .today-badge {
+                position: absolute;
+                top: 20px;
+                right: -35px;
+                background: #48bb78;
+                color: white;
+                padding: 5px 40px;
+                transform: rotate(45deg);
+                font-size: 0.85rem;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+
+            .session-item.active::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 4px;
+                height: 100%;
+                background-color: #48bb78;
+            }
+
+            .session-date {
+                width: 130px;
+                text-align: left;
+            }
+
+            .session-date .day {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #333;
+                line-height: 1;
+            }
+
+            .active .session-date .day {
+                color: #2c5282;
+            }
+
+            .session-date .time {
+                font-size: 1.1rem;
+                color: #666;
+                margin-top: 0.5rem;
+            }
+
+            .session-info {
+                flex-grow: 1;
+                padding: 0 2rem;
+            }
+
+            .department {
+                font-size: 1.3rem;
+                color: #00a3c4;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
+
+            .active .department {
+                color: #2b6cb0;
+            }
+
+            .title {
+                font-size: 1.1rem;
+                color: #4a5568;
+                margin-bottom: 0.5rem;
+            }
+
+            .status {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 1rem;
+            }
+
+            .status-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+            }
+
+            .status-live .status-dot {
+                background-color: #48bb78;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.5);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .status-upcoming .status-dot {
+                background-color: #ed8936;
+            }
+
+            .status-text {
+                font-size: 1rem;
+                color: #666;
+            }
+
+            .active .status-text {
+                color: #48bb78;
+                font-weight: 500;
+            }
+
+            .countdown {
+                color: #e53e3e;
+                font-size: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .join-button {
+                background-color: #cd9f7c;
+                color: white;
+                padding: 0.5rem 1.5rem;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: 500;
+                display: inline-block;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+            }
+
+            .active .join-button {
+                background-color: #48bb78;
+                box-shadow: 0 2px 4px rgba(72, 187, 120, 0.2);
+            }
+
+            .join-button:hover {
+                background-color: #b88b69;
+                transform: translateY(-2px);
+            }
+
+            .active .join-button:hover {
+                background-color: #38a169;
+            }
+
+            .see-more {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 2rem;
+                color: #00a3c4;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .see-more:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Buổi học đang diễn ra</h1>
+
+            <!-- Buổi học đang diễn ra -->
+            <div class="session-item active">
+                <div class="today-badge">HÔM NAY</div>
+                <div class="session-date">
+                    <div class="day">01/04</div>
+                    <div class="time">10:00 - 11:00</div>
+                </div>
+                <div class="session-info">
+                    <div class="department">Ban TCHC</div>
+                    <div class="title">ĐÀO TẠO DÀNH CHO ĐƠN VỊ MỚI</div>
+                    <div class="status status-live">
+                        <span class="status-dot"></span>
+                        <span class="status-text">23:42:48</span>
+                    </div>
+                    <a href="#" class="join-button">Trực tuyến</a>
+                </div>
+            </div>
+
+            <!-- Buổi học sắp tới -->
+            <!-- <div class="session-item">
+                <div class="session-date">
+                    <div class="day">03/04</div>
+                    <div class="time">09:00 - 11:00</div>
+                </div>
+                <div class="session-info">
+                    <div class="department">Ban Kế hoạch</div>
+                    <div class="title">ĐÀO TẠO DÀNH CHO ĐƠN VỊ MỚI</div>
+                    <div class="status status-upcoming"> -->
+        <!-- Buổi học đang diễn ra
+        <div class="session-item active">
+            <div class="today-badge">HÔM NAY</div>
+            <div class="session-date">
+                <div class="day">01/04</div>
+                <div class="time">10:00 - 11:00</div>
+            </div>
+            <div class="session-info">
+                <div class="department">Ban TCHC</div>
+                <div class="title">ĐÀO TẠO DÀNH CHO ĐƠN VỊ MỚI</div>
+                <div class="status status-live">
+                    <span class="status-dot"></span>
+                    <span class="status-text">23:42:48</span>
+                </div>
+                <a href="#" class="join-button">Trực tuyến</a>
+            </div>
+        </div>
+
+        <!-- Buổi học sắp tới -->
+        <div class="session-item">
+            <div class="session-date">
+                <div class="day">03/04</div>
+                <div class="time">09:00 - 11:00</div>
+            </div>
+            <div class="session-info">
+                <div class="department">Ban Kế hoạch</div>
+                <div class="title">ĐÀO TẠO DÀNH CHO ĐƠN VỊ MỚI</div>
+                <div class="status status-upcoming">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Còn 2 ngày</span>
+                </div>
+                <a href="#" class="join-button">Trực tuyến</a>
+            </div>
+        </div> 
+
+        <a href="#" class="see-more">Xem thêm →</a>
+    </body>
+</html>
