@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Xác nhận ảnh đã chụp</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            :root {
+                --primary-color: #1890ff;
+                --success-color: #52c41a;
+                --warning-color: #faad14;
+                --error-color: #f5222d;
+                --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial, sans-serif;
+                --border-radius-base: 6px;
+                --border-color-base: #d9d9d9;
+                --box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+                    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+                    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            }
+
+            body {
+                font-family: var(--font-family);
+                background-color: #f0f2f5;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .ant-modal-mask {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1000;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.45);
+            }
+
+            .ant-modal-wrap {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1000;
+                overflow: auto;
+                outline: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .ant-modal {
+                box-sizing: border-box;
+                padding: 0;
+                color: rgba(0, 0, 0, 0.85);
+                font-size: 14px;
+                line-height: 1.5715;
+                list-style: none;
+                position: relative;
+                width: 520px;
+                max-width: calc(100vw - 32px);
+                margin: 0 auto;
+            }
+
+            .ant-modal-content {
+                position: relative;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 0;
+                border-radius: var(--border-radius-base);
+                box-shadow: var(--box-shadow-base);
+                overflow: hidden;
+            }
+
+            .ant-modal-header {
+                padding: 16px 24px;
+                color: rgba(0, 0, 0, 0.85);
+                background: #fff;
+                border-bottom: 1px solid #f0f0f0;
+                border-radius: var(--border-radius-base)
+                    var(--border-radius-base) 0 0;
+            }
+
+            .ant-modal-title {
+                margin: 0;
+                color: rgba(0, 0, 0, 0.85);
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 22px;
+                word-wrap: break-word;
+            }
+
+            .ant-modal-body {
+                padding: 24px;
+                font-size: 14px;
+                line-height: 1.5715;
+                word-wrap: break-word;
+            }
+
+            .ant-modal-footer {
+                padding: 10px 16px;
+                text-align: right;
+                background: transparent;
+                border-top: 1px solid #f0f0f0;
+                border-radius: 0 0 var(--border-radius-base)
+                    var(--border-radius-base);
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+            }
+
+            .ant-btn {
+                line-height: 1.5715;
+                position: relative;
+                display: inline-block;
+                font-weight: 400;
+                white-space: nowrap;
+                text-align: center;
+                background-image: none;
+                box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+                user-select: none;
+                touch-action: manipulation;
+                height: 32px;
+                padding: 4px 15px;
+                font-size: 14px;
+                border-radius: var(--border-radius-base);
+                color: rgba(0, 0, 0, 0.85);
+                border: 1px solid var(--border-color-base);
+                background: #fff;
+            }
+
+            .ant-btn:hover {
+                color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+            .ant-btn-primary {
+                color: #fff;
+                border-color: var(--primary-color);
+                background: var(--primary-color);
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+                box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+            }
+
+            .ant-btn-primary:hover {
+                color: #fff;
+                border-color: #40a9ff;
+                background: #40a9ff;
+            }
+
+            .ant-btn-dangerous {
+                color: var(--error-color);
+                border-color: var(--error-color);
+            }
+
+            .ant-btn-dangerous:hover {
+                color: #ff4d4f;
+                border-color: #ff4d4f;
+                background: #fff;
+            }
+
+            .snapshot-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 16px;
+                width: 100%;
+            }
+
+            .snapshot-image {
+                width: 100%;
+                aspect-ratio: 16/9;
+                object-fit: cover;
+                border-radius: var(--border-radius-base);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .message-container {
+                text-align: center;
+                margin-bottom: 16px;
+            }
+
+            .ant-result-icon {
+                margin-bottom: 16px;
+            }
+
+            .ant-result-title {
+                color: rgba(0, 0, 0, 0.85);
+                font-size: 18px;
+                line-height: 1.5;
+                margin-bottom: 8px;
+            }
+
+            .ant-result-subtitle {
+                color: rgba(0, 0, 0, 0.45);
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .ant-result-icon .anticon {
+                font-size: 64px;
+            }
+
+            .ant-result-success .anticon {
+                color: var(--success-color);
+            }
+
+            .face-verification-result {
+                margin-top: 16px;
+                padding: 12px;
+                border-radius: var(--border-radius-base);
+            }
+
+            .face-verification-success {
+                background-color: #f6ffed;
+                border: 1px solid #b7eb8f;
+            }
+
+            .face-verification-failed {
+                background-color: #fff2f0;
+                border: 1px solid #ffccc7;
+            }
+
+            .hidden {
+                display: none !important;
+            }
+
+            .app-header {
+                background-color: white;
+                padding: 16px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .mode-selector {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                margin: 24px 0;
+            }
+
+            .mode-card {
+                width: 240px;
+                padding: 24px;
+                background-color: white;
+                border-radius: var(--border-radius-base);
+                box-shadow: var(--box-shadow-base);
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.3s;
+            }
+
+            .mode-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .mode-card-icon {
+                font-size: 32px;
+                margin-bottom: 16px;
+                color: var(--primary-color);
+            }
+
+            .mode-card-title {
+                font-size: 16px;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+
+            .mode-card-description {
+                font-size: 14px;
+                color: rgba(0, 0, 0, 0.45);
+            }
+
+            .app-container {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 24px;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .step-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 24px;
+            }
+
+            .step-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 120px;
+            }
+
+            .step-number {
+                width: 32px;
+                height: 32px;
+                border-radius: 16px;
+                background-color: #f5f5f5;
+                color: rgba(0, 0, 0, 0.45);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 8px;
+                font-weight: 500;
+                position: relative;
+                z-index: 1;
+            }
+
+            .step-title {
+                font-size: 14px;
+                color: rgba(0, 0, 0, 0.45);
+                text-align: center;
+            }
+
+            .step-active .step-number {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .step-active .step-title {
+                color: rgba(0, 0, 0, 0.85);
+                font-weight: 500;
+            }
+
+            .step-done .step-number {
+                background-color: var(--success-color);
+                color: white;
+            }
+
+            .step-line {
+                height: 1px;
+                background-color: #f0f0f0;
+                flex-grow: 1;
+                margin: 16px 8px;
+                position: relative;
+                top: -24px;
+            }
+
+            .step-line-active {
+                background-color: var(--primary-color);
+            }
+
+            .ant-card {
+                background: #fff;
+                border-radius: var(--border-radius-base);
+                box-shadow: var(--box-shadow-base);
+                margin-bottom: 24px;
+            }
+
+            .ant-card-head {
+                padding: 16px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .ant-card-body {
+                padding: 24px;
+            }
+
+            .toggle-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .ant-segmented {
+                display: inline-flex;
+                padding: 2px;
+                border-radius: 4px;
+                background-color: #f0f0f0;
+            }
+
+            .ant-segmented-item {
+                position: relative;
+                text-align: center;
+                cursor: pointer;
+                padding: 6px 16px;
+                border-radius: 4px;
+                transition: all 0.3s;
+            }
+
+            .ant-segmented-item-selected {
+                background-color: white;
+                color: rgba(0, 0, 0, 0.85);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .ant-segmented-item:not(.ant-segmented-item-selected):hover {
+                color: var(--primary-color);
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="app-header">
+            <div class="container mx-auto">
+                <h1 class="text-xl font-semibold text-gray-800">
+                    <i class="fas fa-camera text-blue-500 mr-2"></i>
+                    Hệ thống xác thực qua camera
+                </h1>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="app-container">
+            <!-- Mode Selection Screen -->
+            <div id="mode-selection-screen">
+                <h2 class="text-2xl font-semibold text-center mb-8">
+                    Vui lòng chọn chế độ xác thực
+                </h2>
+                <div class="mode-selector">
+                    <div class="mode-card" id="simple-capture-btn">
+                        <div class="mode-card-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="mode-card-title">Chụp ảnh đơn giản</div>
+                        <div class="mode-card-description">
+                            Chỉ chụp và lưu lại ảnh camera
+                        </div>
+                    </div>
+                    <div class="mode-card" id="face-verification-btn">
+                        <div class="mode-card-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="mode-card-title">Xác thực khuôn mặt</div>
+                        <div class="mode-card-description">
+                            Chụp ảnh và xác thực danh tính
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simple Capture Mode Screen -->
+            <div id="simple-capture-screen" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <button class="ant-btn" id="back-to-modes-btn-simple">
+                        <i class="fas fa-arrow-left mr-1"></i>
+                        Quay lại
+                    </button>
+                </div>
+
+                <div class="ant-card">
+                    <div class="ant-card-head">
+                        <div class="text-lg font-medium">
+                            <i class="fas fa-camera text-blue-500 mr-2"></i>
+                            Chụp ảnh đơn giản
+                        </div>
+                    </div>
+                    <div class="ant-card-body">
+                        <div class="snapshot-container">
+                            <img
+                                src="#"
+                                alt="Ảnh chụp từ camera"
+                                class="snapshot-image"
+                                id="simple-camera-snapshot"
+                            />
+                        </div>
+
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button class="ant-btn" id="simple-retake-btn">
+                                <i class="fas fa-camera mr-1"></i>
+                                Chụp lại
+                            </button>
+                            <button
+                                class="ant-btn ant-btn-primary"
+                                id="simple-confirm-btn"
+                            >
+                                <i class="fas fa-check mr-1"></i>
+                                Xác nhận và lưu ảnh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Face Verification Mode Screen -->
+            <div id="face-verification-screen" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <button class="ant-btn" id="back-to-modes-btn-face">
+                        <i class="fas fa-arrow-left mr-1"></i>
+                        Quay lại
+                    </button>
+                </div>
+
+                <!-- Steps Indicator -->
+                <div class="step-container">
+                    <div class="step-item step-active" id="step-capture">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Chụp ảnh</div>
+                    </div>
+                    <div class="step-line" id="step-line"></div>
+                    <div class="step-item" id="step-verify">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Xác thực</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Capture Photo Card -->
+                <div id="face-capture-card" class="ant-card">
+                    <div class="ant-card-head">
+                        <div class="text-lg font-medium">
+                            <i class="fas fa-camera text-blue-500 mr-2"></i>
+                            Chụp ảnh khuôn mặt
+                        </div>
+                    </div>
+                    <div class="ant-card-body">
+                        <div class="snapshot-container">
+                            <img
+                                src="#"
+                                alt="Ảnh chụp từ camera"
+                                class="snapshot-image"
+                                id="face-camera-snapshot"
+                            />
+                        </div>
+
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button class="ant-btn" id="face-retake-btn">
+                                <i class="fas fa-camera mr-1"></i>
+                                Chụp lại
+                            </button>
+                            <button
+                                class="ant-btn ant-btn-primary"
+                                id="face-next-btn"
+                            >
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                Tiếp theo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toggle for success/failure modes -->
+                <div
+                    id="verification-toggle"
+                    class="toggle-container hidden mb-4"
+                >
+                    <div class="flex justify-between items-center w-full">
+                        <button class="ant-btn" id="back-to-capture-btn">
+                            <i class="fas fa-arrow-left mr-1"></i>
+                            Quay lại
+                        </button>
+                        <div class="ant-segmented">
+                            <div
+                                class="ant-segmented-item ant-segmented-item-selected"
+                                id="success-toggle"
+                            >
+                                Mô phỏng thành công
+                            </div>
+                            <div class="ant-segmented-item" id="failure-toggle">
+                                Mô phỏng thất bại
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Verification Card -->
+                <div id="face-verification-card" class="ant-card hidden">
+                    <div class="ant-card-head">
+                        <div class="text-lg font-medium">
+                            <i class="fas fa-user-check text-blue-500 mr-2"></i>
+                            Kết quả xác thực khuôn mặt
+                        </div>
+                    </div>
+                    <div class="ant-card-body">
+                        <div id="verification-success-content">
+                            <div class="snapshot-container">
+                                <img
+                                    src="#"
+                                    alt="Ảnh khuôn mặt"
+                                    class="snapshot-image"
+                                    id="verification-snapshot"
+                                />
+                            </div>
+
+                            <div
+                                class="face-verification-result face-verification-success mt-4"
+                            >
+                                <div class="flex items-center">
+                                    <i
+                                        class="fas fa-check-circle text-green-500 mr-2"
+                                    ></i>
+                                    <span
+                                        >Xác thực khuôn mặt thành công với độ
+                                        chính xác 98%</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="verification-failure-content" class="hidden">
+                            <div class="snapshot-container">
+                                <img
+                                    src="#"
+                                    alt="Ảnh khuôn mặt"
+                                    class="snapshot-image"
+                                    id="verification-snapshot-fail"
+                                />
+                            </div>
+
+                            <div
+                                class="face-verification-result face-verification-failed mt-4"
+                            >
+                                <div class="flex items-center">
+                                    <i
+                                        class="fas fa-times-circle text-red-500 mr-2"
+                                    ></i>
+                                    <span
+                                        >Không thể xác thực khuôn mặt. Vui lòng
+                                        thử lại.</span
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center gap-4 mt-6">
+                                <button
+                                    class="ant-btn"
+                                    id="verification-retry-btn-fail"
+                                >
+                                    <i class="fas fa-redo mr-1"></i>
+                                    Thử lại
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            id="verification-success-buttons"
+                            class="flex justify-center gap-4 mt-6"
+                        >
+                            <button class="ant-btn" id="verification-retry-btn">
+                                <i class="fas fa-redo mr-1"></i>
+                                Thử lại
+                            </button>
+                            <button
+                                class="ant-btn ant-btn-primary"
+                                id="verification-confirm-btn"
+                            >
+                                <i class="fas fa-check mr-1"></i>
+                                Xác nhận
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // DOM Elements - Mode Selection
+                const modeSelectionScreen = document.getElementById(
+                    "mode-selection-screen"
+                );
+                const simpleCaptureBtn =
+                    document.getElementById("simple-capture-btn");
+                const faceVerificationBtn = document.getElementById(
+                    "face-verification-btn"
+                );
+
+                // DOM Elements - Simple Capture
+                const simpleCaptureScreen = document.getElementById(
+                    "simple-capture-screen"
+                );
+                const simpleCameraSnapshot = document.getElementById(
+                    "simple-camera-snapshot"
+                );
+                const simpleRetakeBtn =
+                    document.getElementById("simple-retake-btn");
+                const simpleConfirmBtn =
+                    document.getElementById("simple-confirm-btn");
+                const backToModesBtnSimple = document.getElementById(
+                    "back-to-modes-btn-simple"
+                );
+
+                // DOM Elements - Face Verification
+                const faceVerificationScreen = document.getElementById(
+                    "face-verification-screen"
+                );
+                const faceCaptureCard =
+                    document.getElementById("face-capture-card");
+                const faceVerificationCard = document.getElementById(
+                    "face-verification-card"
+                );
+                const faceCameraSnapshot = document.getElementById(
+                    "face-camera-snapshot"
+                );
+                const faceRetakeBtn =
+                    document.getElementById("face-retake-btn");
+                const faceNextBtn = document.getElementById("face-next-btn");
+                const backToModesBtnFace = document.getElementById(
+                    "back-to-modes-btn-face"
+                );
+                const backToCaptureBtn = document.getElementById(
+                    "back-to-capture-btn"
+                );
+
+                // DOM Elements - Steps
+                const stepCapture = document.getElementById("step-capture");
+                const stepVerify = document.getElementById("step-verify");
+                const stepLine = document.getElementById("step-line");
+
+                // DOM Elements - Verification
+                const verificationSnapshot = document.getElementById(
+                    "verification-snapshot"
+                );
+                const verificationSnapshotFail = document.getElementById(
+                    "verification-snapshot-fail"
+                );
+                const verificationRetryBtn = document.getElementById(
+                    "verification-retry-btn"
+                );
+                const verificationRetryBtnFail = document.getElementById(
+                    "verification-retry-btn-fail"
+                );
+                const verificationConfirmBtn = document.getElementById(
+                    "verification-confirm-btn"
+                );
+                const verificationSuccessButtons = document.getElementById(
+                    "verification-success-buttons"
+                );
+
+                // DOM Elements - Toggle
+                const successToggle = document.getElementById("success-toggle");
+                const failureToggle = document.getElementById("failure-toggle");
+                const verificationSuccessContent = document.getElementById(
+                    "verification-success-content"
+                );
+                const verificationFailureContent = document.getElementById(
+                    "verification-failure-content"
+                );
+
+                // Sample image for demo
+                const sampleImageUrl =
+                    "https://static-cloud.lotuslms.com/static/testtlx/2024/10/07/ef/668d609eeb6302548d0e15ef/6703afe9ba2b94ff4e0076e4.png";
+
+                // Initialize images
+                simpleCameraSnapshot.src = sampleImageUrl;
+                faceCameraSnapshot.src = sampleImageUrl;
+                verificationSnapshot.src = sampleImageUrl;
+                verificationSnapshotFail.src = sampleImageUrl;
+
+                // Event Handlers - Mode Selection
+                simpleCaptureBtn.addEventListener("click", function () {
+                    modeSelectionScreen.classList.add("hidden");
+                    simpleCaptureScreen.classList.remove("hidden");
+                });
+
+                faceVerificationBtn.addEventListener("click", function () {
+                    modeSelectionScreen.classList.add("hidden");
+                    faceVerificationScreen.classList.remove("hidden");
+
+                    // Reset to first step
+                    stepCapture.classList.add("step-active");
+                    stepCapture.classList.remove("step-done");
+                    stepVerify.classList.remove("step-active");
+                    stepLine.classList.remove("step-line-active");
+                    faceCaptureCard.classList.remove("hidden");
+                    faceVerificationCard.classList.add("hidden");
+                });
+
+                // Event Handlers - Simple Capture
+                simpleRetakeBtn.addEventListener("click", function () {
+                    alert("Đang khởi động camera để chụp lại...");
+                    // Trong ứng dụng thực, bạn sẽ khởi động lại camera ở đây
+                });
+
+                simpleConfirmBtn.addEventListener("click", function () {
+                    alert("Đã xác nhận và lưu ảnh thành công!");
+                    // Trong ứng dụng thực, bạn sẽ gửi ảnh lên máy chủ hoặc lưu vào cơ sở dữ liệu
+
+                    // Quay lại màn hình chọn chế độ
+                    simpleCaptureScreen.classList.add("hidden");
+                    modeSelectionScreen.classList.remove("hidden");
+                });
+
+                backToModesBtnSimple.addEventListener("click", function () {
+                    simpleCaptureScreen.classList.add("hidden");
+                    modeSelectionScreen.classList.remove("hidden");
+                });
+
+                // Event Handlers - Face Verification Step 1
+                faceRetakeBtn.addEventListener("click", function () {
+                    alert("Đang khởi động camera để chụp lại...");
+                    // Trong ứng dụng thực, bạn sẽ khởi động lại camera ở đây
+                });
+
+                faceNextBtn.addEventListener("click", function () {
+                    // Move to step 2
+                    stepCapture.classList.remove("step-active");
+                    stepCapture.classList.add("step-done");
+                    stepVerify.classList.add("step-active");
+                    stepLine.classList.add("step-line-active");
+                    faceCaptureCard.classList.add("hidden");
+                    faceVerificationCard.classList.remove("hidden");
+
+                    // Show verification toggle
+                    document
+                        .getElementById("verification-toggle")
+                        .classList.remove("hidden");
+                });
+
+                backToModesBtnFace.addEventListener("click", function () {
+                    faceVerificationScreen.classList.add("hidden");
+                    modeSelectionScreen.classList.remove("hidden");
+                });
+
+                // Event Handlers - Face Verification Step 2
+                backToCaptureBtn.addEventListener("click", function () {
+                    // Back to step 1
+                    stepCapture.classList.add("step-active");
+                    stepCapture.classList.remove("step-done");
+                    stepVerify.classList.remove("step-active");
+                    stepLine.classList.remove("step-line-active");
+                    faceCaptureCard.classList.remove("hidden");
+                    faceVerificationCard.classList.add("hidden");
+
+                    // Hide verification toggle
+                    document
+                        .getElementById("verification-toggle")
+                        .classList.add("hidden");
+                });
+
+                verificationRetryBtn.addEventListener("click", function () {
+                    // Back to step 1
+                    stepCapture.classList.add("step-active");
+                    stepCapture.classList.remove("step-done");
+                    stepVerify.classList.remove("step-active");
+                    stepLine.classList.remove("step-line-active");
+                    faceCaptureCard.classList.remove("hidden");
+                    faceVerificationCard.classList.add("hidden");
+
+                    // Hide verification toggle
+                    document
+                        .getElementById("verification-toggle")
+                        .classList.add("hidden");
+                });
+
+                verificationRetryBtnFail.addEventListener("click", function () {
+                    // Back to step 1
+                    stepCapture.classList.add("step-active");
+                    stepCapture.classList.remove("step-done");
+                    stepVerify.classList.remove("step-active");
+                    stepLine.classList.remove("step-line-active");
+                    faceCaptureCard.classList.remove("hidden");
+                    faceVerificationCard.classList.add("hidden");
+
+                    // Hide verification toggle
+                    document
+                        .getElementById("verification-toggle")
+                        .classList.add("hidden");
+                });
+
+                verificationConfirmBtn.addEventListener("click", function () {
+                    // Check if success or failure toggle is selected
+                    if (
+                        verificationSuccessContent.classList.contains("hidden")
+                    ) {
+                        alert("Đã ghi nhận xác thực thất bại!");
+                    } else {
+                        alert("Đã xác nhận danh tính thành công!");
+                    }
+
+                    // Return to mode selection
+                    faceVerificationScreen.classList.add("hidden");
+                    modeSelectionScreen.classList.remove("hidden");
+                });
+
+                // Toggle between success and failure UI (for demo)
+                successToggle.addEventListener("click", function () {
+                    successToggle.classList.add("ant-segmented-item-selected");
+                    failureToggle.classList.remove(
+                        "ant-segmented-item-selected"
+                    );
+                    verificationSuccessContent.classList.remove("hidden");
+                    verificationFailureContent.classList.add("hidden");
+                    verificationSuccessButtons.classList.remove("hidden");
+                });
+
+                failureToggle.addEventListener("click", function () {
+                    failureToggle.classList.add("ant-segmented-item-selected");
+                    successToggle.classList.remove(
+                        "ant-segmented-item-selected"
+                    );
+                    verificationFailureContent.classList.remove("hidden");
+                    verificationSuccessContent.classList.add("hidden");
+                    verificationSuccessButtons.classList.add("hidden");
+                });
+            });
+        </script>
+    </body>
+</html>
