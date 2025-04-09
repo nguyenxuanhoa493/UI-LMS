@@ -492,65 +492,9 @@
                         <i class="fas fa-arrow-left mr-1"></i>
                         Quay lại
                     </button>
-                </div>
 
-                <!-- Steps Indicator -->
-                <div class="step-container">
-                    <div class="step-item step-active" id="step-capture">
-                        <div class="step-number">1</div>
-                        <div class="step-title">Chụp ảnh</div>
-                    </div>
-                    <div class="step-line" id="step-line"></div>
-                    <div class="step-item" id="step-verify">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Xác thực</div>
-                    </div>
-                </div>
-
-                <!-- Step 1: Capture Photo Card -->
-                <div id="face-capture-card" class="ant-card">
-                    <div class="ant-card-head">
-                        <div class="text-lg font-medium">
-                            <i class="fas fa-camera text-blue-500 mr-2"></i>
-                            Chụp ảnh khuôn mặt
-                        </div>
-                    </div>
-                    <div class="ant-card-body">
-                        <div class="snapshot-container">
-                            <img
-                                src="#"
-                                alt="Ảnh chụp từ camera"
-                                class="snapshot-image"
-                                id="face-camera-snapshot"
-                            />
-                        </div>
-
-                        <div class="flex justify-center gap-4 mt-4">
-                            <button class="ant-btn" id="face-retake-btn">
-                                <i class="fas fa-camera mr-1"></i>
-                                Chụp lại
-                            </button>
-                            <button
-                                class="ant-btn ant-btn-primary"
-                                id="face-next-btn"
-                            >
-                                <i class="fas fa-arrow-right mr-1"></i>
-                                Tiếp theo
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Toggle for success/failure modes -->
-                <div
-                    id="verification-toggle"
-                    class="toggle-container hidden mb-4"
-                >
-                    <div class="flex justify-between items-center w-full">
-                        <button class="ant-btn" id="back-to-capture-btn">
-                            <i class="fas fa-arrow-left mr-1"></i>
-                            Quay lại
-                        </button>
+                    <!-- Toggle for success/failure modes -->
+                    <div id="verification-toggle" class="hidden">
                         <div class="ant-segmented">
                             <div
                                 class="ant-segmented-item ant-segmented-item-selected"
@@ -565,82 +509,101 @@
                     </div>
                 </div>
 
-                <!-- Step 2: Verification Card -->
-                <div id="face-verification-card" class="ant-card hidden">
+                <!-- Main Card -->
+                <div id="face-verification-card" class="ant-card">
                     <div class="ant-card-head">
                         <div class="text-lg font-medium">
-                            <i class="fas fa-user-check text-blue-500 mr-2"></i>
-                            Kết quả xác thực khuôn mặt
+                            <i class="fas fa-camera text-blue-500 mr-2"></i>
+                            <span id="verification-card-title"
+                                >Chụp ảnh khuôn mặt</span
+                            >
                         </div>
                     </div>
                     <div class="ant-card-body">
-                        <div id="verification-success-content">
-                            <div class="snapshot-container">
-                                <img
-                                    src="#"
-                                    alt="Ảnh khuôn mặt"
-                                    class="snapshot-image"
-                                    id="verification-snapshot"
-                                />
-                            </div>
-
-                            <div
-                                class="face-verification-result face-verification-success mt-4"
-                            >
-                                <div class="flex items-center">
-                                    <i
-                                        class="fas fa-check-circle text-green-500 mr-2"
-                                    ></i>
-                                    <span
-                                        >Xác thực khuôn mặt thành công với độ
-                                        chính xác 98%</span
-                                    >
-                                </div>
-                            </div>
-
-                            <div class="flex justify-center mt-6">
-                                <button
-                                    class="ant-btn ant-btn-primary"
-                                    id="verification-confirm-btn"
-                                >
-                                    <i class="fas fa-check mr-1"></i>
-                                    Xác nhận
-                                </button>
-                            </div>
+                        <div class="snapshot-container">
+                            <img
+                                src="#"
+                                alt="Ảnh chụp từ camera"
+                                class="snapshot-image"
+                                id="face-camera-snapshot"
+                            />
                         </div>
 
-                        <div id="verification-failure-content" class="hidden">
-                            <div class="snapshot-container">
-                                <img
-                                    src="#"
-                                    alt="Ảnh khuôn mặt"
-                                    class="snapshot-image"
-                                    id="verification-snapshot-fail"
-                                />
-                            </div>
-
-                            <div
-                                class="face-verification-result face-verification-failed mt-4"
+                        <!-- Bước 1: Nút chụp ảnh -->
+                        <div
+                            id="capture-controls"
+                            class="flex justify-center gap-4 mt-4"
+                        >
+                            <button class="ant-btn" id="face-retake-btn">
+                                <i class="fas fa-camera mr-1"></i>
+                                Chụp lại
+                            </button>
+                            <button
+                                class="ant-btn ant-btn-primary"
+                                id="face-next-btn"
                             >
-                                <div class="flex items-center">
-                                    <i
-                                        class="fas fa-times-circle text-red-500 mr-2"
-                                    ></i>
-                                    <span
-                                        >Không thể xác thực khuôn mặt. Vui lòng
-                                        thử lại.</span
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                Tiếp theo
+                            </button>
+                        </div>
+
+                        <!-- Kết quả xác thực (ban đầu ẩn) -->
+                        <div id="verification-result" class="hidden mt-6">
+                            <!-- Kết quả thành công -->
+                            <div id="verification-success-content">
+                                <div
+                                    class="face-verification-result face-verification-success mt-4"
+                                >
+                                    <div class="flex items-center">
+                                        <i
+                                            class="fas fa-check-circle text-green-500 mr-2"
+                                        ></i>
+                                        <span
+                                            >Xác thực khuôn mặt thành công với
+                                            độ chính xác 98%</span
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-center mt-6">
+                                    <button
+                                        class="ant-btn ant-btn-primary"
+                                        id="verification-confirm-btn"
                                     >
+                                        <i class="fas fa-check mr-1"></i>
+                                        Xác nhận
+                                    </button>
                                 </div>
                             </div>
 
-                            <div class="flex justify-center mt-6">
-                                <button
-                                    class="ant-btn"
-                                    id="verification-retry-btn"
+                            <!-- Kết quả thất bại -->
+                            <div
+                                id="verification-failure-content"
+                                class="hidden"
+                            >
+                                <div
+                                    class="face-verification-result face-verification-failed mt-4"
                                 >
-                                    <i class="fas fa-redo mr-1"></i>
-                                    Thử lại
-                                </button>
+                                    <div class="flex items-center">
+                                        <i
+                                            class="fas fa-times-circle text-red-500 mr-2"
+                                        ></i>
+                                        <span
+                                            >Không thể xác thực khuôn mặt. Vui
+                                            lòng thử lại.</span
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-center mt-6">
+                                    <button
+                                        class="ant-btn"
+                                        id="verification-retry-btn"
+                                    >
+                                        <i class="fas fa-redo mr-1"></i>
+                                        Thử lại
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -679,8 +642,6 @@
                 const faceVerificationScreen = document.getElementById(
                     "face-verification-screen"
                 );
-                const faceCaptureCard =
-                    document.getElementById("face-capture-card");
                 const faceVerificationCard = document.getElementById(
                     "face-verification-card"
                 );
@@ -703,11 +664,16 @@
                 const stepLine = document.getElementById("step-line");
 
                 // DOM Elements - Verification
-                const verificationSnapshot = document.getElementById(
-                    "verification-snapshot"
+                const verificationToggle = document.getElementById(
+                    "verification-toggle"
                 );
-                const verificationSnapshotFail = document.getElementById(
-                    "verification-snapshot-fail"
+                const captureControls =
+                    document.getElementById("capture-controls");
+                const verificationResult = document.getElementById(
+                    "verification-result"
+                );
+                const verificationCardTitle = document.getElementById(
+                    "verification-card-title"
                 );
                 const verificationRetryBtn = document.getElementById(
                     "verification-retry-btn"
@@ -733,8 +699,6 @@
                 // Initialize images
                 simpleCameraSnapshot.src = sampleImageUrl;
                 faceCameraSnapshot.src = sampleImageUrl;
-                verificationSnapshot.src = sampleImageUrl;
-                verificationSnapshotFail.src = sampleImageUrl;
 
                 // Event Handlers - Mode Selection
                 simpleCaptureBtn.addEventListener("click", function () {
@@ -746,13 +710,11 @@
                     modeSelectionScreen.classList.add("hidden");
                     faceVerificationScreen.classList.remove("hidden");
 
-                    // Reset to first step
-                    stepCapture.classList.add("step-active");
-                    stepCapture.classList.remove("step-done");
-                    stepVerify.classList.remove("step-active");
-                    stepLine.classList.remove("step-line-active");
-                    faceCaptureCard.classList.remove("hidden");
-                    faceVerificationCard.classList.add("hidden");
+                    // Reset to capture mode
+                    captureControls.classList.remove("hidden");
+                    verificationResult.classList.add("hidden");
+                    verificationToggle.classList.add("hidden");
+                    verificationCardTitle.textContent = "Chụp ảnh khuôn mặt";
                 });
 
                 // Event Handlers - Simple Capture
@@ -775,25 +737,30 @@
                     modeSelectionScreen.classList.remove("hidden");
                 });
 
-                // Event Handlers - Face Verification Step 1
+                // Event Handlers - Face Verification
                 faceRetakeBtn.addEventListener("click", function () {
                     alert("Đang khởi động camera để chụp lại...");
                     // Trong ứng dụng thực, bạn sẽ khởi động lại camera ở đây
                 });
 
                 faceNextBtn.addEventListener("click", function () {
-                    // Move to step 2
-                    stepCapture.classList.remove("step-active");
-                    stepCapture.classList.add("step-done");
-                    stepVerify.classList.add("step-active");
-                    stepLine.classList.add("step-line-active");
-                    faceCaptureCard.classList.add("hidden");
-                    faceVerificationCard.classList.remove("hidden");
+                    // Hiện kết quả xác thực
+                    verificationResult.classList.remove("hidden");
+                    // Ẩn các nút điều khiển chụp
+                    captureControls.classList.add("hidden");
+                    // Hiện toggle xác thực
+                    verificationToggle.classList.remove("hidden");
+                    // Cập nhật tiêu đề
+                    verificationCardTitle.textContent =
+                        "Kết quả xác thực khuôn mặt";
 
-                    // Show verification toggle
-                    document
-                        .getElementById("verification-toggle")
-                        .classList.remove("hidden");
+                    // Mặc định hiển thị nội dung thành công
+                    verificationSuccessContent.classList.remove("hidden");
+                    verificationFailureContent.classList.add("hidden");
+                    successToggle.classList.add("ant-segmented-item-selected");
+                    failureToggle.classList.remove(
+                        "ant-segmented-item-selected"
+                    );
                 });
 
                 backToModesBtnFace.addEventListener("click", function () {
@@ -801,35 +768,16 @@
                     modeSelectionScreen.classList.remove("hidden");
                 });
 
-                // Event Handlers - Face Verification Step 2
-                backToCaptureBtn.addEventListener("click", function () {
-                    // Back to step 1
-                    stepCapture.classList.add("step-active");
-                    stepCapture.classList.remove("step-done");
-                    stepVerify.classList.remove("step-active");
-                    stepLine.classList.remove("step-line-active");
-                    faceCaptureCard.classList.remove("hidden");
-                    faceVerificationCard.classList.add("hidden");
-
-                    // Hide verification toggle
-                    document
-                        .getElementById("verification-toggle")
-                        .classList.add("hidden");
-                });
-
+                // Event Handlers - Verification Result
                 verificationRetryBtn.addEventListener("click", function () {
-                    // Back to step 1
-                    stepCapture.classList.add("step-active");
-                    stepCapture.classList.remove("step-done");
-                    stepVerify.classList.remove("step-active");
-                    stepLine.classList.remove("step-line-active");
-                    faceCaptureCard.classList.remove("hidden");
-                    faceVerificationCard.classList.add("hidden");
-
-                    // Hide verification toggle
-                    document
-                        .getElementById("verification-toggle")
-                        .classList.add("hidden");
+                    // Hiện lại các nút điều khiển chụp
+                    captureControls.classList.remove("hidden");
+                    // Ẩn kết quả xác thực
+                    verificationResult.classList.add("hidden");
+                    // Ẩn toggle
+                    verificationToggle.classList.add("hidden");
+                    // Cập nhật tiêu đề
+                    verificationCardTitle.textContent = "Chụp ảnh khuôn mặt";
                 });
 
                 verificationConfirmBtn.addEventListener("click", function () {
@@ -840,23 +788,39 @@
                     modeSelectionScreen.classList.remove("hidden");
                 });
 
-                // Toggle between success and failure UI (for demo)
+                // Toggle giữa thành công và thất bại
                 successToggle.addEventListener("click", function () {
-                    successToggle.classList.add("ant-segmented-item-selected");
-                    failureToggle.classList.remove(
-                        "ant-segmented-item-selected"
-                    );
-                    verificationSuccessContent.classList.remove("hidden");
-                    verificationFailureContent.classList.add("hidden");
+                    if (
+                        !successToggle.classList.contains(
+                            "ant-segmented-item-selected"
+                        )
+                    ) {
+                        successToggle.classList.add(
+                            "ant-segmented-item-selected"
+                        );
+                        failureToggle.classList.remove(
+                            "ant-segmented-item-selected"
+                        );
+                        verificationSuccessContent.classList.remove("hidden");
+                        verificationFailureContent.classList.add("hidden");
+                    }
                 });
 
                 failureToggle.addEventListener("click", function () {
-                    failureToggle.classList.add("ant-segmented-item-selected");
-                    successToggle.classList.remove(
-                        "ant-segmented-item-selected"
-                    );
-                    verificationFailureContent.classList.remove("hidden");
-                    verificationSuccessContent.classList.add("hidden");
+                    if (
+                        !failureToggle.classList.contains(
+                            "ant-segmented-item-selected"
+                        )
+                    ) {
+                        failureToggle.classList.add(
+                            "ant-segmented-item-selected"
+                        );
+                        successToggle.classList.remove(
+                            "ant-segmented-item-selected"
+                        );
+                        verificationFailureContent.classList.remove("hidden");
+                        verificationSuccessContent.classList.add("hidden");
+                    }
                 });
             });
         </script>
