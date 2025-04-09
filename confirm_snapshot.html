@@ -597,6 +597,16 @@
                                     >
                                 </div>
                             </div>
+
+                            <div class="flex justify-center mt-6">
+                                <button
+                                    class="ant-btn ant-btn-primary"
+                                    id="verification-confirm-btn"
+                                >
+                                    <i class="fas fa-check mr-1"></i>
+                                    Xác nhận
+                                </button>
+                            </div>
                         </div>
 
                         <div id="verification-failure-content" class="hidden">
@@ -623,32 +633,15 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-center gap-4 mt-6">
+                            <div class="flex justify-center mt-6">
                                 <button
                                     class="ant-btn"
-                                    id="verification-retry-btn-fail"
+                                    id="verification-retry-btn"
                                 >
                                     <i class="fas fa-redo mr-1"></i>
                                     Thử lại
                                 </button>
                             </div>
-                        </div>
-
-                        <div
-                            id="verification-success-buttons"
-                            class="flex justify-center gap-4 mt-6"
-                        >
-                            <button class="ant-btn" id="verification-retry-btn">
-                                <i class="fas fa-redo mr-1"></i>
-                                Thử lại
-                            </button>
-                            <button
-                                class="ant-btn ant-btn-primary"
-                                id="verification-confirm-btn"
-                            >
-                                <i class="fas fa-check mr-1"></i>
-                                Xác nhận
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -719,14 +712,8 @@
                 const verificationRetryBtn = document.getElementById(
                     "verification-retry-btn"
                 );
-                const verificationRetryBtnFail = document.getElementById(
-                    "verification-retry-btn-fail"
-                );
                 const verificationConfirmBtn = document.getElementById(
                     "verification-confirm-btn"
-                );
-                const verificationSuccessButtons = document.getElementById(
-                    "verification-success-buttons"
                 );
 
                 // DOM Elements - Toggle
@@ -845,30 +832,8 @@
                         .classList.add("hidden");
                 });
 
-                verificationRetryBtnFail.addEventListener("click", function () {
-                    // Back to step 1
-                    stepCapture.classList.add("step-active");
-                    stepCapture.classList.remove("step-done");
-                    stepVerify.classList.remove("step-active");
-                    stepLine.classList.remove("step-line-active");
-                    faceCaptureCard.classList.remove("hidden");
-                    faceVerificationCard.classList.add("hidden");
-
-                    // Hide verification toggle
-                    document
-                        .getElementById("verification-toggle")
-                        .classList.add("hidden");
-                });
-
                 verificationConfirmBtn.addEventListener("click", function () {
-                    // Check if success or failure toggle is selected
-                    if (
-                        verificationSuccessContent.classList.contains("hidden")
-                    ) {
-                        alert("Đã ghi nhận xác thực thất bại!");
-                    } else {
-                        alert("Đã xác nhận danh tính thành công!");
-                    }
+                    alert("Đã xác nhận danh tính thành công!");
 
                     // Return to mode selection
                     faceVerificationScreen.classList.add("hidden");
@@ -883,7 +848,6 @@
                     );
                     verificationSuccessContent.classList.remove("hidden");
                     verificationFailureContent.classList.add("hidden");
-                    verificationSuccessButtons.classList.remove("hidden");
                 });
 
                 failureToggle.addEventListener("click", function () {
@@ -893,7 +857,6 @@
                     );
                     verificationFailureContent.classList.remove("hidden");
                     verificationSuccessContent.classList.add("hidden");
-                    verificationSuccessButtons.classList.add("hidden");
                 });
             });
         </script>
