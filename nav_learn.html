@@ -22,6 +22,9 @@
                 --pass-score: #4caf50;
                 --fail-score: #f44336;
                 --nested-indent: 12px;
+                --font-regular: 400;
+                --font-medium: 500;
+                --font-semibold: 600;
             }
 
             * {
@@ -29,6 +32,7 @@
                 padding: 0;
                 box-sizing: border-box;
                 font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                font-weight: var(--font-regular);
             }
 
             body {
@@ -41,6 +45,8 @@
             .main-container {
                 display: flex;
                 height: 100vh;
+                position: relative;
+                transition: padding-left 0.3s ease;
             }
 
             /* Sidebar navigation */
@@ -48,11 +54,14 @@
                 width: var(--sidebar-width);
                 background-color: white;
                 height: 100%;
-                overflow-y: auto;
+                overflow: hidden;
                 box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
                 flex-shrink: 0;
                 position: relative;
                 z-index: 10;
+                transition: margin-left 0.3s ease;
+                display: flex;
+                flex-direction: column;
             }
 
             /* Main content area */
@@ -61,10 +70,13 @@
                 overflow-y: auto;
                 padding: 20px;
                 background-color: var(--background);
+                transition: width 0.3s ease;
             }
 
             .course-navigator {
                 height: 100%;
+                overflow-y: auto;
+                flex-grow: 1;
             }
 
             .module {
@@ -97,17 +109,24 @@
                 display: flex;
                 align-items: center;
                 cursor: pointer;
-                transition: background-color 0.2s;
+                transition: background-color 0.2s, box-shadow 0.3s;
+                border-radius: 4px;
+                margin: 2px 0;
             }
 
             .module-header:hover {
                 background-color: #d6eafc;
             }
 
+            .module-header.expanded {
+                background-color: #d1e8fc;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
             .module-header h2 {
                 flex-grow: 1;
-                font-size: 14px;
-                font-weight: 600;
+                font-size: 13px;
+                font-weight: var(--font-medium);
                 display: flex;
                 align-items: center;
             }
@@ -133,7 +152,7 @@
             .toggle-icon {
                 font-size: 14px;
                 color: var(--primary);
-                transition: transform 0.3s;
+                transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             }
 
             .module-header.collapsed .toggle-icon {
@@ -143,11 +162,16 @@
             .module-content {
                 max-height: 2000px;
                 overflow: hidden;
-                transition: max-height 0.3s ease-in-out;
+                transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.3s, transform 0.3s;
+                opacity: 1;
+                transform: translateY(0);
             }
 
             .module-content.collapsed {
                 max-height: 0;
+                opacity: 0;
+                transform: translateY(-10px);
             }
 
             .lesson {
@@ -232,8 +256,8 @@
             }
 
             .lesson-title {
-                font-weight: 500;
-                font-size: 13px;
+                font-weight: var(--font-regular);
+                font-size: 12px;
                 display: flex;
                 flex-wrap: nowrap;
                 align-items: center;
@@ -362,20 +386,23 @@
             }
 
             .sidebar-header {
-                padding: 12px 15px;
+                padding: 10px 15px;
                 background-color: var(--primary);
                 color: white;
-                font-weight: 600;
+                font-weight: var(--font-medium);
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 position: sticky;
                 top: 0;
                 z-index: 10;
+                flex-shrink: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .sidebar-header h1 {
-                font-size: 15px;
+                font-size: 14px;
+                font-weight: var(--font-medium);
             }
 
             .sidebar-controls {
@@ -449,16 +476,84 @@
             }
 
             .content-header {
-                padding: 20px;
+                padding: 15px;
                 background-color: white;
                 margin-bottom: 20px;
                 border-radius: 8px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 15px;
             }
 
             .content-title {
-                font-size: 24px;
-                margin-bottom: 10px;
+                font-size: 18px;
+                margin: 0;
+                flex-grow: 1;
+                font-weight: var(--font-medium);
+            }
+
+            /* CSS cho vòng tròn tiến độ */
+            .progress-circle-container {
+                position: relative;
+                width: 30px;
+                height: 30px;
+                flex-shrink: 0;
+            }
+
+            .progress-circle {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                position: relative;
+                transform: rotate(-90deg);
+            }
+
+            .progress-circle-bg {
+                fill: none;
+                stroke: #f0f0f0;
+                stroke-width: 3;
+            }
+
+            .progress-circle-fill {
+                fill: none;
+                stroke: var(--primary);
+                stroke-width: 3;
+                stroke-linecap: round;
+                transition: stroke-dasharray 0.5s ease;
+            }
+
+            .progress-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 10px;
+                font-weight: var(--font-medium);
+                color: var(--primary);
+            }
+
+            /* CSS cho content info */
+            .content-info {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .content-type {
+                display: flex;
+                align-items: center;
+                padding: 4px 8px;
+                background-color: var(--primary-light);
+                border-radius: 4px;
+                font-size: 12px;
+                color: var(--primary);
+                font-weight: var(--font-regular);
+            }
+
+            .content-type i {
+                margin-right: 4px;
+                font-size: 12px;
             }
 
             .content-placeholder {
@@ -481,6 +576,94 @@
                 margin-bottom: 15px;
             }
 
+            /* Thêm CSS cho nút ẩn/hiện thanh điều hướng */
+            .sidebar-toggle {
+                display: none;
+            }
+
+            .sidebar.collapsed {
+                margin-left: calc(-1 * var(--sidebar-width));
+            }
+
+            .sidebar.collapsed + .content-area {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transition: margin-left 0.3s ease;
+            }
+
+            .sidebar-toggle i {
+                transition: transform 0.3s;
+            }
+
+            .sidebar.collapsed ~ .sidebar-toggle,
+            .sidebar.collapsed .sidebar-toggle {
+                left: 15px;
+            }
+
+            .sidebar.collapsed .sidebar-toggle i {
+                transform: rotate(180deg);
+            }
+
+            /* Chỉnh main-container để chứa sidebar-toggle khi sidebar bị ẩn */
+            .main-container {
+                position: relative;
+            }
+
+            /* CSS cho nút ẩn/hiện bên trong thanh điều hướng */
+            .sidebar .nav-toggle {
+                cursor: pointer;
+                width: 32px;
+                height: 32px;
+                background-color: rgba(255, 255, 255, 0.15);
+                color: white;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                margin-right: 10px;
+            }
+
+            .sidebar .nav-toggle:hover {
+                background-color: rgba(255, 255, 255, 0.25);
+            }
+
+            /* CSS cho nút ẩn/hiện bên ngoài thanh điều hướng */
+            .outer-nav-toggle {
+                cursor: pointer;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+                width: 36px;
+                height: 36px;
+                background-color: var(--primary);
+                color: white;
+                border-radius: 50%;
+                display: none; /* Ẩn ban đầu, sẽ hiển thị khi sidebar ẩn */
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+            }
+
+            .outer-nav-toggle:hover {
+                background-color: #0d6efd;
+            }
+
+            /* Hiển thị nút toggle bên ngoài khi sidebar bị ẩn */
+            .sidebar.collapsed ~ .outer-nav-toggle {
+                display: flex;
+            }
+
+            /* Xử lý icon */
+            .nav-toggle i,
+            .outer-nav-toggle i {
+                transition: transform 0.3s ease;
+            }
+
             @media (max-width: 768px) {
                 .main-container {
                     flex-direction: column;
@@ -496,13 +679,20 @@
                     width: 100%;
                 }
 
-                .mobile-toggle {
-                    display: block;
+                .nav-toggle {
+                    top: auto;
+                    bottom: 20px;
+                    left: 20px;
                 }
 
                 .sidebar.collapsed {
                     max-height: var(--header-height);
                     overflow: hidden;
+                }
+
+                /* Đảm bảo header vẫn hiển thị khi sidebar thu gọn trên mobile */
+                .sidebar.collapsed .sidebar-header {
+                    position: relative;
                 }
             }
         </style>
@@ -512,7 +702,12 @@
             <!-- Sidebar Navigation -->
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <h1>Nội dung khóa học</h1>
+                    <div style="display: flex; align-items: center">
+                        <div class="nav-toggle" id="nav-toggle">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                        <h1>Nội dung khóa học</h1>
+                    </div>
                     <div class="sidebar-controls">
                         <label class="switch" title="Ẩn/hiện trạng thái xem">
                             <input type="checkbox" id="status-toggle" />
@@ -527,9 +722,6 @@
                             <span class="slider"></span>
                             <span class="switch-label">Ẩn nhãn</span>
                         </label>
-                        <div class="mobile-toggle">
-                            <i class="fas fa-bars"></i>
-                        </div>
                     </div>
                 </div>
 
@@ -538,11 +730,43 @@
                 </div>
             </div>
 
+            <!-- Thêm nút toggle bên ngoài, hiển thị khi sidebar bị ẩn -->
+            <div class="outer-nav-toggle" id="outer-nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
             <!-- Main Content Area -->
             <div class="content-area">
                 <div class="content-header">
-                    <h1 class="content-title">Chọn bài học</h1>
-                    <p>Vui lòng chọn một bài học từ menu bên trái</p>
+                    <div class="progress-circle-container">
+                        <svg class="progress-circle" viewBox="0 0 36 36">
+                            <circle
+                                class="progress-circle-bg"
+                                cx="18"
+                                cy="18"
+                                r="15"
+                            />
+                            <circle
+                                class="progress-circle-fill"
+                                cx="18"
+                                cy="18"
+                                r="15"
+                                stroke-dasharray="0 100"
+                            />
+                        </svg>
+                        <div class="progress-text" id="progress-percentage">
+                            0%
+                        </div>
+                    </div>
+                    <div class="content-info">
+                        <div class="content-type" id="content-type">
+                            <i class="fas fa-book"></i>
+                            <span>Đang tải...</span>
+                        </div>
+                    </div>
+                    <h1 class="content-title" id="content-title">
+                        Chọn bài học
+                    </h1>
                 </div>
 
                 <div class="content-placeholder">
@@ -745,6 +969,114 @@
                             },
                         ],
                     },
+                    {
+                        title: "06. Các loại nội dung học tập",
+                        id: "module6",
+                        icon: "folder",
+                        progress: "0/12",
+                        status: "not-viewed",
+                        lessons: [
+                            {
+                                title: "Video hướng dẫn chi tiết về cách sử dụng công cụ phân tích dữ liệu và biểu đồ trong khóa học",
+                                id: "lesson13",
+                                type: "video",
+                                typeLabel: "Video",
+                                status: "not-viewed",
+                                score: "12:30",
+                                scoreClass: "zero-score",
+                            },
+                            {
+                                title: "Nội dung văn bản định dạng và tài liệu tham khảo cho học viên nghiên cứu chuyên sâu về phương pháp phân tích",
+                                id: "lesson14",
+                                type: "file-alt",
+                                typeLabel: "Text",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Tài liệu PDF - Hướng dẫn sử dụng các công thức toán học nâng cao",
+                                id: "lesson15",
+                                type: "file-pdf",
+                                typeLabel: "PDF",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Tài liệu Microsoft Word",
+                                id: "lesson16",
+                                type: "file-word",
+                                typeLabel: "Word",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Bảng tính phân tích chuẩn đoán các phương pháp mới và hướng dẫn cách áp dụng vào bài tập thực tế",
+                                id: "lesson17",
+                                type: "file-excel",
+                                typeLabel: "Excel",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Bài trình chiếu PowerPoint",
+                                id: "lesson18",
+                                type: "file-powerpoint",
+                                typeLabel: "PPT",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Bài giảng audio",
+                                id: "lesson19",
+                                type: "volume-up",
+                                typeLabel: "Audio",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Hình ảnh minh họa chi tiết các quy trình thực hành và thí nghiệm mô phỏng các hiện tượng vật lý",
+                                id: "lesson20",
+                                type: "image",
+                                typeLabel: "Photo",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Bài tập thực hành tổng hợp kiến thức và ứng dụng các công thức vào giải quyết vấn đề thực tiễn",
+                                id: "lesson12",
+                                type: "pencil-alt",
+                                typeLabel: "Bài tập",
+                                status: "not-viewed",
+                                score: "0/10",
+                                scoreClass: "zero-score",
+                                hasPassed: false,
+                            },
+                            {
+                                title: "Bài luyện tập tương tác",
+                                id: "lesson22",
+                                type: "dumbbell",
+                                typeLabel: "Luyện tập",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Bài học định dạng SCORM bao gồm các hoạt động tương tác và đánh giá tiến trình học tập theo chuẩn quốc tế",
+                                id: "lesson23",
+                                type: "cubes",
+                                typeLabel: "SCORM",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                            {
+                                title: "Nội dung tương tác H5P",
+                                id: "lesson24",
+                                type: "cube",
+                                typeLabel: "H5P",
+                                status: "not-viewed",
+                                score: null,
+                            },
+                        ],
+                    },
                 ],
             };
 
@@ -776,242 +1108,79 @@
                     .querySelector(".course-navigator")
                     .classList.add("hide-labels");
 
-                // Xử lý toggle sidebar trên mobile
-                const mobileToggle = document.querySelector(".mobile-toggle");
+                // Xử lý toggle sidebar
+                const navToggle = document.getElementById("nav-toggle");
+                const outerNavToggle =
+                    document.getElementById("outer-nav-toggle");
                 const sidebar = document.querySelector(".sidebar");
 
-                mobileToggle.addEventListener("click", function () {
+                // Hàm xử lý bật/tắt sidebar
+                function toggleSidebar() {
                     sidebar.classList.toggle("collapsed");
-                });
-            });
 
-            // Hàm render khóa học và các module
-            function renderCourse(courseData, container) {
-                const moduleElement = createModule(courseData);
-                container.appendChild(moduleElement);
-
-                // Thiết lập ban đầu: mở khóa học chính
-                setTimeout(() => {
-                    const mainModuleContent =
-                        moduleElement.querySelector(".module-content");
-                    if (mainModuleContent) {
-                        mainModuleContent.classList.remove("collapsed");
-                    }
-
-                    // Nếu có bài học active, hiển thị nội dung và mở module tương ứng
-                    const activeLessonId = findActiveLessonId(courseData);
-                    if (activeLessonId) {
-                        const activeLesson =
-                            document.getElementById(activeLessonId);
-                        if (activeLesson) {
-                            // Mở tất cả các module cha
-                            let parentModule = activeLesson.closest(".module");
-                            while (parentModule) {
-                                const content =
-                                    parentModule.querySelector(
-                                        ".module-content"
-                                    );
-                                if (content)
-                                    content.classList.remove("collapsed");
-                                parentModule =
-                                    parentModule.parentElement.closest(
-                                        ".module"
-                                    );
-                            }
-
-                            // Click vào bài học active
-                            activeLesson.click();
-                        }
-                    }
-                }, 100);
-            }
-
-            // Tìm ID của bài học đánh dấu active
-            function findActiveLessonId(data) {
-                // Tìm trong danh sách bài học
-                if (data.lessons) {
-                    for (const lesson of data.lessons) {
-                        if (lesson.isActive) return lesson.id;
+                    // Điều chỉnh lại kích thước khu vực nội dung
+                    if (sidebar.classList.contains("collapsed")) {
+                        document.querySelector(".content-area").style.width =
+                            "100%";
+                    } else {
+                        document.querySelector(".content-area").style.width =
+                            "";
                     }
                 }
 
-                // Tìm trong các module con
-                if (data.modules) {
-                    for (const module of data.modules) {
-                        const result = findActiveLessonId(module);
-                        if (result) return result;
+                // Gán sự kiện cho cả hai nút toggle
+                navToggle.addEventListener("click", toggleSidebar);
+                outerNavToggle.addEventListener("click", toggleSidebar);
+
+                // Tạo số phần trăm ngẫu nhiên cho tiến độ
+                function updateProgressCircle() {
+                    const percentage = Math.floor(Math.random() * 101); // Số ngẫu nhiên 0-100
+                    const circumference = 2 * Math.PI * 15; // 2πr, r=15
+                    const dasharray = (percentage / 100) * circumference;
+
+                    // Cập nhật vòng tròn tiến độ
+                    const progressCircle = document.querySelector(
+                        ".progress-circle-fill"
+                    );
+                    progressCircle.style.strokeDasharray = `${dasharray} ${circumference}`;
+
+                    // Cập nhật số phần trăm (bỏ dấu %)
+                    document.getElementById(
+                        "progress-percentage"
+                    ).textContent = `${percentage}`;
+
+                    // Đổi màu dựa vào phần trăm
+                    if (percentage < 30) {
+                        progressCircle.style.stroke = "#f44336"; // Đỏ khi dưới 30%
+                    } else if (percentage < 70) {
+                        progressCircle.style.stroke = "#ff9800"; // Cam khi 30-70%
+                    } else {
+                        progressCircle.style.stroke = "#4caf50"; // Xanh khi trên 70%
                     }
                 }
 
-                // Tìm trong các submodule
-                if (data.submodules) {
-                    for (const submodule of data.submodules) {
-                        const result = findActiveLessonId(submodule);
-                        if (result) return result;
-                    }
+                // Cập nhật tiến độ ban đầu
+                updateProgressCircle();
+
+                // Hàm cập nhật tiêu đề và loại nội dung khi chọn bài học
+                function updateContentHeader(lessonData, moduleTitle) {
+                    // Cập nhật tiêu đề
+                    document.getElementById("content-title").textContent =
+                        lessonData.title;
+
+                    // Cập nhật loại nội dung
+                    const contentType = document.getElementById("content-type");
+                    contentType.innerHTML = `
+                        <i class="fas fa-${lessonData.type}"></i>
+                        <span>${lessonData.typeLabel}</span>
+                    `;
+
+                    // Cập nhật ngẫu nhiên tiến độ khi chọn bài học mới
+                    updateProgressCircle();
                 }
-
-                return null;
-            }
-
-            // Hàm tạo module
-            function createModule(moduleData) {
-                const moduleElement = document.createElement("div");
-                moduleElement.className = `module ${moduleData.status || ""}`;
-                moduleElement.id = moduleData.id;
-
-                // Tạo header của module
-                const moduleHeader = document.createElement("div");
-                moduleHeader.className = "module-header";
-
-                // Tạo tiêu đề module với icon
-                const moduleTitle = document.createElement("h2");
-                const moduleIcon = document.createElement("i");
-                moduleIcon.className = `fas fa-${moduleData.icon} module-icon`;
-
-                // Thêm sự kiện click vào icon để thay đổi trạng thái
-                moduleIcon.addEventListener("click", function (e) {
-                    e.stopPropagation(); // Ngăn sự kiện lan lên để không gây ảnh hưởng đến việc mở/đóng module
-                    cycleModuleStatus(moduleElement);
-                });
-
-                const moduleTitleText = document.createElement("span");
-                moduleTitleText.textContent = moduleData.title;
-
-                moduleTitle.appendChild(moduleIcon);
-                moduleTitle.appendChild(moduleTitleText);
-
-                const moduleProgress = document.createElement("div");
-                moduleProgress.className = "module-progress";
-                moduleProgress.textContent = moduleData.progress;
-
-                const toggleIcon = document.createElement("i");
-                toggleIcon.className = "fas fa-chevron-down toggle-icon";
-
-                moduleHeader.appendChild(moduleTitle);
-                if (moduleData.progress) {
-                    moduleHeader.appendChild(moduleProgress);
-                }
-                moduleHeader.appendChild(toggleIcon);
-
-                // Tạo nội dung của module
-                const moduleContent = document.createElement("div");
-                moduleContent.className = "module-content collapsed";
-
-                // Thêm các bài học
-                if (moduleData.lessons) {
-                    moduleData.lessons.forEach((lesson) => {
-                        moduleContent.appendChild(createLesson(lesson));
-                    });
-                }
-
-                // Thêm các submodule
-                if (moduleData.submodules) {
-                    moduleData.submodules.forEach((submodule) => {
-                        moduleContent.appendChild(createModule(submodule));
-                    });
-                }
-
-                // Thêm các module con
-                if (moduleData.modules) {
-                    moduleData.modules.forEach((submodule) => {
-                        moduleContent.appendChild(createModule(submodule));
-                    });
-                }
-
-                moduleElement.appendChild(moduleHeader);
-                moduleElement.appendChild(moduleContent);
-
-                // Xử lý sự kiện click vào header
-                moduleHeader.addEventListener("click", function (e) {
-                    // Chỉ xử lý sự kiện click nếu không phải là click vào icon
-                    if (!e.target.classList.contains("module-icon")) {
-                        e.stopPropagation(); // Ngăn sự kiện lan lên
-
-                        const content = this.nextElementSibling;
-                        const isCollapsed =
-                            content.classList.contains("collapsed");
-
-                        if (isCollapsed) {
-                            content.classList.remove("collapsed");
-                            this.classList.remove("collapsed");
-                        } else {
-                            content.classList.add("collapsed");
-                            this.classList.add("collapsed");
-                        }
-                    }
-                });
-
-                return moduleElement;
-            }
-
-            // Hàm tạo bài học
-            function createLesson(lessonData) {
-                const lessonElement = document.createElement("div");
-                lessonElement.className = `lesson ${
-                    lessonData.status || "not-viewed"
-                }`;
-                lessonElement.id = lessonData.id;
-                if (lessonData.isActive) lessonElement.classList.add("active");
-
-                // Icon trạng thái xem
-                let statusIcon = "circle";
-                if (lessonData.status === "completed") {
-                    statusIcon = "check-circle";
-                } else if (lessonData.status === "in-progress") {
-                    statusIcon = "play-circle";
-                }
-
-                const iconClass =
-                    lessonData.status === "not-viewed" ? "far" : "fas";
-
-                // Thêm tooltip cho nội dung có tên dài
-                const tooltipAttr =
-                    lessonData.title.length > 35
-                        ? `data-title="${lessonData.title}"`
-                        : "";
-
-                lessonElement.innerHTML = `
-                    <i class="${iconClass} fa-${statusIcon} lesson-icon"></i>
-                    <div class="lesson-content">
-                        <div class="lesson-title">
-                            <span class="lesson-type" title="${
-                                lessonData.typeLabel
-                            }">
-                                <i class="fas fa-${lessonData.type}"></i>
-                                <span>${lessonData.typeLabel}</span>
-                            </span>
-                            <span class="lesson-tooltip lesson-text" ${tooltipAttr}>${
-                    lessonData.title
-                }</span>
-                        </div>
-                        ${
-                            lessonData.score
-                                ? `
-                        <div class="score-container">
-                            <div class="score ${lessonData.scoreClass}">${
-                                      lessonData.score
-                                  }</div>
-                            ${
-                                lessonData.hasPassed !== undefined
-                                    ? `
-                                <span class="status-badge ${
-                                    lessonData.hasPassed ? "passed" : "failed"
-                                }">
-                                    ${lessonData.hasPassed ? "Đạt" : "Chưa đạt"}
-                                </span>
-                            `
-                                    : ""
-                            }
-                        </div>
-                        `
-                                : ""
-                        }
-                    </div>
-                `;
 
                 // Xử lý sự kiện click vào bài học
-                lessonElement.addEventListener("click", function (e) {
+                function lessonElementEventListener(e) {
                     e.stopPropagation(); // Ngăn sự kiện lan lên
 
                     // Xóa active class từ tất cả các bài học
@@ -1025,140 +1194,413 @@
                     // Chuyển đổi trạng thái xem khi click
                     cycleViewStatus(this);
 
-                    // Cập nhật nội dung hiển thị
+                    // Lấy dữ liệu bài học và module
                     const lessonTitle =
                         this.querySelector(".lesson-text").textContent.trim();
-                    document.querySelector(".content-title").textContent =
-                        lessonTitle;
-
-                    const lessonType =
-                        this.querySelector(".lesson-type").getAttribute(
-                            "title"
-                        );
+                    const lessonType = this.querySelector(
+                        ".lesson-type i"
+                    ).classList[1].replace("fa-", "");
+                    const lessonTypeLabel =
+                        this.querySelector(
+                            ".lesson-type span"
+                        ).textContent.trim();
                     const moduleTitle = this.closest(".module")
                         .querySelector(".module-header h2")
                         .textContent.trim();
-                    document.querySelector(
-                        ".content-header p"
-                    ).textContent = `${lessonType} - ${moduleTitle}`;
-                });
 
-                return lessonElement;
-            }
+                    // Tạo đối tượng lesson data
+                    const lessonData = {
+                        title: lessonTitle,
+                        type: lessonType,
+                        typeLabel: lessonTypeLabel,
+                    };
 
-            // Hàm xử lý chuyển đổi trạng thái xem (chưa xem -> đang xem -> đã xem -> chưa xem)
-            function cycleViewStatus(lessonElement) {
-                // Xác định trạng thái hiện tại
-                const currentStatus = lessonElement.classList.contains(
-                    "completed"
-                )
-                    ? "completed"
-                    : lessonElement.classList.contains("in-progress")
-                    ? "in-progress"
-                    : "not-viewed";
-
-                // Xác định trạng thái tiếp theo
-                let nextStatus, nextIcon, nextIconClass;
-
-                if (currentStatus === "not-viewed") {
-                    nextStatus = "in-progress";
-                    nextIcon = "play-circle";
-                    nextIconClass = "fas";
-                } else if (currentStatus === "in-progress") {
-                    nextStatus = "completed";
-                    nextIcon = "check-circle";
-                    nextIconClass = "fas";
-                } else {
-                    // completed
-                    nextStatus = "not-viewed";
-                    nextIcon = "circle";
-                    nextIconClass = "far";
+                    // Cập nhật content header
+                    updateContentHeader(lessonData, moduleTitle);
                 }
 
-                // Xóa tất cả các class trạng thái cũ
-                lessonElement.classList.remove(
-                    "not-viewed",
-                    "in-progress",
-                    "completed"
-                );
+                // Hàm render khóa học và các module
+                function renderCourse(courseData, container) {
+                    const moduleElement = createModule(courseData);
+                    container.appendChild(moduleElement);
 
-                // Thêm class trạng thái mới
-                lessonElement.classList.add(nextStatus);
+                    // Thiết lập ban đầu: mở khóa học chính
+                    setTimeout(() => {
+                        const mainModuleContent =
+                            moduleElement.querySelector(".module-content");
+                        if (mainModuleContent) {
+                            mainModuleContent.classList.remove("collapsed");
+                        }
 
-                // Cập nhật icon
-                const icon = lessonElement.querySelector(".lesson-icon");
-                icon.className = `${nextIconClass} fa-${nextIcon} lesson-icon`;
+                        // Nếu có bài học active, hiển thị nội dung và mở module tương ứng
+                        const activeLessonId = findActiveLessonId(courseData);
+                        if (activeLessonId) {
+                            const activeLesson =
+                                document.getElementById(activeLessonId);
+                            if (activeLesson) {
+                                // Mở tất cả các module cha
+                                let parentModule =
+                                    activeLesson.closest(".module");
+                                while (parentModule) {
+                                    const content =
+                                        parentModule.querySelector(
+                                            ".module-content"
+                                        );
+                                    if (content)
+                                        content.classList.remove("collapsed");
+                                    parentModule =
+                                        parentModule.parentElement.closest(
+                                            ".module"
+                                        );
+                                }
 
-                // Cập nhật trạng thái module cha
-                updateModuleStatus(lessonElement.closest(".module"));
-            }
-
-            // Hàm kiểm tra và cập nhật trạng thái module
-            function updateModuleStatus(moduleElement) {
-                if (!moduleElement) return;
-
-                const lessons = moduleElement.querySelectorAll(".lesson");
-                const completedLessons =
-                    moduleElement.querySelectorAll(".lesson.completed");
-                const inProgressLessons = moduleElement.querySelectorAll(
-                    ".lesson.in-progress"
-                );
-
-                // Nếu tất cả bài đã hoàn thành => module hoàn thành
-                if (completedLessons.length === lessons.length) {
-                    moduleElement.classList.remove("not-viewed", "in-progress");
-                    moduleElement.classList.add("completed");
-                }
-                // Nếu có bài đang học hoặc đã hoàn thành => module đang học
-                else if (
-                    completedLessons.length > 0 ||
-                    inProgressLessons.length > 0
-                ) {
-                    moduleElement.classList.remove("not-viewed", "completed");
-                    moduleElement.classList.add("in-progress");
-                }
-
-                // Đệ quy lên các module cha
-                const parentModule =
-                    moduleElement.parentElement.closest(".module");
-                if (parentModule) {
-                    updateModuleStatus(parentModule);
-                }
-            }
-
-            // Hàm xử lý chuyển đổi trạng thái xem của module (chưa xem -> đang xem -> đã xem -> chưa xem)
-            function cycleModuleStatus(moduleElement) {
-                // Xác định trạng thái hiện tại
-                const currentStatus = moduleElement.classList.contains(
-                    "completed"
-                )
-                    ? "completed"
-                    : moduleElement.classList.contains("in-progress")
-                    ? "in-progress"
-                    : "not-viewed";
-
-                // Xác định trạng thái tiếp theo
-                let nextStatus;
-
-                if (currentStatus === "not-viewed") {
-                    nextStatus = "in-progress";
-                } else if (currentStatus === "in-progress") {
-                    nextStatus = "completed";
-                } else {
-                    // completed
-                    nextStatus = "not-viewed";
+                                // Click vào bài học active
+                                activeLesson.click();
+                            }
+                        }
+                    }, 100);
                 }
 
-                // Xóa tất cả các class trạng thái cũ
-                moduleElement.classList.remove(
-                    "not-viewed",
-                    "in-progress",
-                    "completed"
-                );
+                // Tìm ID của bài học đánh dấu active
+                function findActiveLessonId(data) {
+                    // Tìm trong danh sách bài học
+                    if (data.lessons) {
+                        for (const lesson of data.lessons) {
+                            if (lesson.isActive) return lesson.id;
+                        }
+                    }
 
-                // Thêm class trạng thái mới
-                moduleElement.classList.add(nextStatus);
-            }
+                    // Tìm trong các module con
+                    if (data.modules) {
+                        for (const module of data.modules) {
+                            const result = findActiveLessonId(module);
+                            if (result) return result;
+                        }
+                    }
+
+                    // Tìm trong các submodule
+                    if (data.submodules) {
+                        for (const submodule of data.submodules) {
+                            const result = findActiveLessonId(submodule);
+                            if (result) return result;
+                        }
+                    }
+
+                    return null;
+                }
+
+                // Hàm tạo module
+                function createModule(moduleData) {
+                    const moduleElement = document.createElement("div");
+                    moduleElement.className = `module ${
+                        moduleData.status || ""
+                    }`;
+                    moduleElement.id = moduleData.id;
+
+                    // Tạo header của module
+                    const moduleHeader = document.createElement("div");
+                    moduleHeader.className = "module-header";
+
+                    // Tạo tiêu đề module với icon
+                    const moduleTitle = document.createElement("h2");
+                    const moduleIcon = document.createElement("i");
+                    moduleIcon.className = `fas fa-${moduleData.icon} module-icon`;
+
+                    // Thêm sự kiện click vào icon để thay đổi trạng thái
+                    moduleIcon.addEventListener("click", function (e) {
+                        e.stopPropagation(); // Ngăn sự kiện lan lên để không gây ảnh hưởng đến việc mở/đóng module
+                        cycleModuleStatus(moduleElement);
+                    });
+
+                    const moduleTitleText = document.createElement("span");
+                    moduleTitleText.textContent = moduleData.title;
+
+                    moduleTitle.appendChild(moduleIcon);
+                    moduleTitle.appendChild(moduleTitleText);
+
+                    const moduleProgress = document.createElement("div");
+                    moduleProgress.className = "module-progress";
+                    moduleProgress.textContent = moduleData.progress;
+
+                    const toggleIcon = document.createElement("i");
+                    toggleIcon.className = "fas fa-chevron-down toggle-icon";
+
+                    moduleHeader.appendChild(moduleTitle);
+                    if (moduleData.progress) {
+                        moduleHeader.appendChild(moduleProgress);
+                    }
+                    moduleHeader.appendChild(toggleIcon);
+
+                    // Tạo nội dung của module
+                    const moduleContent = document.createElement("div");
+                    moduleContent.className = "module-content collapsed";
+
+                    // Thêm các bài học
+                    if (moduleData.lessons) {
+                        moduleData.lessons.forEach((lesson) => {
+                            moduleContent.appendChild(createLesson(lesson));
+                        });
+                    }
+
+                    // Thêm các submodule
+                    if (moduleData.submodules) {
+                        moduleData.submodules.forEach((submodule) => {
+                            moduleContent.appendChild(createModule(submodule));
+                        });
+                    }
+
+                    // Thêm các module con
+                    if (moduleData.modules) {
+                        moduleData.modules.forEach((submodule) => {
+                            moduleContent.appendChild(createModule(submodule));
+                        });
+                    }
+
+                    moduleElement.appendChild(moduleHeader);
+                    moduleElement.appendChild(moduleContent);
+
+                    // Xử lý sự kiện click vào header
+                    moduleHeader.addEventListener("click", function (e) {
+                        // Chỉ xử lý sự kiện click nếu không phải là click vào icon
+                        if (!e.target.classList.contains("module-icon")) {
+                            e.stopPropagation(); // Ngăn sự kiện lan lên
+
+                            const content = this.nextElementSibling;
+                            const isCollapsed =
+                                content.classList.contains("collapsed");
+
+                            // Hiệu ứng khi mở
+                            if (isCollapsed) {
+                                // Thêm class expanded cho header
+                                this.classList.add("expanded");
+                                // Xoay icon mở
+                                const toggleIcon =
+                                    this.querySelector(".toggle-icon");
+                                toggleIcon.style.transform = "rotate(0deg)";
+                                // Mở nội dung
+                                content.classList.remove("collapsed");
+                                // Thêm hiệu ứng pulse nhẹ cho module khi mở
+                                moduleElement.classList.add("pulse");
+                                setTimeout(() => {
+                                    moduleElement.classList.remove("pulse");
+                                }, 500);
+                            } else {
+                                // Bỏ class expanded khỏi header
+                                this.classList.remove("expanded");
+                                // Xoay icon đóng
+                                const toggleIcon =
+                                    this.querySelector(".toggle-icon");
+                                toggleIcon.style.transform = "rotate(-90deg)";
+                                // Đóng nội dung
+                                content.classList.add("collapsed");
+                            }
+                        }
+                    });
+
+                    return moduleElement;
+                }
+
+                // Hàm tạo bài học
+                function createLesson(lessonData) {
+                    const lessonElement = document.createElement("div");
+                    lessonElement.className = `lesson ${
+                        lessonData.status || "not-viewed"
+                    }`;
+                    lessonElement.id = lessonData.id;
+                    if (lessonData.isActive)
+                        lessonElement.classList.add("active");
+
+                    // Icon trạng thái xem
+                    let statusIcon = "circle";
+                    if (lessonData.status === "completed") {
+                        statusIcon = "check-circle";
+                    } else if (lessonData.status === "in-progress") {
+                        statusIcon = "play-circle";
+                    }
+
+                    const iconClass =
+                        lessonData.status === "not-viewed" ? "far" : "fas";
+
+                    // Thêm tooltip cho nội dung có tên dài
+                    const tooltipAttr =
+                        lessonData.title.length > 35
+                            ? `data-title="${lessonData.title}"`
+                            : "";
+
+                    lessonElement.innerHTML = `
+                        <i class="${iconClass} fa-${statusIcon} lesson-icon"></i>
+                        <div class="lesson-content">
+                            <div class="lesson-title">
+                                <span class="lesson-type" title="${
+                                    lessonData.typeLabel
+                                }">
+                                    <i class="fas fa-${lessonData.type}"></i>
+                                    <span>${lessonData.typeLabel}</span>
+                                </span>
+                                <span class="lesson-tooltip lesson-text" ${tooltipAttr}>${
+                        lessonData.title
+                    }</span>
+                            </div>
+                            ${
+                                lessonData.score
+                                    ? `
+                            <div class="score-container">
+                                <div class="score ${lessonData.scoreClass}">${
+                                          lessonData.score
+                                      }</div>
+                                ${
+                                    lessonData.hasPassed !== undefined
+                                        ? `
+                                    <span class="status-badge ${
+                                        lessonData.hasPassed
+                                            ? "passed"
+                                            : "failed"
+                                    }">
+                                        ${
+                                            lessonData.hasPassed
+                                                ? "Đạt"
+                                                : "Chưa đạt"
+                                        }
+                                    </span>
+                                `
+                                        : ""
+                                }
+                            </div>
+                            `
+                                    : ""
+                            }
+                        </div>
+                    `;
+
+                    // Xử lý sự kiện click vào bài học
+                    lessonElement.addEventListener(
+                        "click",
+                        lessonElementEventListener
+                    );
+
+                    return lessonElement;
+                }
+
+                // Hàm xử lý chuyển đổi trạng thái xem (chưa xem -> đang xem -> đã xem -> chưa xem)
+                function cycleViewStatus(lessonElement) {
+                    // Xác định trạng thái hiện tại
+                    const currentStatus = lessonElement.classList.contains(
+                        "completed"
+                    )
+                        ? "completed"
+                        : lessonElement.classList.contains("in-progress")
+                        ? "in-progress"
+                        : "not-viewed";
+
+                    // Xác định trạng thái tiếp theo
+                    let nextStatus, nextIcon, nextIconClass;
+
+                    if (currentStatus === "not-viewed") {
+                        nextStatus = "in-progress";
+                        nextIcon = "play-circle";
+                        nextIconClass = "fas";
+                    } else if (currentStatus === "in-progress") {
+                        nextStatus = "completed";
+                        nextIcon = "check-circle";
+                        nextIconClass = "fas";
+                    } else {
+                        // completed
+                        nextStatus = "not-viewed";
+                        nextIcon = "circle";
+                        nextIconClass = "far";
+                    }
+
+                    // Xóa tất cả các class trạng thái cũ
+                    lessonElement.classList.remove(
+                        "not-viewed",
+                        "in-progress",
+                        "completed"
+                    );
+
+                    // Thêm class trạng thái mới
+                    lessonElement.classList.add(nextStatus);
+
+                    // Cập nhật icon
+                    const icon = lessonElement.querySelector(".lesson-icon");
+                    icon.className = `${nextIconClass} fa-${nextIcon} lesson-icon`;
+
+                    // Cập nhật trạng thái module cha
+                    updateModuleStatus(lessonElement.closest(".module"));
+                }
+
+                // Hàm kiểm tra và cập nhật trạng thái module
+                function updateModuleStatus(moduleElement) {
+                    if (!moduleElement) return;
+
+                    const lessons = moduleElement.querySelectorAll(".lesson");
+                    const completedLessons =
+                        moduleElement.querySelectorAll(".lesson.completed");
+                    const inProgressLessons = moduleElement.querySelectorAll(
+                        ".lesson.in-progress"
+                    );
+
+                    // Nếu tất cả bài đã hoàn thành => module hoàn thành
+                    if (completedLessons.length === lessons.length) {
+                        moduleElement.classList.remove(
+                            "not-viewed",
+                            "in-progress"
+                        );
+                        moduleElement.classList.add("completed");
+                    }
+                    // Nếu có bài đang học hoặc đã hoàn thành => module đang học
+                    else if (
+                        completedLessons.length > 0 ||
+                        inProgressLessons.length > 0
+                    ) {
+                        moduleElement.classList.remove(
+                            "not-viewed",
+                            "completed"
+                        );
+                        moduleElement.classList.add("in-progress");
+                    }
+
+                    // Đệ quy lên các module cha
+                    const parentModule =
+                        moduleElement.parentElement.closest(".module");
+                    if (parentModule) {
+                        updateModuleStatus(parentModule);
+                    }
+                }
+
+                // Hàm xử lý chuyển đổi trạng thái xem của module (chưa xem -> đang xem -> đã xem -> chưa xem)
+                function cycleModuleStatus(moduleElement) {
+                    // Xác định trạng thái hiện tại
+                    const currentStatus = moduleElement.classList.contains(
+                        "completed"
+                    )
+                        ? "completed"
+                        : moduleElement.classList.contains("in-progress")
+                        ? "in-progress"
+                        : "not-viewed";
+
+                    // Xác định trạng thái tiếp theo
+                    let nextStatus;
+
+                    if (currentStatus === "not-viewed") {
+                        nextStatus = "in-progress";
+                    } else if (currentStatus === "in-progress") {
+                        nextStatus = "completed";
+                    } else {
+                        // completed
+                        nextStatus = "not-viewed";
+                    }
+
+                    // Xóa tất cả các class trạng thái cũ
+                    moduleElement.classList.remove(
+                        "not-viewed",
+                        "in-progress",
+                        "completed"
+                    );
+
+                    // Thêm class trạng thái mới
+                    moduleElement.classList.add(nextStatus);
+                }
+            });
         </script>
     </body>
 </html>
