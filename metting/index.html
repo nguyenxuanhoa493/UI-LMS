@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Quản lý cuộc họp</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen">
+        <div class="w-[100%] mx-auto mt-10 bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-center text-blue-800 mb-8">
+                Quản lý cuộc họp
+            </h1>
+            <div
+                class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6"
+            >
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Tìm kiếm cuộc họp..."
+                    class="border border-gray-300 rounded px-4 py-2 w-full sm:w-72 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <button
+                    onclick="openCreateModal()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow transition"
+                >
+                    Tạo cuộc họp mới
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border rounded-lg">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                STT
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Tên cuộc họp
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Loại cuộc họp
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Hình thức họp
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Địa điểm họp
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Người chủ trì
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Thời gian diễn ra
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Trạng thái
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Số người tham gia
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Điểm đánh giá TB
+                            </th>
+                            <th
+                                class="px-4 py-2 bg-blue-50 text-left font-semibold"
+                            >
+                                Hành động
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="meetingList">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">1</td>
+                            <td class="px-4 py-2">Họp dự án A</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                                    >Online</span
+                                >
+                            </td>
+                            <td class="px-4 py-2">Họp giao ban</td>
+                            <td class="px-4 py-2">Zoom Meeting</td>
+                            <td class="px-4 py-2">Nguyễn Văn A</td>
+                            <td class="px-4 py-2">10/06/2024 09:00 - 10:30</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                                    >Đã hoàn thành</span
+                                >
+                            </td>
+                            <td class="px-4 py-2 text-center">15/20</td>
+                            <td class="px-4 py-2 text-center">4.2/5</td>
+                            <td class="px-4 py-2 space-x-2">
+                                <button
+                                    class="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"
+                                    title="Sửa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    class="bg-red-500 hover:bg-red-600 text-white p-2 rounded"
+                                    title="Xóa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9zM4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h4a1 1 0 100-2H7z"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">2</td>
+                            <td class="px-4 py-2">Họp phòng ban</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                                    >Offline</span
+                                >
+                            </td>
+                            <td class="px-4 py-2">Họp Ban</td>
+                            <td class="px-4 py-2">Phòng họp A</td>
+                            <td class="px-4 py-2">Trần Thị B</td>
+                            <td class="px-4 py-2">12/06/2024 14:00 - 16:00</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                                    >Đang diễn ra</span
+                                >
+                            </td>
+                            <td class="px-4 py-2 text-center">8/10</td>
+                            <td class="px-4 py-2 text-center">-</td>
+                            <td class="px-4 py-2 space-x-2">
+                                <button
+                                    class="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"
+                                    title="Sửa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    class="bg-red-500 hover:bg-red-600 text-white p-2 rounded"
+                                    title="Xóa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9zM4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h4a1 1 0 100-2H7z"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">3</td>
+                            <td class="px-4 py-2">Họp nhóm marketing</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-sm"
+                                    >Hybrid</span
+                                >
+                            </td>
+                            <td class="px-4 py-2">Họp Nhóm</td>
+                            <td class="px-4 py-2">Phòng họp B + Zoom</td>
+                            <td class="px-4 py-2">Lê Minh C</td>
+                            <td class="px-4 py-2">15/06/2024 10:00 - 11:30</td>
+                            <td class="px-4 py-2">
+                                <span
+                                    class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
+                                    >Chưa diễn ra</span
+                                >
+                            </td>
+                            <td class="px-4 py-2 text-center">12/12</td>
+                            <td class="px-4 py-2 text-center">-</td>
+                            <td class="px-4 py-2 space-x-2">
+                                <button
+                                    class="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded"
+                                    title="Sửa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    class="bg-red-500 hover:bg-red-600 text-white p-2 rounded"
+                                    title="Xóa"
+                                >
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9zM4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h4a1 1 0 100-2H7z"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Modal tạo mới -->
+        <div
+            id="createModal"
+            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden"
+        >
+            <form
+                id="createForm"
+                class="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl relative overflow-y-auto"
+                style="max-height: 80vh"
+            >
+                <h2 class="text-2xl font-bold mb-6 text-blue-700">
+                    Tạo cuộc họp mới
+                </h2>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Tên cuộc họp</label>
+                    <input
+                        name="name"
+                        required
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Ngày diễn ra</label>
+                    <input
+                        type="date"
+                        name="date"
+                        required
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                <div class="flex gap-4 mb-4">
+                    <div class="flex-1">
+                        <label class="block font-medium mb-1"
+                            >Giờ bắt đầu</label
+                        >
+                        <input
+                            type="time"
+                            name="start"
+                            required
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
+                    <div class="flex-1">
+                        <label class="block font-medium mb-1"
+                            >Giờ kết thúc</label
+                        >
+                        <input
+                            type="time"
+                            name="end"
+                            required
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Host</label>
+                    <input
+                        name="host"
+                        required
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Hình thức họp</label>
+                    <select
+                        name="meetingType"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                        <option value="giao_ban">Họp giao ban</option>
+                        <option value="ban">Họp Ban</option>
+                        <option value="nhom">Họp Nhóm</option>
+                        <option value="1_1">Họp 1:1</option>
+                        <option value="khac">Khác</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1"
+                        >Đối tượng tham dự</label
+                    >
+                    <select
+                        id="objectTypeDropdown"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-2"
+                        onchange="addObjectType()"
+                    >
+                        <option value="">-- Chọn đối tượng --</option>
+                        <option value="AD">AD</option>
+                        <option value="Trưởng ban">Trưởng ban</option>
+                        <option value="Trưởng nhóm">Trưởng nhóm</option>
+                        <option value="Tiền trưởng nhóm">
+                            Tiền trưởng nhóm
+                        </option>
+                        <option value="NVVP">NVVP</option>
+                        <option value="TVV">TVV</option>
+                        <option value="Lãnh đạo công ty">
+                            Lãnh đạo công ty
+                        </option>
+                    </select>
+                    <div class="flex flex-wrap gap-2" id="selectedTags">
+                        <!-- Các tag đã chọn sẽ hiển thị ở đây -->
+                    </div>
+                    <input
+                        type="hidden"
+                        name="objectType"
+                        id="objectTypeInput"
+                    />
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Địa điểm họp</label>
+                    <select
+                        name="meetingLocation"
+                        id="meetingLocationSelect"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        onchange="toggleLocationInput()"
+                    >
+                        <option value="Phòng họp A">Phòng họp A</option>
+                        <option value="Phòng họp B">Phòng họp B</option>
+                        <option value="Phòng họp C">Phòng họp C</option>
+                        <option value="Online">Online</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                    <input
+                        type="text"
+                        name="customLocation"
+                        id="customLocationInput"
+                        placeholder="Nhập địa điểm khác..."
+                        class="w-full border border-gray-300 rounded px-3 py-2 mt-2 hidden"
+                    />
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium mb-1">Loại cuộc họp</label>
+                    <select
+                        name="meetingMode"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                        <option value="Online">Online</option>
+                        <option value="Offline">Offline</option>
+                        <option value="Hybrid">Hybrid (Kết hợp)</option>
+                    </select>
+                </div>
+                <fieldset class="mb-4 border border-gray-200 rounded p-4">
+                    <legend class="font-semibold text-gray-700">
+                        Hình thức tham gia
+                    </legend>
+                    <div class="mb-2">
+                        <select
+                            id="shareTypeSelect"
+                            name="shareType"
+                            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            onchange="toggleShareOptions()"
+                        >
+                            <option value="account">
+                                Share theo danh sách tài khoản
+                            </option>
+                            <option value="url">Share theo URL</option>
+                            <option value="unit">Share theo đơn vị</option>
+                        </select>
+                    </div>
+                    <div id="accountShare" class="ml-6 mt-2 hidden">
+                        <label class="block text-sm"
+                            >Danh sách tài khoản (phân cách bởi dấu
+                            phẩy):</label
+                        >
+                        <div class="flex gap-2">
+                            <input
+                                name="accountList"
+                                id="accountListInput"
+                                class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                            />
+                            <button
+                                type="button"
+                                onclick="openSelectModal('account')"
+                                class="px-3 py-1 mt-1 bg-blue-500 hover:bg-blue-600 text-white rounded whitespace-nowrap"
+                            >
+                                Chọn từ danh sách
+                            </button>
+                            <button
+                                type="button"
+                                onclick="openGroupModal()"
+                                class="px-3 py-1 mt-1 bg-green-500 hover:bg-green-600 text-white rounded whitespace-nowrap"
+                            >
+                                Chọn từ nhóm của tôi
+                            </button>
+                        </div>
+                    </div>
+                    <div id="urlShare" class="ml-6 mt-2 hidden">
+                        <label class="inline-flex items-center"
+                            ><input
+                                type="checkbox"
+                                id="urlLogin"
+                                name="urlLogin"
+                                class="mr-2"
+                            />Có cần login LMS hay không?</label
+                        ><br />
+                        <label class="inline-flex items-center"
+                            ><input
+                                type="checkbox"
+                                id="urlPassword"
+                                name="urlPassword"
+                                class="mr-2"
+                                onchange="togglePasswordInput()"
+                            />Có cần mật khẩu để tham gia hay không?</label
+                        >
+                        <div id="passwordInput" class="mt-2 hidden">
+                            <label class="block text-sm">Nhập mật khẩu:</label>
+                            <input
+                                type="password"
+                                name="meetingPassword"
+                                class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                            />
+                        </div>
+                    </div>
+                    <div id="unitShare" class="ml-6 mt-2 hidden">
+                        <label class="block text-sm"
+                            >Danh sách đơn vị (phân cách bởi dấu phẩy):</label
+                        >
+                        <div class="flex gap-2">
+                            <input
+                                name="unitList"
+                                id="unitListInput"
+                                class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+                            />
+                            <button
+                                type="button"
+                                onclick="openSelectModal('unit')"
+                                class="px-3 py-1 mt-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                            >
+                                Chọn từ danh sách
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="flex justify-end gap-2 mt-6">
+                    <button
+                        type="button"
+                        onclick="closeCreateModal()"
+                        class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        type="submit"
+                        class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                    >
+                        Tạo mới
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- Modal chọn tài khoản/đơn vị -->
+        <div
+            id="selectModal"
+            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden"
+        >
+            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                <h3 id="selectModalTitle" class="text-lg font-bold mb-4">
+                    Chọn
+                </h3>
+                <div
+                    id="selectList"
+                    class="max-h-60 overflow-y-auto mb-4"
+                ></div>
+                <div class="flex justify-end gap-2">
+                    <button
+                        type="button"
+                        onclick="closeSelectModal()"
+                        class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        type="button"
+                        onclick="applySelectModal()"
+                        class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                    >
+                        Chọn
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal chọn nhóm -->
+        <div
+            id="groupModal"
+            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden"
+        >
+            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                <h3 class="text-lg font-bold mb-4">Chọn nhóm của tôi</h3>
+                <div id="groupList" class="max-h-60 overflow-y-auto mb-4"></div>
+                <div class="flex justify-end gap-2">
+                    <button
+                        type="button"
+                        onclick="closeGroupModal()"
+                        class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        type="button"
+                        onclick="applyGroupModal()"
+                        class="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white font-semibold"
+                    >
+                        Chọn
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function openCreateModal() {
+                document
+                    .getElementById("createModal")
+                    .classList.remove("hidden");
+                document.getElementById("createModal").classList.add("flex");
+                toggleShareOptions();
+                togglePasswordInput();
+                toggleLocationInput();
+            }
+            function closeCreateModal() {
+                document.getElementById("createModal").classList.remove("flex");
+                document.getElementById("createModal").classList.add("hidden");
+                document.getElementById("createForm").reset();
+                document.getElementById("accountShare").classList.add("hidden");
+                document.getElementById("urlShare").classList.add("hidden");
+                document.getElementById("unitShare").classList.add("hidden");
+                // Reset tags
+                selectedObjectTypes = [];
+                updateSelectedTags();
+                updateObjectTypeInput();
+            }
+            function toggleShareOptions() {
+                const select = document.getElementById("shareTypeSelect");
+                document.getElementById("accountShare").classList.add("hidden");
+                document.getElementById("urlShare").classList.add("hidden");
+                document.getElementById("unitShare").classList.add("hidden");
+                if (select.value === "account") {
+                    document
+                        .getElementById("accountShare")
+                        .classList.remove("hidden");
+                } else if (select.value === "url") {
+                    document
+                        .getElementById("urlShare")
+                        .classList.remove("hidden");
+                } else if (select.value === "unit") {
+                    document
+                        .getElementById("unitShare")
+                        .classList.remove("hidden");
+                }
+            }
+            function togglePasswordInput() {
+                const checked = document.getElementById("urlPassword").checked;
+                document
+                    .getElementById("passwordInput")
+                    .classList.toggle("hidden", !checked);
+            }
+            function toggleLocationInput() {
+                const select = document.getElementById("meetingLocationSelect");
+                const input = document.getElementById("customLocationInput");
+                if (select.value === "Khác") {
+                    input.classList.remove("hidden");
+                } else {
+                    input.classList.add("hidden");
+                }
+            }
+            document.getElementById("createForm").onsubmit = function (e) {
+                e.preventDefault();
+                alert("Tạo mới cuộc họp thành công! (Demo)");
+                closeCreateModal();
+            };
+            // Fake data
+            const fakeAccounts = [
+                "nguyenvana",
+                "tranthib",
+                "leminhc",
+                "phamquocd",
+                "hoangthie",
+                "buiducf",
+            ];
+            const fakeUnits = [
+                "Phòng Nhân sự",
+                "Phòng Kỹ thuật",
+                "Phòng Kế toán",
+                "Phòng Đào tạo",
+                "Ban Giám đốc",
+            ];
+            let currentSelectType = null;
+            let selectedItems = [];
+            let selectedObjectTypes = [];
+            function addObjectType() {
+                const dropdown = document.getElementById("objectTypeDropdown");
+                const selectedValue = dropdown.value;
+                if (
+                    selectedValue &&
+                    !selectedObjectTypes.includes(selectedValue)
+                ) {
+                    selectedObjectTypes.push(selectedValue);
+                    updateSelectedTags();
+                    updateObjectTypeInput();
+                    dropdown.value = ""; // Reset dropdown
+                }
+            }
+            function updateSelectedTags() {
+                const container = document.getElementById("selectedTags");
+                container.innerHTML = selectedObjectTypes
+                    .map(
+                        (tag) =>
+                            `<span class="px-3 py-1 bg-green-500 text-white rounded-full text-sm flex items-center gap-1">
+                        ${tag}
+                        <button type="button" onclick="removeTag('${tag}')" class="ml-1 text-white hover:text-red-200">×</button>
+                    </span>`
+                    )
+                    .join("");
+            }
+            function removeTag(tagName) {
+                const index = selectedObjectTypes.indexOf(tagName);
+                if (index > -1) {
+                    selectedObjectTypes.splice(index, 1);
+                    updateSelectedTags();
+                    updateObjectTypeInput();
+                }
+            }
+            function updateObjectTypeInput() {
+                document.getElementById("objectTypeInput").value =
+                    selectedObjectTypes.join(",");
+            }
+            function openSelectModal(type) {
+                currentSelectType = type;
+                selectedItems = [];
+                document
+                    .getElementById("selectModal")
+                    .classList.remove("hidden");
+                document.getElementById("selectModal").classList.add("flex");
+                const list = type === "account" ? fakeAccounts : fakeUnits;
+                let typeLabel = "";
+                if (selectedObjectTypes.length > 0) {
+                    typeLabel = " (" + selectedObjectTypes.join(", ") + ")";
+                }
+                document.getElementById("selectModalTitle").innerText =
+                    (type === "account" ? "Chọn tài khoản" : "Chọn đơn vị") +
+                    typeLabel;
+                document.getElementById("selectList").innerHTML = list
+                    .map(
+                        (item, idx) =>
+                            `<label class='flex items-center mb-2'><input type='checkbox' value='${item}' class='mr-2 select-item'>${item}</label>`
+                    )
+                    .join("");
+            }
+            function closeSelectModal() {
+                document.getElementById("selectModal").classList.remove("flex");
+                document.getElementById("selectModal").classList.add("hidden");
+            }
+            function applySelectModal() {
+                const checked = Array.from(
+                    document.querySelectorAll(
+                        "#selectList .select-item:checked"
+                    )
+                ).map((i) => i.value);
+                if (currentSelectType === "account") {
+                    document.getElementById("accountListInput").value =
+                        checked.join(", ");
+                } else if (currentSelectType === "unit") {
+                    document.getElementById("unitListInput").value =
+                        checked.join(", ");
+                }
+                closeSelectModal();
+            }
+            // Fake data nhóm
+            const fakeGroups = [
+                {
+                    name: "Nhóm Phát triển Web",
+                    members: ["nguyenvana", "tranthib", "leminhc"],
+                },
+                { name: "Nhóm Marketing", members: ["phamquocd", "hoangthie"] },
+                { name: "Nhóm Thiết kế", members: ["buiducf", "nguyenvana"] },
+                {
+                    name: "Nhóm Quản lý dự án",
+                    members: ["tranthib", "leminhc", "phamquocd"],
+                },
+                { name: "Nhóm Kiểm thử", members: ["hoangthie", "buiducf"] },
+            ];
+            function openGroupModal() {
+                document
+                    .getElementById("groupModal")
+                    .classList.remove("hidden");
+                document.getElementById("groupModal").classList.add("flex");
+                document.getElementById("groupList").innerHTML = fakeGroups
+                    .map(
+                        (group, idx) =>
+                            `<label class='flex items-start mb-3 p-2 border rounded hover:bg-gray-50'>
+                        <input type='checkbox' value='${idx}' class='mr-2 mt-1 group-item'>
+                        <div>
+                            <div class='font-medium'>${group.name}</div>
+                            <div class='text-sm text-gray-600'>${
+                                group.members.length
+                            } thành viên: ${group.members.join(", ")}</div>
+                        </div>
+                    </label>`
+                    )
+                    .join("");
+            }
+            function closeGroupModal() {
+                document.getElementById("groupModal").classList.remove("flex");
+                document.getElementById("groupModal").classList.add("hidden");
+            }
+            function applyGroupModal() {
+                const checked = Array.from(
+                    document.querySelectorAll("#groupList .group-item:checked")
+                );
+                let allMembers = [];
+                checked.forEach((checkbox) => {
+                    const groupIndex = parseInt(checkbox.value);
+                    allMembers = allMembers.concat(
+                        fakeGroups[groupIndex].members
+                    );
+                });
+                // Loại bỏ trùng lặp
+                const uniqueMembers = [...new Set(allMembers)];
+                const currentValue =
+                    document.getElementById("accountListInput").value;
+                const currentMembers = currentValue
+                    ? currentValue.split(", ").map((s) => s.trim())
+                    : [];
+                const combinedMembers = [
+                    ...new Set([...currentMembers, ...uniqueMembers]),
+                ];
+                document.getElementById("accountListInput").value =
+                    combinedMembers.join(", ");
+                closeGroupModal();
+            }
+        </script>
+    </body>
+</html>
