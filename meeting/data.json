@@ -1,0 +1,118 @@
+{
+    "course": {
+        "title": "Phật Pháp Căn Bản",
+        "lesson": "Bài 8: Tứ Diệu Đế và Con Đường Giải Thoát",
+        "time": "19:30 - 21:00, Thứ 5, 15/03/2024",
+        "format": "Học trực tuyến qua LMS Platform",
+        "content": "Tìm hiểu về Khổ đế, Tập đế, Diệt đế, Đạo đế và ý nghĩa trong cuộc sống thường ngày",
+        "students": {
+            "current": 18,
+            "total": 25
+        },
+        "timeLeft": 0,
+        "status": "Sắp diễn ra"
+    },
+    "teachers": [
+        {
+            "id": 3,
+            "name": "Thầy Thích Ngộ Trí Dũng",
+            "title": "Thầy Phó Trụ Trì",
+            "specialty": "Chuyên về Thiền Tông & Đạo đức học",
+            "experience": "12+ năm tu học",
+            "education": "Thạc sĩ Triết học",
+            "certification": "Thượng tọa",
+            "students": "250+ học viên",
+            "rating": 4.9,
+            "reviews": 67,
+            "image": "https://quydaophatngaynay.org/wp-content/uploads/2023/07/1-25.jpg"
+        },
+        {
+            "id": 1,
+            "name": "Thầy Thích Nhất Tư",
+            "title": "Thầy Giảng Phật Pháp",
+            "specialty": "Chuyên về Thiền học & Kinh điển Phật giáo",
+            "experience": "15+ năm tu học",
+            "education": "Thạc sĩ Phật học",
+            "certification": "Chứng chỉ Thiền sư",
+            "students": "300+ học viên",
+            "rating": 4.9,
+            "reviews": 89,
+            "image": "https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/473818eyF/thay-thich-nhat-tu-850207.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Thầy Thích Tâm Nguyên",
+            "title": "Thầy Trụ Trì",
+            "specialty": "Chuyên về Tịnh Độ & Kinh Pháp Hoa",
+            "experience": "20+ năm tu học",
+            "education": "Tiến sĩ Phật học",
+            "certification": "Hòa thượng",
+            "students": "500+ học viên",
+            "rating": 4.8,
+            "reviews": 156,
+            "image": "https://i.ex-cdn.com/phatgiao.org.vn/files/content/2019/11/30/tinh-yeu-khong-co-loi-loi-o-92983-0839.jpg"
+        }
+    ],
+    "documents": [
+        {
+            "id": 1,
+            "title": "Kinh Tứ Diệu Đế",
+            "type": "Kinh điển",
+            "description": "Giải thích chi tiết về Tứ Diệu Đế - nền tảng của Phật giáo",
+            "pages": 45,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=200&h=300&fit=crop"
+        },
+        {
+            "id": 2,
+            "title": "Bát Chính Đạo",
+            "type": "Hướng dẫn tu tập",
+            "description": "Con đường tám nhánh dẫn đến giải thoát khổ đau",
+            "pages": 32,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=300&fit=crop"
+        },
+        {
+            "id": 3,
+            "title": "Thiền Quán Hơi Thở",
+            "type": "Thực hành",
+            "description": "Hướng dẫn thực tập thiền quán niệm hơi thở cơ bản",
+            "pages": 28,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=200&h=300&fit=crop"
+        },
+        {
+            "id": 4,
+            "title": "Luật Nhân Quả",
+            "type": "Triết lý",
+            "description": "Hiểu về luật nhân quả trong Phật giáo",
+            "pages": 38,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=300&fit=crop"
+        },
+        {
+            "id": 5,
+            "title": "Kinh Kim Cương",
+            "type": "Kinh điển",
+            "description": "Một trong những kinh điển quan trọng nhất của Phật giáo Đại thừa",
+            "pages": 52,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=300&fit=crop"
+        },
+        {
+            "id": 6,
+            "title": "Năm Giới Phật Giáo",
+            "type": "Giới luật",
+            "description": "Năm giới cơ bản mà người Phật tử cần tuân thủ",
+            "pages": 22,
+            "downloadUrl": "#",
+            "thumbnail": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=300&fit=crop"
+        }
+    ],
+    "studyTips": [
+        "Chuẩn bị tâm hồn thanh tịnh và tập trung",
+        "Ghi chú những điều thắc mắc muốn hỏi thầy",
+        "Tìm nơi yên tĩnh, tắt các thiết bị gây xao nhãng",
+        "Suy ngẫm và áp dụng giáo lý vào cuộc sống"
+    ]
+}

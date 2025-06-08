@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Timeline Session - LMS</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            accent: {
+                                orange: "#f97316",
+                                emerald: "#10b981",
+                                indigo: "#6366f1",
+                                rose: "#f43f5e",
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body {
+                font-family: "Poppins", sans-serif;
+            }
+            .timeline-line {
+                position: relative;
+            }
+            .timeline-line::before {
+                content: "";
+                position: absolute;
+                left: 24px;
+                top: 60px;
+                bottom: -20px;
+                width: 2px;
+                background: linear-gradient(
+                    to bottom,
+                    #6366f1,
+                    #f97316,
+                    #10b981
+                );
+                border-radius: 2px;
+            }
+            .timeline-dot {
+                position: relative;
+                z-index: 10;
+            }
+            .floating-card {
+                animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+            .glass-morphism {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+        </style>
+    </head>
+    <body
+        class="bg-gradient-to-br from-indigo-50 via-white to-orange-50 min-h-screen"
+    >
+        <!-- Header -->
+        <header
+            class="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50"
+        >
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-orange-500 rounded-2xl flex items-center justify-center"
+                        >
+                            <i class="fas fa-timeline text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">
+                                TimelineLMS
+                            </h1>
+                            <p class="text-gray-600 text-sm">
+                                Learning Journey Platform
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="hidden md:flex items-center space-x-6 text-gray-600"
+                        >
+                            <span class="text-sm">Timeline View</span>
+                            <span class="text-sm">•</span>
+                            <span class="text-sm">Nguyễn Văn C</span>
+                        </div>
+                        <img
+                            src="https://ui-avatars.com/api/?name=Nguyen+Van+C&background=6366f1&color=fff"
+                            class="w-10 h-10 rounded-full ring-2 ring-indigo-200"
+                            alt="Avatar"
+                        />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="max-w-6xl mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Timeline Column -->
+                <div class="lg:col-span-2">
+                    <!-- Session Header -->
+                    <div class="mb-8">
+                        <div
+                            class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100"
+                        >
+                            <div class="flex items-center space-x-6 mb-6">
+                                <div
+                                    class="w-24 h-24 bg-gradient-to-br from-indigo-500 via-purple-500 to-orange-500 rounded-3xl flex items-center justify-center"
+                                >
+                                    <i
+                                        class="fab fa-js-square text-white text-4xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h1
+                                        class="text-3xl font-bold text-gray-900 mb-2"
+                                    >
+                                        JavaScript Fundamentals
+                                    </h1>
+                                    <p class="text-gray-600 text-lg">
+                                        Web Development Bootcamp
+                                    </p>
+                                    <div
+                                        class="flex items-center space-x-4 mt-3"
+                                    >
+                                        <span
+                                            class="bg-emerald-100 text-emerald-700 px-4 py-1 rounded-full text-sm font-medium"
+                                            >Active</span
+                                        >
+                                        <span class="text-gray-500 text-sm"
+                                            >Lesson 12/20</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Visualization -->
+                            <div class="bg-gray-50 rounded-2xl p-6">
+                                <div
+                                    class="flex justify-between items-center mb-3"
+                                >
+                                    <span class="text-gray-700 font-medium"
+                                        >Course Progress</span
+                                    >
+                                    <span
+                                        class="text-2xl font-bold text-indigo-600"
+                                        >60%</span
+                                    >
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-3 mb-4">
+                                    <div
+                                        class="bg-gradient-to-r from-indigo-500 to-orange-500 h-3 rounded-full transition-all duration-1000"
+                                        style="width: 60%"
+                                    ></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div
+                                            class="text-2xl font-bold text-emerald-600"
+                                        >
+                                            12
+                                        </div>
+                                        <div class="text-sm text-gray-600">
+                                            Completed
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-2xl font-bold text-orange-600"
+                                        >
+                                            1
+                                        </div>
+                                        <div class="text-sm text-gray-600">
+                                            Current
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-2xl font-bold text-gray-400"
+                                        >
+                                            7
+                                        </div>
+                                        <div class="text-sm text-gray-600">
+                                            Remaining
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="timeline-line">
+                        <!-- Current Session -->
+                        <div class="mb-8">
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="timeline-dot w-12 h-12 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center"
+                                >
+                                    <i class="fas fa-play text-white"></i>
+                                </div>
+                                <div
+                                    class="flex-1 bg-white rounded-3xl shadow-lg p-6 border-l-4 border-emerald-500 floating-card"
+                                >
+                                    <div
+                                        class="flex items-center justify-between mb-4"
+                                    >
+                                        <h3
+                                            class="text-xl font-bold text-gray-900"
+                                        >
+                                            Buổi học hiện tại
+                                        </h3>
+                                        <span
+                                            class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium animate-pulse"
+                                            >Đang diễn ra</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"
+                                    >
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-clock text-indigo-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Thời gian
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    19:00 - 21:00
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-calendar text-orange-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Ngày
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    Thứ 2, 15/01
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-emerald-50 rounded-xl p-4">
+                                        <p class="text-emerald-800 font-medium">
+                                            ✓ Đã vào lớp - Đang học về DOM
+                                            Manipulation
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Session -->
+                        <div class="mb-8">
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="timeline-dot w-12 h-12 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center"
+                                >
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                                <div
+                                    class="flex-1 bg-white rounded-3xl shadow-lg p-6 border-l-4 border-orange-500"
+                                >
+                                    <div
+                                        class="flex items-center justify-between mb-4"
+                                    >
+                                        <h3
+                                            class="text-xl font-bold text-gray-900"
+                                        >
+                                            Buổi học tiếp theo
+                                        </h3>
+                                        <span
+                                            class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium"
+                                            >Sắp diễn ra</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"
+                                    >
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-user-tie text-purple-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Giảng viên
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    Thầy Trần Văn D
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-code text-rose-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Topic
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    ES6 Features
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-orange-50 rounded-xl p-4">
+                                        <div
+                                            class="flex items-center justify-between"
+                                        >
+                                            <p
+                                                class="text-orange-800 font-medium"
+                                            >
+                                                Bắt đầu sau:
+                                                <span id="nextClass"
+                                                    >2 ngày 5 giờ</span
+                                                >
+                                            </p>
+                                            <button
+                                                class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                            >
+                                                Đặt nhắc nhở
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Completed Session -->
+                        <div class="mb-8">
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="timeline-dot w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-600 rounded-full flex items-center justify-center"
+                                >
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <div
+                                    class="flex-1 bg-white rounded-3xl shadow-lg p-6 border-l-4 border-gray-400 opacity-75"
+                                >
+                                    <div
+                                        class="flex items-center justify-between mb-4"
+                                    >
+                                        <h3
+                                            class="text-xl font-bold text-gray-900"
+                                        >
+                                            Buổi học trước
+                                        </h3>
+                                        <span
+                                            class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium"
+                                            >Đã hoàn thành</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"
+                                    >
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-star text-green-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Điểm số
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    9.2/10
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center space-x-3"
+                                        >
+                                            <div
+                                                class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"
+                                            >
+                                                <i
+                                                    class="fas fa-tasks text-blue-600"
+                                                ></i>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    class="text-sm text-gray-500"
+                                                >
+                                                    Bài tập
+                                                </p>
+                                                <p
+                                                    class="font-semibold text-gray-900"
+                                                >
+                                                    Đã nộp
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 rounded-xl p-4">
+                                        <p class="text-gray-700">
+                                            Chủ đề: Variables & Data Types • Thứ
+                                            6, 12/01
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Action Panel -->
+                    <div class="bg-white rounded-3xl shadow-xl p-6">
+                        <h3
+                            class="text-xl font-bold text-gray-900 mb-6 text-center"
+                        >
+                            Hành động nhanh
+                        </h3>
+
+                        <div class="space-y-4 mb-6">
+                            <button
+                                class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
+                            >
+                                <i class="fas fa-play text-lg"></i>
+                                <span>Tiếp tục học</span>
+                            </button>
+
+                            <button
+                                class="w-full bg-white border-2 border-indigo-200 hover:border-indigo-300 text-indigo-600 hover:text-indigo-700 font-semibold py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3"
+                            >
+                                <i class="fas fa-book"></i>
+                                <span>Xem tài liệu</span>
+                            </button>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div
+                                class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-4 text-center"
+                            >
+                                <div class="text-2xl font-bold text-indigo-600">
+                                    45m
+                                </div>
+                                <div class="text-sm text-indigo-700">
+                                    Thời gian còn lại
+                                </div>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-4 text-center"
+                            >
+                                <div class="text-2xl font-bold text-orange-600">
+                                    28
+                                </div>
+                                <div class="text-sm text-orange-700">
+                                    Người tham gia
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Path -->
+                    <div class="bg-white rounded-3xl shadow-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">
+                            Lộ trình học tập
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div
+                                class="flex items-center space-x-3 p-3 bg-emerald-50 rounded-xl border-l-4 border-emerald-500"
+                            >
+                                <i
+                                    class="fas fa-check-circle text-emerald-600"
+                                ></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">
+                                        HTML Basics
+                                    </p>
+                                    <p class="text-sm text-gray-600">
+                                        Hoàn thành
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex items-center space-x-3 p-3 bg-orange-50 rounded-xl border-l-4 border-orange-500"
+                            >
+                                <i
+                                    class="fas fa-play-circle text-orange-600"
+                                ></i>
+                                <div>
+                                    <p class="font-semibold text-gray-900">
+                                        JavaScript
+                                    </p>
+                                    <p class="text-sm text-gray-600">
+                                        Đang học
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl border-l-4 border-gray-300"
+                            >
+                                <i class="fas fa-clock text-gray-400"></i>
+                                <div>
+                                    <p class="font-semibold text-gray-600">
+                                        React Basics
+                                    </p>
+                                    <p class="text-sm text-gray-500">Sắp học</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievement -->
+                    <div
+                        class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl shadow-xl p-6 border border-yellow-200"
+                    >
+                        <div class="text-center">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+                            >
+                                <i class="fas fa-trophy text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">
+                                Thành tích mới!
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4">
+                                Bạn đã học liên tục 7 ngày
+                            </p>
+                            <div class="bg-white rounded-xl p-3">
+                                <div class="text-sm text-gray-600 mb-1">
+                                    Streak hiện tại
+                                </div>
+                                <div class="text-2xl font-bold text-orange-600">
+                                    7 ngày 🔥
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Timeline animations
+            document.addEventListener("DOMContentLoaded", function () {
+                // Animate timeline items on scroll
+                const timelineItems = document.querySelectorAll(
+                    ".timeline-line > div"
+                );
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = "1";
+                            entry.target.style.transform = "translateX(0)";
+                        }
+                    });
+                });
+
+                timelineItems.forEach((item) => {
+                    item.style.opacity = "0";
+                    item.style.transform = "translateX(-20px)";
+                    item.style.transition = "all 0.6s ease";
+                    observer.observe(item);
+                });
+            });
+        </script>
+    </body>
+</html>

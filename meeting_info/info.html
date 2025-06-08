@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thông tin buổi học - LMS</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: {
+                                50: "#f0f9ff",
+                                100: "#e0f2fe",
+                                500: "#0ea5e9",
+                                600: "#0284c7",
+                                700: "#0369a1",
+                                800: "#075985",
+                                900: "#0c4a6e",
+                            },
+                            secondary: {
+                                500: "#8b5cf6",
+                                600: "#7c3aed",
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+            }
+            .gradient-bg {
+                background: linear-gradient(
+                    135deg,
+                    #0f172a 0%,
+                    #1e293b 50%,
+                    #334155 100%
+                );
+            }
+            .card-shadow {
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            }
+            .pulse-animation {
+                animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+            }
+        </style>
+    </head>
+    <body class="gradient-bg min-h-screen">
+        <!-- Header Navigation -->
+        <nav class="bg-white/10 backdrop-blur-md border-b border-white/20">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center"
+                        >
+                            <i
+                                class="fas fa-graduation-cap text-white text-lg"
+                            ></i>
+                        </div>
+                        <h1 class="text-white text-xl font-semibold">
+                            EduLMS Platform
+                        </h1>
+                    </div>
+                    <div class="flex items-center space-x-4 text-white/80">
+                        <span class="text-sm"
+                            >Xin chào, <strong>Nguyễn Văn B</strong></span
+                        >
+                        <img
+                            src="https://ui-avatars.com/api/?name=Nguyen+Van+B&background=0ea5e9&color=fff"
+                            class="w-8 h-8 rounded-full"
+                            alt="Avatar"
+                        />
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="max-w-6xl mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Meeting Info Card -->
+                <div
+                    class="lg:col-span-2 bg-white rounded-2xl card-shadow overflow-hidden"
+                >
+                    <!-- Card Header -->
+                    <div
+                        class="bg-gradient-to-r from-primary-600 to-secondary-600 px-8 py-6"
+                    >
+                        <div
+                            class="flex items-center justify-between text-white"
+                        >
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">
+                                    Buổi học sắp diễn ra
+                                </h2>
+                                <p class="text-primary-100">
+                                    Chuẩn bị tham gia lớp học online
+                                </p>
+                            </div>
+                            <div
+                                class="bg-white/20 px-4 py-2 rounded-full flex items-center space-x-2"
+                            >
+                                <div
+                                    class="w-2 h-2 bg-green-400 rounded-full pulse-animation"
+                                ></div>
+                                <span class="text-sm font-medium"
+                                    >Sắp bắt đầu</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Info -->
+                    <div class="px-8 py-6 border-b border-gray-100">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center"
+                            >
+                                <i class="fab fa-react text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-2xl font-bold text-gray-900 mb-1"
+                                >
+                                    Lập trình Web với React JS
+                                </h3>
+                                <p class="text-gray-600">
+                                    Khóa học Fullstack Development • Buổi 8/12
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="bg-gray-200 rounded-full h-2 mb-4">
+                            <div
+                                class="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full"
+                                style="width: 67%"
+                            ></div>
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Tiến độ khóa học: 67% hoàn thành
+                        </p>
+                    </div>
+
+                    <!-- Meeting Details Grid -->
+                    <div class="p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Date & Time -->
+                            <div
+                                class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6"
+                            >
+                                <div class="flex items-center space-x-4">
+                                    <div
+                                        class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center"
+                                    >
+                                        <i
+                                            class="fas fa-calendar-alt text-white"
+                                        ></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1"
+                                        >
+                                            Thời gian học
+                                        </p>
+                                        <p
+                                            class="text-lg font-bold text-gray-900"
+                                        >
+                                            Thứ 2, 15/01/2024
+                                        </p>
+                                        <p
+                                            class="text-primary-600 font-semibold"
+                                        >
+                                            19:00 - 21:00 (2 giờ)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Instructor -->
+                            <div
+                                class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6"
+                            >
+                                <div class="flex items-center space-x-4">
+                                    <img
+                                        src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=8b5cf6&color=fff"
+                                        class="w-12 h-12 rounded-xl"
+                                        alt="Instructor"
+                                    />
+                                    <div>
+                                        <p
+                                            class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1"
+                                        >
+                                            Giảng viên
+                                        </p>
+                                        <p
+                                            class="text-lg font-bold text-gray-900"
+                                        >
+                                            Thầy Nguyễn Văn A
+                                        </p>
+                                        <p
+                                            class="text-secondary-600 font-semibold"
+                                        >
+                                            Senior Developer
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Participants -->
+                            <div
+                                class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6"
+                            >
+                                <div class="flex items-center space-x-4">
+                                    <div
+                                        class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center"
+                                    >
+                                        <i class="fas fa-users text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1"
+                                        >
+                                            Tham gia
+                                        </p>
+                                        <p
+                                            class="text-lg font-bold text-gray-900"
+                                        >
+                                            24/30 sinh viên
+                                        </p>
+                                        <p class="text-green-600 font-semibold">
+                                            80% có mặt
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Duration -->
+                            <div
+                                class="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-xl p-6"
+                            >
+                                <div class="flex items-center space-x-4">
+                                    <div
+                                        class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center"
+                                    >
+                                        <i class="fas fa-clock text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1"
+                                        >
+                                            Thời lượng
+                                        </p>
+                                        <p
+                                            class="text-lg font-bold text-gray-900"
+                                        >
+                                            2 giờ học
+                                        </p>
+                                        <p
+                                            class="text-orange-600 font-semibold"
+                                        >
+                                            Có nghỉ giải lao
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button
+                                onclick="joinMeeting()"
+                                class="flex-1 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-3"
+                            >
+                                <i class="fas fa-video text-lg"></i>
+                                <span>Tham gia buổi học ngay</span>
+                            </button>
+
+                            <button
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3"
+                            >
+                                <i class="fas fa-download"></i>
+                                <span>Tài liệu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Countdown Timer -->
+                    <div class="bg-white rounded-2xl card-shadow p-6">
+                        <div class="text-center">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                            >
+                                <i
+                                    class="fas fa-stopwatch text-white text-xl"
+                                ></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">
+                                Thời gian bắt đầu
+                            </h3>
+                            <div
+                                class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-4 mb-4"
+                            >
+                                <div
+                                    id="countdown"
+                                    class="text-3xl font-bold text-orange-700 font-mono tracking-wider"
+                                >
+                                    00:45:32
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600">
+                                Hãy chuẩn bị sẵn sàng!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-2xl card-shadow p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">
+                            Hành động nhanh
+                        </h3>
+                        <div class="space-y-3">
+                            <button
+                                class="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-3 flex items-center space-x-3 transition-colors"
+                            >
+                                <i class="fas fa-microphone text-blue-600"></i>
+                                <span class="text-blue-800 font-medium"
+                                    >Kiểm tra mic</span
+                                >
+                            </button>
+
+                            <button
+                                class="w-full bg-green-50 hover:bg-green-100 border border-green-200 rounded-xl p-3 flex items-center space-x-3 transition-colors"
+                            >
+                                <i class="fas fa-camera text-green-600"></i>
+                                <span class="text-green-800 font-medium"
+                                    >Kiểm tra camera</span
+                                >
+                            </button>
+
+                            <button
+                                class="w-full bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl p-3 flex items-center space-x-3 transition-colors"
+                            >
+                                <i class="fas fa-book text-purple-600"></i>
+                                <span class="text-purple-800 font-medium"
+                                    >Xem bài tập</span
+                                >
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-2xl card-shadow p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">
+                            Hoạt động gần đây
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div
+                                    class="w-2 h-2 bg-green-500 rounded-full mt-2"
+                                ></div>
+                                <div>
+                                    <p
+                                        class="text-sm font-medium text-gray-900"
+                                    >
+                                        Bài tập số 7 đã nộp
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        2 giờ trước
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div
+                                    class="w-2 h-2 bg-blue-500 rounded-full mt-2"
+                                ></div>
+                                <div>
+                                    <p
+                                        class="text-sm font-medium text-gray-900"
+                                    >
+                                        Tài liệu mới được tải lên
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        1 ngày trước
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div
+                                    class="w-2 h-2 bg-orange-500 rounded-full mt-2"
+                                ></div>
+                                <div>
+                                    <p
+                                        class="text-sm font-medium text-gray-900"
+                                    >
+                                        Hoàn thành bài test
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        3 ngày trước
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function joinMeeting() {
+                // Hiện loading state
+                const button = event.target.closest("button");
+                const originalContent = button.innerHTML;
+                button.innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i> <span>Đang kết nối...</span>';
+                button.disabled = true;
+
+                // Simulate connection
+                setTimeout(() => {
+                    alert("Đang chuyển hướng đến phòng học...");
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 2000);
+            }
+
+            // Enhanced countdown timer
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const meetingTime = new Date();
+                meetingTime.setHours(19, 0, 0, 0);
+
+                if (meetingTime <= now) {
+                    meetingTime.setDate(meetingTime.getDate() + 1);
+                }
+
+                const distance = meetingTime - now;
+
+                const hours = Math.floor(
+                    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                );
+                const minutes = Math.floor(
+                    (distance % (1000 * 60 * 60)) / (1000 * 60)
+                );
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").textContent = `${String(
+                    hours
+                ).padStart(2, "0")}:${String(minutes).padStart(
+                    2,
+                    "0"
+                )}:${String(seconds).padStart(2, "0")}`;
+            }
+
+            // Update countdown every second
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            // Add some interactivity
+            document.addEventListener("DOMContentLoaded", function () {
+                // Add hover effects to info cards
+                const infoCards =
+                    document.querySelectorAll(".bg-gradient-to-br");
+                infoCards.forEach((card) => {
+                    card.addEventListener("mouseenter", function () {
+                        this.style.transform = "translateY(-2px)";
+                        this.style.transition = "transform 0.2s ease";
+                    });
+
+                    card.addEventListener("mouseleave", function () {
+                        this.style.transform = "translateY(0)";
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
